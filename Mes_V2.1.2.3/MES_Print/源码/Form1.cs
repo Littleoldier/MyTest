@@ -903,7 +903,7 @@ namespace WindowsForms_print
                     }
                     LabelFormatDocument btFormat = btEngine.Documents.Open(lj);
                     //对模板相应字段进行赋值
-                    ValueToTemplate(btFormat);
+                    ValueToTemplate(btFormat);  //只复制生产日期
                     //指定打印机名称
                     btFormat.PrintSetup.PrinterName = this.Printer1.Text;
                     //打印份数,同序列打印的份数
