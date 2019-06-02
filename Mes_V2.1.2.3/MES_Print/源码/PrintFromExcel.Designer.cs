@@ -28,13 +28,14 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle9 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle10 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
             this.ImportPath = new System.Windows.Forms.TextBox();
             this.Import = new System.Windows.Forms.Button();
             this.RowNumber = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
+            this.button1 = new System.Windows.Forms.Button();
             this.CB_Zhidan = new System.Windows.Forms.ComboBox();
             this.label5 = new System.Windows.Forms.Label();
             this.RePrintIMEI1 = new System.Windows.Forms.TextBox();
@@ -57,7 +58,6 @@
             this.label6 = new System.Windows.Forms.Label();
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
             this.remined = new System.Windows.Forms.TextBox();
-            this.button1 = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
@@ -86,7 +86,6 @@
             // 
             // RowNumber
             // 
-            this.RowNumber.Enabled = false;
             this.RowNumber.Location = new System.Drawing.Point(106, 86);
             this.RowNumber.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.RowNumber.Name = "RowNumber";
@@ -148,13 +147,24 @@
             this.splitContainer1.SplitterDistance = 139;
             this.splitContainer1.TabIndex = 4;
             // 
+            // button1
+            // 
+            this.button1.Location = new System.Drawing.Point(1593, 3);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(75, 26);
+            this.button1.TabIndex = 25;
+            this.button1.Text = "锁定";
+            this.button1.UseVisualStyleBackColor = true;
+            this.button1.Visible = false;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
+            // 
             // CB_Zhidan
             // 
             this.CB_Zhidan.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
             this.CB_Zhidan.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
             this.CB_Zhidan.FormattingEnabled = true;
             this.CB_Zhidan.Location = new System.Drawing.Point(1221, 16);
-            this.CB_Zhidan.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.CB_Zhidan.Margin = new System.Windows.Forms.Padding(4);
             this.CB_Zhidan.Name = "CB_Zhidan";
             this.CB_Zhidan.Size = new System.Drawing.Size(161, 23);
             this.CB_Zhidan.TabIndex = 23;
@@ -172,7 +182,7 @@
             // RePrintIMEI1
             // 
             this.RePrintIMEI1.Location = new System.Drawing.Point(1161, 85);
-            this.RePrintIMEI1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.RePrintIMEI1.Margin = new System.Windows.Forms.Padding(4);
             this.RePrintIMEI1.Name = "RePrintIMEI1";
             this.RePrintIMEI1.Size = new System.Drawing.Size(221, 25);
             this.RePrintIMEI1.TabIndex = 21;
@@ -180,7 +190,6 @@
             // 
             // RePrint
             // 
-            this.RePrint.Enabled = false;
             this.RePrint.Location = new System.Drawing.Point(464, 86);
             this.RePrint.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.RePrint.Name = "RePrint";
@@ -214,7 +223,6 @@
             // 
             // Debug_Print
             // 
-            this.Debug_Print.Enabled = false;
             this.Debug_Print.Location = new System.Drawing.Point(328, 86);
             this.Debug_Print.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.Debug_Print.Name = "Debug_Print";
@@ -315,7 +323,6 @@
             // 
             // ExcelToPrint
             // 
-            this.ExcelToPrint.Enabled = false;
             this.ExcelToPrint.Location = new System.Drawing.Point(205, 86);
             this.ExcelToPrint.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.ExcelToPrint.Name = "ExcelToPrint";
@@ -362,23 +369,23 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.dataGridView1.AutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.DisplayedCellsExceptHeaders;
             this.dataGridView1.BackgroundColor = System.Drawing.Color.White;
-            dataGridViewCellStyle9.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle9.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle9.Font = new System.Drawing.Font("宋体", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            dataGridViewCellStyle9.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle9.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle9.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle9.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.dataGridView1.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle9;
+            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle1.Font = new System.Drawing.Font("宋体", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            dataGridViewCellStyle1.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dataGridView1.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
             this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dataGridViewCellStyle10.Alignment = System.Windows.Forms.DataGridViewContentAlignment.TopCenter;
-            dataGridViewCellStyle10.BackColor = System.Drawing.SystemColors.Window;
-            dataGridViewCellStyle10.Font = new System.Drawing.Font("宋体", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            dataGridViewCellStyle10.ForeColor = System.Drawing.SystemColors.ControlText;
-            dataGridViewCellStyle10.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle10.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle10.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.dataGridView1.DefaultCellStyle = dataGridViewCellStyle10;
+            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.TopCenter;
+            dataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.Window;
+            dataGridViewCellStyle2.Font = new System.Drawing.Font("宋体", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            dataGridViewCellStyle2.ForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.dataGridView1.DefaultCellStyle = dataGridViewCellStyle2;
             this.dataGridView1.Location = new System.Drawing.Point(3, 2);
             this.dataGridView1.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.dataGridView1.Name = "dataGridView1";
@@ -401,17 +408,6 @@
             this.remined.ScrollBars = System.Windows.Forms.ScrollBars.Both;
             this.remined.Size = new System.Drawing.Size(1659, 128);
             this.remined.TabIndex = 5;
-            // 
-            // button1
-            // 
-            this.button1.Location = new System.Drawing.Point(1593, 3);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(75, 26);
-            this.button1.TabIndex = 25;
-            this.button1.Text = "锁定";
-            this.button1.UseVisualStyleBackColor = true;
-            this.button1.Visible = false;
-            this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
             // PrintFromExcel
             // 

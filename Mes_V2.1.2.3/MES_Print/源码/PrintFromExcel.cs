@@ -37,12 +37,13 @@ namespace WindowsForms_print
         string lj = "";
 
         //存是否重复的标志
-        bool[] IsRepeat = {false};
+        List<bool> IsRepeat=new List<bool>();
         //存是否已打印标志
-        bool[] IsPrint = {false};
+        bool[] IsPrint = new bool[100];
         //开启上传打印数据标志
         bool BeginInsertFlag = false;
-
+        //订单号
+        string myZhiDan;
         //记录Excel字段，用来插入关联表
         string IMEI; string SN; string SIM; string VIP; string BAT; string MAC; string ICCID; string Equipment;
         //插入关联表的Sql语句
@@ -298,15 +299,22 @@ namespace WindowsForms_print
                                 dataGridView1.DataSource = dd;
                                 i++;
                             }
-                            //开启查询线程
-                            Thread thread1 = new Thread(CheckUseThread);
-                            thread1.Start();
+                            ////开启查询线程
+                   //         string str = dataGridView1.Rows[1].Cells[].Value.ToString();
                             dataGridView1.Columns[0].Width = 50;
                             dataGridView1.Columns[1].Width = 200;
                             dataGridView1.Columns[2].Width = 200;
                             dataGridView1.Columns[3].Width = 200;
                             dataGridView1.Columns[4].Width = 200;
                             dataGridView1.Columns[5].Width = 200;
+                            myZhiDan = this.CB_Zhidan.Text;
+                            Thread thread1 = new Thread(CheckUseThread);
+                            thread1.Start();
+                            Thread.Sleep(500);
+                            
+                            //BeginInsertFlag = true;
+                            //Thread thread2 = new Thread(InsertPrintDataThread);
+                            //thread2.Start();
                         }
                         else
                         {
@@ -324,15 +332,52 @@ namespace WindowsForms_print
         public void CheckUseThread()
         {
             int last = this.dataGridView1.RowCount;
-            for (int i = 1; i < last; i++)
+            for (int i = 0; i < last - 1; i++)
             {
-                if (!MEPPB.CheckIMEIBLL(dataGridView1.Rows[i].Cells[0].Value.ToString(), dataGridView1.Rows[i].Cells[1].Value.ToString()))
+                string str = dataGridView1.Rows[i].Cells[1].Value.ToString();
+                if (!MEPPB.CheckIMEIBLL(dataGridView1.Rows[i].Cells[1].Value.ToString(), dataGridView1.Rows[i].Cells[2].Value.ToString()))
                 {
-                    IsRepeat[i] = false;
+                    IsRepeat.Add(false);
+                    mepp.Add(new ManuExcelPrintParam()
+                    {
+                        IMEI1 = dataGridView1.Rows[i].Cells[1].Value.ToString(),
+                        IMEI2 = dataGridView1.Rows[i].Cells[2].Value.ToString(),
+                        IMEI3 = dataGridView1.Rows[i].Cells[3].Value.ToString(),
+                        IMEI4 = dataGridView1.Rows[i].Cells[4].Value.ToString(),
+                        IMEI5 = dataGridView1.Rows[i].Cells[5].Value.ToString(),
+                        PrintTime = System.DateTime.Now.ToString("yyyy.MM.dd HH:mm:ss:fff"),
+                        Template = this.Select_Template.Text
+                    });
+                    if (MEPPB.InsertManuExcelPrintBLL(mepp))//上传成功
+                    {
+                        ToReplay = "";
+                        if (HaveImei1 == 1)//上传关联关系到关联表
+                        {
+                            for (int k = 1; k < SdNum + 1; k++)
+                            {
+                                ToReplay += "'" + dataGridView1.Rows[i].Cells[k].Value.ToString() + "',";
+                            }
+                            ToReplay += "'" + myZhiDan + "','" + System.DateTime.Now.ToString("yyyy.MM.dd HH:mm:ss:fff") + "')";
+                            string Insql = DrsbSql.Replace("TheValues", ToReplay);
+                            DRSB.InsertRSFromExcelBLL(Insql);
+
+                        }
+                        else
+                        {
+                            ToReplay += "'" + dataGridView1.Rows[i].Cells[0].Value.ToString() + "',";
+                            for (int k = 1; k < SdNum + 1; k++)
+                            {
+                                ToReplay += "'" + dataGridView1.Rows[i].Cells[k].Value.ToString() + "',";
+                            }
+                            ToReplay += "'" + myZhiDan + "','" + System.DateTime.Now.ToString("yyyy.MM.dd HH:mm:ss:fff") + "')";
+                            string Insql = DrsbSql.Replace("TheValues", ToReplay);
+                            DRSB.InsertRSFromExcelBLL(Insql);
+                        }
+                    }              
                 }
                 else
                 {
-                    IsRepeat[i] = true;
+                    IsRepeat.Add(true);
                 }
             }
         }
@@ -485,19 +530,22 @@ namespace WindowsForms_print
                         //        this.remined.AppendText(dr3[0].ToString() + "或" + dr3[1].ToString() + "重号\r\n");
                         //    }
                         //}
-                        BeginInsertFlag = true;
-                        Thread thread1 = new Thread(InsertPrintDataThread);
-                        thread1.Start();
+                   
+            
                         int rowCount = this.dataGridView1.RowCount;
-                        for (int i = 1;i<rowCount;i++)
+
+                        LabelFormatDocument btFormat = btEngine.Documents.Open(lj);
+                        //指定打印机名称
+                        btFormat.PrintSetup.PrinterName = this.Printer.Text;
+                        for (int i = 0;i<rowCount-1;i++)
                         {
-                            if (IsRepeat[i] == false)
+                            if (IsRepeat[i]==false)
                             {
-                                btFormat.SubStrings["IMEI1"].Value = dataGridView1.Rows[i].Cells[0].Value.ToString();
-                                btFormat.SubStrings["IMEI2"].Value = dataGridView1.Rows[i].Cells[1].Value.ToString();
-                                btFormat.SubStrings["IMEI3"].Value = dataGridView1.Rows[i].Cells[2].Value.ToString();
-                                btFormat.SubStrings["IMEI4"].Value = dataGridView1.Rows[i].Cells[3].Value.ToString();
-                                btFormat.SubStrings["IMEI5"].Value = dataGridView1.Rows[i].Cells[4].Value.ToString();
+                                btFormat.SubStrings["IMEI1"].Value = dataGridView1.Rows[i].Cells[1].Value.ToString();
+                                btFormat.SubStrings["IMEI2"].Value = dataGridView1.Rows[i].Cells[2].Value.ToString();
+                                btFormat.SubStrings["IMEI3"].Value = dataGridView1.Rows[i].Cells[3].Value.ToString();
+                                btFormat.SubStrings["IMEI4"].Value = dataGridView1.Rows[i].Cells[4].Value.ToString();
+                                btFormat.SubStrings["IMEI5"].Value = dataGridView1.Rows[i].Cells[5].Value.ToString();
                                 btFormat.SubStrings["ProductDate"].Value = DateTime.Now.ToString("yyyy.MM.dd");
                                 //打印份数,同序列打印的份数
                                 btFormat.PrintSetup.IdenticalCopiesOfLabel = TN;
@@ -507,7 +555,7 @@ namespace WindowsForms_print
                             else
                             {
                                 player.Play();
-                                this.remined.AppendText(dataGridView1.Rows[i].Cells[0].Value.ToString() + "或" + dataGridView1.Rows[i].Cells[1].Value.ToString() + "重号\r\n");
+                                this.remined.AppendText(dataGridView1.Rows[i].Cells[1].Value.ToString() + "或" + dataGridView1.Rows[i].Cells[2].Value.ToString() + "重号\r\n");
                             }
                         }
                     }
@@ -534,62 +582,6 @@ namespace WindowsForms_print
             }
         }
 
-        //上传数据线程
-        public void InsertPrintDataThread()
-        {
-            int i = 1;
-            while(BeginInsertFlag)
-            {
-                if (IsPrint[i] == true)
-                {
-                    mepp.Add(new ManuExcelPrintParam()
-                    {
-                        IMEI1 = dataGridView1.Rows[i].Cells[0].Value.ToString(),
-                        IMEI2 = dataGridView1.Rows[i].Cells[1].Value.ToString(),
-                        IMEI3 = dataGridView1.Rows[i].Cells[2].Value.ToString(),
-                        IMEI4 = dataGridView1.Rows[i].Cells[3].Value.ToString(),
-                        IMEI5 = dataGridView1.Rows[i].Cells[4].Value.ToString(),
-                        PrintTime = System.DateTime.Now.ToString("yyyy.MM.dd HH:mm:ss:fff"),
-                        Template = this.Select_Template.Text
-                    });
-                    if (MEPPB.InsertManuExcelPrintBLL(mepp))//上传成功
-                    {
-                        ToReplay = "";
-                        if (HaveImei1 == 1)//上传关联关系到关联表
-                        {
-                            for (int k = 0; k < SdNum; k++)
-                            {
-                                ToReplay += "'" + dataGridView1.Rows[i].Cells[k].Value.ToString() + "',";
-                            }
-                            ToReplay += "'" + this.CB_Zhidan.Text + "','" + System.DateTime.Now.ToString("yyyy.MM.dd HH:mm:ss:fff") + "')";
-                            string Insql = DrsbSql.Replace("TheValues", ToReplay);
-                            DRSB.InsertRSFromExcelBLL(Insql);
-
-                        }
-                        else
-                        {
-                            ToReplay += "'" + dataGridView1.Rows[i].Cells[0].Value.ToString() + "',";
-                            for (int k = 0; k < SdNum; k++)
-                            {
-                                ToReplay += "'" + dataGridView1.Rows[i].Cells[k].Value.ToString() + "',";
-                            }
-                            ToReplay += "'" + this.CB_Zhidan.Text + "','" + System.DateTime.Now.ToString("yyyy.MM.dd HH:mm:ss:fff") + "')";
-                            string Insql = DrsbSql.Replace("TheValues", ToReplay);
-                            DRSB.InsertRSFromExcelBLL(Insql);
-                        }
-                    }
-                    i++;
-                    if (i>dataGridView1.RowCount-1)
-                    {
-                        BeginInsertFlag = false;
-                    }
-                }
-                else
-                {
-                    continue;
-                }
-            }
-        }
 
         //打开Excel按钮函数
         private void OpenExcel_Click(object sender, EventArgs e)
