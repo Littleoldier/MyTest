@@ -27,7 +27,11 @@ namespace WindowsForms_print
 {
     public partial class Form1 : Form
     {
-
+        public string GetName()
+        {
+            SignIn SI = new SignIn();
+            return  SI.UserNamestr1;
+        }
         //写日志函数
         public static void Log(string msg, Exception e)
         {
@@ -90,6 +94,8 @@ namespace WindowsForms_print
         List<Gps_ManuOrderParam> G_MOP = new List<Gps_ManuOrderParam>();
 
         List<PrintMessage> list = new List<PrintMessage>();
+
+        PrintMessage PList = new PrintMessage();
 
         SortedDictionary<int, string> RelationFields = new SortedDictionary<int, string>();
 
@@ -812,6 +818,12 @@ namespace WindowsForms_print
         {
             if (e.KeyChar == 13)
             {
+                if (this.UserShow.Text == "")
+                {
+                    this.reminder.AppendText("请先登录\r\n");
+                    return;
+                }
+
                 if (this.CB_ZhiDan.Text == "")
                 {
                     player2.Play();
@@ -833,6 +845,13 @@ namespace WindowsForms_print
                     this.reminder.AppendText("请获取制单数据\r\n");
                     this.PrintNum.Clear();
                     this.PrintNum.Focus();
+                    return;
+                }
+                if (this.ToLock.Enabled == true)
+                {
+                    this.reminder.AppendText("请锁定\r\n");
+                    this.HexPrintNum.Clear();
+                    this.HexPrintNum.Focus();
                     return;
                 }
                 if (this.PrintNum.Text != "" && IsNumeric(this.PrintNum.Text))
@@ -903,7 +922,7 @@ namespace WindowsForms_print
                     }
                     LabelFormatDocument btFormat = btEngine.Documents.Open(lj);
                     //对模板相应字段进行赋值
-                    ValueToTemplate(btFormat);  //只复制生产日期
+                    ValueToTemplate(btFormat);
                     //指定打印机名称
                     btFormat.PrintSetup.PrinterName = this.Printer1.Text;
                     //打印份数,同序列打印的份数
@@ -942,30 +961,29 @@ namespace WindowsForms_print
                                     btFormat.SubStrings["IMEI"].Value = imei_begin.ToString() + imei15;
                                     //记录打印信息日志
                                     ProductTime = System.DateTime.Now.ToString("yyyy.MM.dd HH:mm:ss:fff");
-                                    list.Add(new PrintMessage()
-                                    {
-                                        Zhidan = this.CB_ZhiDan.Text.Trim(),
-                                        IMEI = imei_begin.ToString() + imei15,
-                                        IMEIStart = this.IMEI_num1.Text.Trim(),
-                                        IMEIEnd = this.IMEI_num2.Text.Trim(),
-                                        SN = "",
-                                        IMEIRel = this.IMEIRel.Text.Trim(),
-                                        SIM = "",
-                                        VIP = "",
-                                        BAT = "",
-                                        SoftModel = this.SoftModel.Text.Trim(),
-                                        Version = this.SoftwareVersion.Text.Trim(),
-                                        Remark = this.Remake.Text.Trim(),
-                                        JS_PrintTime = ProductTime,
-                                        JS_TemplatePath = this.Select_Template1.Text.Trim(),
-                                        CH_PrintTime = "",
-                                        CH_TemplatePath1 = null,
-                                        CH_TemplatePath2 = null,
-                                        ICCID = "",
-                                        MAC = "",
-                                        Equipment = ""
-                                    });
-                                    if (PMB.InsertPrintMessageBLL(list))
+                                    PList.Claer();
+                                    PList.Zhidan = this.CB_ZhiDan.Text.Trim();
+                                    PList.IMEI = imei_begin.ToString() + imei15;
+                                    PList.IMEIStart = this.IMEI_num1.Text.Trim();
+                                    PList.IMEIEnd = this.IMEI_num2.Text.Trim();
+                                    PList.SN = "";
+                                    PList.IMEIRel = this.IMEIRel.Text.Trim();
+                                    PList.SIM = "";
+                                    PList.VIP = "";
+                                    PList.BAT = "";
+                                    PList.SoftModel = this.SoftModel.Text.Trim();
+                                    PList.Version = this.SoftwareVersion.Text.Trim();
+                                    PList.Remark = this.Remake.Text.Trim();
+                                    PList.JS_PrintTime = ProductTime;
+                                    PList.JS_TemplatePath = this.Select_Template1.Text.Trim();
+                                    PList.CH_PrintTime = "";
+                                    PList.CH_TemplatePath1 = null;
+                                    PList.CH_TemplatePath2 = null;
+                                    PList.ICCID = "";
+                                    PList.MAC = "";
+                                    PList.Equipment = "";
+                                    PList.JSUserName = this.UserShow.Text;
+                                    if (PMB.InsertPrintMessageBLL(PList))
                                     {
                                         btFormat.Print();
                                         //Form1.Log("批量打印了IMEI号为" + imei_begin + imei15 + "的制单", null);
@@ -1021,30 +1039,29 @@ namespace WindowsForms_print
                                                 btFormat.SubStrings["SN"].Value = sn_bef + sn_aft;
                                                 //记录打印信息日志
                                                 ProductTime = System.DateTime.Now.ToString("yyyy.MM.dd HH:mm:ss:fff");
-                                                list.Add(new PrintMessage()
-                                                {
-                                                    Zhidan = this.CB_ZhiDan.Text.Trim(),
-                                                    IMEI = imei_begin.ToString() + imei15,
-                                                    IMEIStart = this.IMEI_num1.Text.Trim(),
-                                                    IMEIEnd = this.IMEI_num2.Text.Trim(),
-                                                    SN = sn_bef + sn_aft,
-                                                    IMEIRel = this.IMEIRel.Text.Trim(),
-                                                    SIM = "",
-                                                    VIP = "",
-                                                    BAT = "",
-                                                    SoftModel = this.SoftModel.Text.Trim(),
-                                                    Version = this.SoftwareVersion.Text.Trim(),
-                                                    Remark = this.Remake.Text.Trim(),
-                                                    JS_PrintTime = ProductTime,
-                                                    JS_TemplatePath = this.Select_Template1.Text.Trim(),
-                                                    CH_PrintTime = "",
-                                                    CH_TemplatePath1 = null,
-                                                    CH_TemplatePath2 = null,
-                                                    ICCID = "",
-                                                    MAC = "",
-                                                    Equipment = ""
-                                                });
-                                                if (PMB.InsertPrintMessageBLL(list))
+                                                PList.Claer();
+                                                PList.Zhidan = this.CB_ZhiDan.Text.Trim();
+                                                PList.IMEI = imei_begin.ToString() + imei15;
+                                                PList.IMEIStart = this.IMEI_num1.Text.Trim();
+                                                PList.IMEIEnd = this.IMEI_num2.Text.Trim();
+                                                PList.SN = sn_bef + sn_aft;
+                                                PList.IMEIRel = this.IMEIRel.Text.Trim();
+                                                PList.SIM = "";
+                                                PList.VIP = "";
+                                                PList.BAT = "";
+                                                PList.SoftModel = this.SoftModel.Text.Trim();
+                                                PList.Version = this.SoftwareVersion.Text.Trim();
+                                                PList.Remark = this.Remake.Text.Trim();
+                                                PList.JS_PrintTime = ProductTime;
+                                                PList.JS_TemplatePath = this.Select_Template1.Text.Trim();
+                                                PList.CH_PrintTime = "";
+                                                PList.CH_TemplatePath1 = null;
+                                                PList.CH_TemplatePath2 = null;
+                                                PList.ICCID = "";
+                                                PList.MAC = "";
+                                                PList.Equipment = "";
+                                                PList.JSUserName = this.UserShow.Text;
+                                                if (PMB.InsertPrintMessageBLL(PList))
                                                 {
                                                     btFormat.Print();
                                                     //Form1.Log("批量打印了IMEI号为" + imei_begin + imei15 + "的制单", null);
@@ -1079,30 +1096,29 @@ namespace WindowsForms_print
                                                 btFormat.SubStrings["SN"].Value = SNHexNum;
                                                 //记录打印信息日志
                                                 ProductTime = System.DateTime.Now.ToString("yyyy.MM.dd HH:mm:ss:fff");
-                                                list.Add(new PrintMessage()
-                                                {
-                                                    Zhidan = this.CB_ZhiDan.Text.Trim(),
-                                                    IMEI = imei_begin.ToString() + imei15,
-                                                    IMEIStart = this.IMEI_num1.Text.Trim(),
-                                                    IMEIEnd = this.IMEI_num2.Text.Trim(),
-                                                    SN = SNHexNum,
-                                                    IMEIRel = this.IMEIRel.Text.Trim(),
-                                                    SIM = "",
-                                                    VIP = "",
-                                                    BAT = "",
-                                                    SoftModel = this.SoftModel.Text.Trim(),
-                                                    Version = this.SoftwareVersion.Text.Trim(),
-                                                    Remark = this.Remake.Text.Trim(),
-                                                    JS_PrintTime = ProductTime,
-                                                    JS_TemplatePath = this.Select_Template1.Text.Trim(),
-                                                    CH_PrintTime = "",
-                                                    CH_TemplatePath1 = null,
-                                                    CH_TemplatePath2 = null,
-                                                    ICCID = "",
-                                                    MAC = "",
-                                                    Equipment = ""
-                                                });
-                                                if (PMB.InsertPrintMessageBLL(list))
+                                                PList.Claer();
+                                                PList.Zhidan = this.CB_ZhiDan.Text.Trim();
+                                                PList.IMEI = imei_begin.ToString() + imei15;
+                                                PList.IMEIStart = this.IMEI_num1.Text.Trim();
+                                                PList.IMEIEnd = this.IMEI_num2.Text.Trim();
+                                                PList.SN = SNHexNum;
+                                                PList.IMEIRel = this.IMEIRel.Text.Trim();
+                                                PList.SIM = "";
+                                                PList.VIP = "";
+                                                PList.BAT = "";
+                                                PList.SoftModel = this.SoftModel.Text.Trim();
+                                                PList.Version = this.SoftwareVersion.Text.Trim();
+                                                PList.Remark = this.Remake.Text.Trim();
+                                                PList.JS_PrintTime = ProductTime;
+                                                PList.JS_TemplatePath = this.Select_Template1.Text.Trim();
+                                                PList.CH_PrintTime = "";
+                                                PList.CH_TemplatePath1 = null;
+                                                PList.CH_TemplatePath2 = null;
+                                                PList.ICCID = "";
+                                                PList.MAC = "";
+                                                PList.Equipment = "";
+                                                PList.JSUserName = this.UserShow.Text;
+                                                if (PMB.InsertPrintMessageBLL(PList))
                                                 {
                                                     btFormat.Print();
                                                     //Form1.Log("批量打印了IMEI号为" + imei_begin + imei15 + "的制单", null);
@@ -1135,27 +1151,26 @@ namespace WindowsForms_print
                                         btFormat.SubStrings["SN"].Value = "";
                                         //记录打印信息日志
                                         ProductTime = System.DateTime.Now.ToString("yyyy.MM.dd HH:mm:ss:fff");
-                                        list.Add(new PrintMessage()
-                                        {
-                                            Zhidan = this.CB_ZhiDan.Text.Trim(),
-                                            IMEI = imei_begin.ToString() + imei15,
-                                            IMEIStart = this.IMEI_num1.Text.Trim(),
-                                            IMEIEnd = this.IMEI_num2.Text.Trim(),
-                                            SN = "",
-                                            IMEIRel = this.IMEIRel.Text.Trim(),
-                                            SIM = "",
-                                            VIP = "",
-                                            BAT = "",
-                                            SoftModel = this.SoftModel.Text.Trim(),
-                                            Version = this.SoftwareVersion.Text.Trim(),
-                                            Remark = this.Remake.Text.Trim(),
-                                            JS_PrintTime = ProductTime,
-                                            JS_TemplatePath = this.Select_Template1.Text.Trim(),
-                                            CH_PrintTime = "",
-                                            CH_TemplatePath1 = null,
-                                            CH_TemplatePath2 = null
-                                        });
-                                        if (PMB.InsertPrintMessageBLL(list))
+                                        PList.Claer();
+                                        PList.Zhidan = this.CB_ZhiDan.Text.Trim();
+                                        PList.IMEI = imei_begin.ToString() + imei15;
+                                        PList.IMEIStart = this.IMEI_num1.Text.Trim();
+                                        PList.IMEIEnd = this.IMEI_num2.Text.Trim();
+                                        PList.SN = "";
+                                        PList.IMEIRel = this.IMEIRel.Text.Trim();
+                                        PList.SIM = "";
+                                        PList.VIP = "";
+                                        PList.BAT = "";
+                                        PList.SoftModel = this.SoftModel.Text.Trim();
+                                        PList.Version = this.SoftwareVersion.Text.Trim();
+                                        PList.Remark = this.Remake.Text.Trim();
+                                        PList.JS_PrintTime = ProductTime;
+                                        PList.JS_TemplatePath = this.Select_Template1.Text.Trim();
+                                        PList.CH_PrintTime = "";
+                                        PList.CH_TemplatePath1 = null;
+                                        PList.CH_TemplatePath2 = null;
+                                        PList.UserName = this.UserShow.Text;
+                                        if (PMB.InsertPrintMessageBLL(PList))
                                         {
                                             btFormat.Print();
                                             //Form1.Log("批量打印了IMEI号为" + imei_begin + imei15 + "的制单", null);
@@ -1214,30 +1229,29 @@ namespace WindowsForms_print
                                                     btFormat.SubStrings["SN"].Value = sn_bef + sn_aft;
                                                     //记录打印信息日志
                                                     ProductTime = System.DateTime.Now.ToString("yyyy.MM.dd HH:mm:ss:fff");
-                                                    list.Add(new PrintMessage()
-                                                    {
-                                                        Zhidan = this.CB_ZhiDan.Text.Trim(),
-                                                        IMEI = imei_begin.ToString() + imei15,
-                                                        IMEIStart = this.IMEI_num1.Text.Trim(),
-                                                        IMEIEnd = this.IMEI_num2.Text.Trim(),
-                                                        SN = sn_bef + sn_aft,
-                                                        IMEIRel = this.IMEIRel.Text.Trim(),
-                                                        SIM = "",
-                                                        VIP = "",
-                                                        BAT = "",
-                                                        SoftModel = this.SoftModel.Text.Trim(),
-                                                        Version = this.SoftwareVersion.Text.Trim(),
-                                                        Remark = this.Remake.Text.Trim(),
-                                                        JS_PrintTime = ProductTime,
-                                                        JS_TemplatePath = this.Select_Template1.Text.Trim(),
-                                                        CH_PrintTime = "",
-                                                        CH_TemplatePath1 = null,
-                                                        CH_TemplatePath2 = null,
-                                                        ICCID = "",
-                                                        MAC = "",
-                                                        Equipment = ""
-                                                    });
-                                                    if (PMB.InsertPrintMessageBLL(list))
+                                                    PList.Claer();
+                                                    PList.Zhidan = this.CB_ZhiDan.Text.Trim();
+                                                    PList.IMEI = imei_begin.ToString() + imei15;
+                                                    PList.IMEIStart = this.IMEI_num1.Text.Trim();
+                                                    PList.IMEIEnd = this.IMEI_num2.Text.Trim();
+                                                    PList.SN = sn_bef + sn_aft;
+                                                    PList.IMEIRel = this.IMEIRel.Text.Trim();
+                                                    PList.SIM = "";
+                                                    PList.VIP = "";
+                                                    PList.BAT = "";
+                                                    PList.SoftModel = this.SoftModel.Text.Trim();
+                                                    PList.Version = this.SoftwareVersion.Text.Trim();
+                                                    PList.Remark = this.Remake.Text.Trim();
+                                                    PList.JS_PrintTime = ProductTime;
+                                                    PList.JS_TemplatePath = this.Select_Template1.Text.Trim();
+                                                    PList.CH_PrintTime = "";
+                                                    PList.CH_TemplatePath1 = null;
+                                                    PList.CH_TemplatePath2 = null;
+                                                    PList.ICCID = "";
+                                                    PList.MAC = "";
+                                                    PList.Equipment = "";
+                                                    PList.JSUserName = this.UserShow.Text;
+                                                    if (PMB.InsertPrintMessageBLL(PList))
                                                     {
                                                         btFormat.Print();
                                                         //Form1.Log("批量打印了IMEI号为" + imei_begin + imei15 + "的制单", null);
@@ -1281,30 +1295,29 @@ namespace WindowsForms_print
                                                     btFormat.SubStrings["SN"].Value = SNHexNum;
                                                     //记录打印信息日志
                                                     ProductTime = System.DateTime.Now.ToString("yyyy.MM.dd HH:mm:ss:fff");
-                                                    list.Add(new PrintMessage()
-                                                    {
-                                                        Zhidan = this.CB_ZhiDan.Text.Trim(),
-                                                        IMEI = imei_begin.ToString() + imei15,
-                                                        IMEIStart = this.IMEI_num1.Text.Trim(),
-                                                        IMEIEnd = this.IMEI_num2.Text.Trim(),
-                                                        SN = SNHexNum,
-                                                        IMEIRel = this.IMEIRel.Text.Trim(),
-                                                        SIM = "",
-                                                        VIP = "",
-                                                        BAT = "",
-                                                        SoftModel = this.SoftModel.Text.Trim(),
-                                                        Version = this.SoftwareVersion.Text.Trim(),
-                                                        Remark = this.Remake.Text.Trim(),
-                                                        JS_PrintTime = ProductTime,
-                                                        JS_TemplatePath = this.Select_Template1.Text.Trim(),
-                                                        CH_PrintTime = "",
-                                                        CH_TemplatePath1 = null,
-                                                        CH_TemplatePath2 = null,
-                                                        ICCID = "",
-                                                        MAC = "",
-                                                        Equipment = ""
-                                                    });
-                                                    if (PMB.InsertPrintMessageBLL(list))
+                                                    PList.Claer();
+                                                    PList.Zhidan = this.CB_ZhiDan.Text.Trim();
+                                                    PList.IMEI = imei_begin.ToString() + imei15;
+                                                    PList.IMEIStart = this.IMEI_num1.Text.Trim();
+                                                    PList.IMEIEnd = this.IMEI_num2.Text.Trim();
+                                                    PList.SN = SNHexNum;
+                                                    PList.IMEIRel = this.IMEIRel.Text.Trim();
+                                                    PList.SIM = "";
+                                                    PList.VIP = "";
+                                                    PList.BAT = "";
+                                                    PList.SoftModel = this.SoftModel.Text.Trim();
+                                                    PList.Version = this.SoftwareVersion.Text.Trim();
+                                                    PList.Remark = this.Remake.Text.Trim();
+                                                    PList.JS_PrintTime = ProductTime;
+                                                    PList.JS_TemplatePath = this.Select_Template1.Text.Trim();
+                                                    PList.CH_PrintTime = "";
+                                                    PList.CH_TemplatePath1 = null;
+                                                    PList.CH_TemplatePath2 = null;
+                                                    PList.ICCID = "";
+                                                    PList.MAC = "";
+                                                    PList.Equipment = "";
+                                                    PList.JSUserName = this.UserShow.Text;
+                                                    if (PMB.InsertPrintMessageBLL(PList))
                                                     {
                                                         btFormat.Print();
                                                         //Form1.Log("批量打印了IMEI号为" + imei_begin + imei15 + "的制单", null);
@@ -1344,27 +1357,27 @@ namespace WindowsForms_print
                                         btFormat.SubStrings["SN"].Value = "";
                                         //记录打印信息日志
                                         ProductTime = System.DateTime.Now.ToString("yyyy.MM.dd HH:mm:ss:fff");
-                                        list.Add(new PrintMessage()
-                                        {
-                                            Zhidan = this.CB_ZhiDan.Text.Trim(),
-                                            IMEI = imei_begin.ToString() + imei15,
-                                            IMEIStart = this.IMEI_num1.Text.Trim(),
-                                            IMEIEnd = this.IMEI_num2.Text.Trim(),
-                                            SN = "",
-                                            IMEIRel = this.IMEIRel.Text.Trim(),
-                                            SIM = "",
-                                            VIP = "",
-                                            BAT = "",
-                                            SoftModel = this.SoftModel.Text.Trim(),
-                                            Version = this.SoftwareVersion.Text.Trim(),
-                                            Remark = this.Remake.Text.Trim(),
-                                            JS_PrintTime = ProductTime,
-                                            JS_TemplatePath = this.Select_Template1.Text.Trim(),
-                                            CH_PrintTime = "",
-                                            CH_TemplatePath1 = null,
-                                            CH_TemplatePath2 = null
-                                        });
-                                        if (PMB.InsertPrintMessageBLL(list))
+                                        PList.Claer();
+                                        PList.Zhidan = this.CB_ZhiDan.Text.Trim();
+                                        PList.IMEI = imei_begin.ToString() + imei15;
+                                        PList.IMEIStart = this.IMEI_num1.Text.Trim();
+                                        PList.IMEIEnd = this.IMEI_num2.Text.Trim();
+                                        PList.SN = "";
+                                        PList.IMEIRel = this.IMEIRel.Text.Trim();
+                                        PList.SIM = "";
+                                        PList.VIP = "";
+                                        PList.BAT = "";
+                                        PList.SoftModel = this.SoftModel.Text.Trim();
+                                        PList.Version = this.SoftwareVersion.Text.Trim();
+                                        PList.Remark = this.Remake.Text.Trim();
+                                        PList.JS_PrintTime = ProductTime;
+                                        PList.JS_TemplatePath = this.Select_Template1.Text.Trim();
+                                        PList.CH_PrintTime = "";
+                                        PList.CH_TemplatePath1 = null;
+                                        PList.CH_TemplatePath2 = null;
+                                        PList.JSUserName = this.UserShow.Text;
+
+                                        if (PMB.InsertPrintMessageBLL(PList))
                                         {
                                             btFormat.Print();
                                             //Form1.Log("批量打印了IMEI号为" + imei_begin + imei15 + "的制单", null);
@@ -1420,30 +1433,29 @@ namespace WindowsForms_print
                                                 btFormat.SubStrings["SN"].Value = sn_bef + sn_aft;
                                                 //记录打印信息日志
                                                 ProductTime = System.DateTime.Now.ToString("yyyy.MM.dd HH:mm:ss:fff");
-                                                list.Add(new PrintMessage()
-                                                {
-                                                    Zhidan = this.CB_ZhiDan.Text.Trim(),
-                                                    IMEI = imei_begin_pre + imei_begin.ToString().PadLeft(5, '0'),
-                                                    IMEIStart = this.IMEI_num1.Text.Trim(),
-                                                    IMEIEnd = this.IMEI_num2.Text.Trim(),
-                                                    SN = sn_bef + sn_aft,
-                                                    IMEIRel = this.IMEIRel.Text.Trim(),
-                                                    SIM = "",
-                                                    VIP = "",
-                                                    BAT = "",
-                                                    SoftModel = this.SoftModel.Text.Trim(),
-                                                    Version = this.SoftwareVersion.Text.Trim(),
-                                                    Remark = this.Remake.Text.Trim(),
-                                                    JS_PrintTime = ProductTime,
-                                                    JS_TemplatePath = this.Select_Template1.Text.Trim(),
-                                                    CH_PrintTime = "",
-                                                    CH_TemplatePath1 = null,
-                                                    CH_TemplatePath2 = null,
-                                                    ICCID = "",
-                                                    MAC = "",
-                                                    Equipment = ""
-                                                });
-                                                if (PMB.InsertPrintMessageBLL(list))
+                                                PList.Claer();
+                                                PList.Zhidan = this.CB_ZhiDan.Text.Trim();
+                                                PList.IMEI = imei_begin_pre + imei_begin.ToString().PadLeft(5, '0');
+                                                PList.IMEIStart = this.IMEI_num1.Text.Trim();
+                                                PList.IMEIEnd = this.IMEI_num2.Text.Trim();
+                                                PList.SN = sn_bef + sn_aft;
+                                                PList.IMEIRel = this.IMEIRel.Text.Trim();
+                                                PList.SIM = "";
+                                                PList.VIP = "";
+                                                PList.BAT = "";
+                                                PList.SoftModel = this.SoftModel.Text.Trim();
+                                                PList.Version = this.SoftwareVersion.Text.Trim();
+                                                PList.Remark = this.Remake.Text.Trim();
+                                                PList.JS_PrintTime = ProductTime;
+                                                PList.JS_TemplatePath = this.Select_Template1.Text.Trim();
+                                                PList.CH_PrintTime = "";
+                                                PList.CH_TemplatePath1 = null;
+                                                PList.CH_TemplatePath2 = null;
+                                                PList.ICCID = "";
+                                                PList.MAC = "";
+                                                PList.Equipment = "";
+                                                PList.JSUserName = this.UserShow.Text;
+                                                if (PMB.InsertPrintMessageBLL(PList))
                                                 {
                                                     btFormat.Print();
                                                     //Form1.Log("批量打印了IMEI号为" + imei_begin + "的制单", null);
@@ -1477,30 +1489,29 @@ namespace WindowsForms_print
                                                 btFormat.SubStrings["SN"].Value = SNHexNum;
                                                 //记录打印信息日志
                                                 ProductTime = System.DateTime.Now.ToString("yyyy.MM.dd HH:mm:ss:fff");
-                                                list.Add(new PrintMessage()
-                                                {
-                                                    Zhidan = this.CB_ZhiDan.Text.Trim(),
-                                                    IMEI = imei_begin_pre + imei_begin.ToString().PadLeft(5, '0'),
-                                                    IMEIStart = this.IMEI_num1.Text.Trim(),
-                                                    IMEIEnd = this.IMEI_num2.Text.Trim(),
-                                                    SN = SNHexNum,
-                                                    IMEIRel = this.IMEIRel.Text.Trim(),
-                                                    SIM = "",
-                                                    VIP = "",
-                                                    BAT = "",
-                                                    SoftModel = this.SoftModel.Text.Trim(),
-                                                    Version = this.SoftwareVersion.Text.Trim(),
-                                                    Remark = this.Remake.Text.Trim(),
-                                                    JS_PrintTime = ProductTime,
-                                                    JS_TemplatePath = this.Select_Template1.Text.Trim(),
-                                                    CH_PrintTime = "",
-                                                    CH_TemplatePath1 = null,
-                                                    CH_TemplatePath2 = null,
-                                                    ICCID = "",
-                                                    MAC = "",
-                                                    Equipment = ""
-                                                });
-                                                if (PMB.InsertPrintMessageBLL(list))
+                                                PList.Claer();
+                                                PList.Zhidan = this.CB_ZhiDan.Text.Trim();
+                                                PList.IMEI = imei_begin_pre + imei_begin.ToString().PadLeft(5, '0');
+                                                PList.IMEIStart = this.IMEI_num1.Text.Trim();
+                                                PList.IMEIEnd = this.IMEI_num2.Text.Trim();
+                                                PList.SN = SNHexNum;
+                                                PList.IMEIRel = this.IMEIRel.Text.Trim();
+                                                PList.SIM = "";
+                                                PList.VIP = "";
+                                                PList.BAT = "";
+                                                PList.SoftModel = this.SoftModel.Text.Trim();
+                                                PList.Version = this.SoftwareVersion.Text.Trim();
+                                                PList.Remark = this.Remake.Text.Trim();
+                                                PList.JS_PrintTime = ProductTime;
+                                                PList.JS_TemplatePath = this.Select_Template1.Text.Trim();
+                                                PList.CH_PrintTime = "";
+                                                PList.CH_TemplatePath1 = null;
+                                                PList.CH_TemplatePath2 = null;
+                                                PList.ICCID = "";
+                                                PList.MAC = "";
+                                                PList.Equipment = "";
+                                                PList.JSUserName = this.UserShow.Text;
+                                                if (PMB.InsertPrintMessageBLL(PList))
                                                 {
                                                     btFormat.Print();
                                                     //Form1.Log("批量打印了IMEI号为" + imei_begin + "的制单", null);
@@ -1532,27 +1543,26 @@ namespace WindowsForms_print
                                         btFormat.SubStrings["SN"].Value = "";
                                         //记录打印信息日志
                                         ProductTime = System.DateTime.Now.ToString("yyyy.MM.dd HH:mm:ss:fff");
-                                        list.Add(new PrintMessage()
-                                        {
-                                            Zhidan = this.CB_ZhiDan.Text.Trim(),
-                                            IMEI = imei_begin_pre + imei_begin.ToString().PadLeft(5, '0'),
-                                            IMEIStart = this.IMEI_num1.Text.Trim(),
-                                            IMEIEnd = this.IMEI_num2.Text.Trim(),
-                                            SN = "",
-                                            IMEIRel = this.IMEIRel.Text.Trim(),
-                                            SIM = "",
-                                            VIP = "",
-                                            BAT = "",
-                                            SoftModel = this.SoftModel.Text.Trim(),
-                                            Version = this.SoftwareVersion.Text.Trim(),
-                                            Remark = this.Remake.Text.Trim(),
-                                            JS_PrintTime = ProductTime,
-                                            JS_TemplatePath = this.Select_Template1.Text.Trim(),
-                                            CH_PrintTime = "",
-                                            CH_TemplatePath1 = null,
-                                            CH_TemplatePath2 = null
-                                        });
-                                        if (PMB.InsertPrintMessageBLL(list))
+                                        PList.Claer();
+                                        PList.Zhidan = this.CB_ZhiDan.Text.Trim();
+                                        PList.IMEI = imei_begin_pre + imei_begin.ToString().PadLeft(5, '0');
+                                        PList.IMEIStart = this.IMEI_num1.Text.Trim();
+                                        PList.IMEIEnd = this.IMEI_num2.Text.Trim();
+                                        PList.SN = "";
+                                        PList.IMEIRel = this.IMEIRel.Text.Trim();
+                                        PList.SIM = "";
+                                        PList.VIP = "";
+                                        PList.BAT = "";
+                                        PList.SoftModel = this.SoftModel.Text.Trim();
+                                        PList.Version = this.SoftwareVersion.Text.Trim();
+                                        PList.Remark = this.Remake.Text.Trim();
+                                        PList.JS_PrintTime = ProductTime;
+                                        PList.JS_TemplatePath = this.Select_Template1.Text.Trim();
+                                        PList.CH_PrintTime = "";
+                                        PList.CH_TemplatePath1 = null;
+                                        PList.CH_TemplatePath2 = null;
+                                        PList.JSUserName = this.UserShow.Text;
+                                        if (PMB.InsertPrintMessageBLL(PList))
                                         {
                                             btFormat.Print();
                                             //Form1.Log("批量打印了IMEI号为" + imei_begin + "的制单", null);
@@ -1610,30 +1620,29 @@ namespace WindowsForms_print
                                                     btFormat.SubStrings["SN"].Value = sn_bef + sn_aft;
                                                     //记录打印信息日志
                                                     ProductTime = System.DateTime.Now.ToString("yyyy.MM.dd HH:mm:ss:fff");
-                                                    list.Add(new PrintMessage()
-                                                    {
-                                                        Zhidan = this.CB_ZhiDan.Text.Trim(),
-                                                        IMEI = imei_begin_pre + imei_begin.ToString().PadLeft(5, '0'),
-                                                        IMEIStart = this.IMEI_num1.Text.Trim(),
-                                                        IMEIEnd = this.IMEI_num2.Text.Trim(),
-                                                        SN = sn_bef + sn_aft,
-                                                        IMEIRel = this.IMEIRel.Text.Trim(),
-                                                        SIM = "",
-                                                        VIP = "",
-                                                        BAT = "",
-                                                        SoftModel = this.SoftModel.Text.Trim(),
-                                                        Version = this.SoftwareVersion.Text.Trim(),
-                                                        Remark = this.Remake.Text.Trim(),
-                                                        JS_PrintTime = ProductTime,
-                                                        JS_TemplatePath = this.Select_Template1.Text.Trim(),
-                                                        CH_PrintTime = "",
-                                                        CH_TemplatePath1 = null,
-                                                        CH_TemplatePath2 = null,
-                                                        ICCID = "",
-                                                        MAC = "",
-                                                        Equipment = ""
-                                                    });
-                                                    if (PMB.InsertPrintMessageBLL(list))
+                                                    PList.Claer();
+                                                    PList.Zhidan = this.CB_ZhiDan.Text.Trim();
+                                                    PList.IMEI = imei_begin_pre + imei_begin.ToString().PadLeft(5, '0');
+                                                    PList.IMEIStart = this.IMEI_num1.Text.Trim();
+                                                    PList.IMEIEnd = this.IMEI_num2.Text.Trim();
+                                                    PList.SN = sn_bef + sn_aft;
+                                                    PList.IMEIRel = this.IMEIRel.Text.Trim();
+                                                    PList.SIM = "";
+                                                    PList.VIP = "";
+                                                    PList.BAT = "";
+                                                    PList.SoftModel = this.SoftModel.Text.Trim();
+                                                    PList.Version = this.SoftwareVersion.Text.Trim();
+                                                    PList.Remark = this.Remake.Text.Trim();
+                                                    PList.JS_PrintTime = ProductTime;
+                                                    PList.JS_TemplatePath = this.Select_Template1.Text.Trim();
+                                                    PList.CH_PrintTime = "";
+                                                    PList.CH_TemplatePath1 = null;
+                                                    PList.CH_TemplatePath2 = null;
+                                                    PList.ICCID = "";
+                                                    PList.MAC = "";
+                                                    PList.Equipment = "";
+                                                    PList.JSUserName = this.UserShow.Text;
+                                                    if (PMB.InsertPrintMessageBLL(PList))
                                                     {
                                                         btFormat.Print();
                                                         //Form1.Log("批量打印了IMEI号为" + imei_begin + "的制单", null);
@@ -1676,30 +1685,29 @@ namespace WindowsForms_print
                                                     btFormat.SubStrings["SN"].Value = SNHexNum;
                                                     //记录打印信息日志
                                                     ProductTime = System.DateTime.Now.ToString("yyyy.MM.dd HH:mm:ss:fff");
-                                                    list.Add(new PrintMessage()
-                                                    {
-                                                        Zhidan = this.CB_ZhiDan.Text.Trim(),
-                                                        IMEI = imei_begin_pre + imei_begin.ToString().PadLeft(5, '0'),
-                                                        IMEIStart = this.IMEI_num1.Text.Trim(),
-                                                        IMEIEnd = this.IMEI_num2.Text.Trim(),
-                                                        SN = SNHexNum,
-                                                        IMEIRel = this.IMEIRel.Text.Trim(),
-                                                        SIM = "",
-                                                        VIP = "",
-                                                        BAT = "",
-                                                        SoftModel = this.SoftModel.Text.Trim(),
-                                                        Version = this.SoftwareVersion.Text.Trim(),
-                                                        Remark = this.Remake.Text.Trim(),
-                                                        JS_PrintTime = ProductTime,
-                                                        JS_TemplatePath = this.Select_Template1.Text.Trim(),
-                                                        CH_PrintTime = "",
-                                                        CH_TemplatePath1 = null,
-                                                        CH_TemplatePath2 = null,
-                                                        ICCID = "",
-                                                        MAC = "",
-                                                        Equipment = ""
-                                                    });
-                                                    if (PMB.InsertPrintMessageBLL(list))
+                                                    PList.Claer();
+                                                    PList.Zhidan = this.CB_ZhiDan.Text.Trim();
+                                                    PList.IMEI = imei_begin_pre + imei_begin.ToString().PadLeft(5, '0');
+                                                    PList.IMEIStart = this.IMEI_num1.Text.Trim();
+                                                    PList.IMEIEnd = this.IMEI_num2.Text.Trim();
+                                                    PList.SN = SNHexNum;
+                                                    PList.IMEIRel = this.IMEIRel.Text.Trim();
+                                                    PList.SIM = "";
+                                                    PList.VIP = "";
+                                                    PList.BAT = "";
+                                                    PList.SoftModel = this.SoftModel.Text.Trim();
+                                                    PList.Version = this.SoftwareVersion.Text.Trim();
+                                                    PList.Remark = this.Remake.Text.Trim();
+                                                    PList.JS_PrintTime = ProductTime;
+                                                    PList.JS_TemplatePath = this.Select_Template1.Text.Trim();
+                                                    PList.CH_PrintTime = "";
+                                                    PList.CH_TemplatePath1 = null;
+                                                    PList.CH_TemplatePath2 = null;
+                                                    PList.ICCID = "";
+                                                    PList.MAC = "";
+                                                    PList.Equipment = "";
+                                                    PList.JSUserName = this.UserShow.Text;
+                                                    if (PMB.InsertPrintMessageBLL(PList))
                                                     {
                                                         btFormat.Print();
                                                         //Form1.Log("批量打印了IMEI号为" + imei_begin + "的制单", null);
@@ -1738,27 +1746,27 @@ namespace WindowsForms_print
                                         btFormat.SubStrings["SN"].Value = "";
                                         //记录打印信息日志
                                         ProductTime = System.DateTime.Now.ToString("yyyy.MM.dd HH:mm:ss:fff");
-                                        list.Add(new PrintMessage()
-                                        {
-                                            Zhidan = this.CB_ZhiDan.Text.Trim(),
-                                            IMEI = imei_begin_pre + imei_begin.ToString().PadLeft(5, '0'),
-                                            IMEIStart = this.IMEI_num1.Text.Trim(),
-                                            IMEIEnd = this.IMEI_num2.Text.Trim(),
-                                            SN = "",
-                                            IMEIRel = this.IMEIRel.Text.Trim(),
-                                            SIM = "",
-                                            VIP = "",
-                                            BAT = "",
-                                            SoftModel = this.SoftModel.Text.Trim(),
-                                            Version = this.SoftwareVersion.Text.Trim(),
-                                            Remark = this.Remake.Text.Trim(),
-                                            JS_PrintTime = ProductTime,
-                                            JS_TemplatePath = this.Select_Template1.Text.Trim(),
-                                            CH_PrintTime = "",
-                                            CH_TemplatePath1 = null,
-                                            CH_TemplatePath2 = null
-                                        });
-                                        if (PMB.InsertPrintMessageBLL(list))
+                                        PList.Claer();
+                                        PList.Zhidan = this.CB_ZhiDan.Text.Trim();
+                                        PList.IMEI = imei_begin_pre + imei_begin.ToString().PadLeft(5, '0');
+                                        PList.IMEIStart = this.IMEI_num1.Text.Trim();
+                                        PList.IMEIEnd = this.IMEI_num2.Text.Trim();
+                                        PList.SN = "";
+                                        PList.IMEIRel = this.IMEIRel.Text.Trim();
+                                        PList.SIM = "";
+                                        PList.VIP = "";
+                                        PList.BAT = "";
+                                        PList.SoftModel = this.SoftModel.Text.Trim();
+                                        PList.Version = this.SoftwareVersion.Text.Trim();
+                                        PList.Remark = this.Remake.Text.Trim();
+                                        PList.JS_PrintTime = ProductTime;
+                                        PList.JS_TemplatePath = this.Select_Template1.Text.Trim();
+                                        PList.CH_PrintTime = "";
+                                        PList.CH_TemplatePath1 = null;
+                                        PList.CH_TemplatePath2 = null;
+                                        PList.JSUserName = this.UserShow.Text;
+
+                                        if (PMB.InsertPrintMessageBLL(PList))
                                         {
                                             btFormat.Print();
                                             //Form1.Log("批量打印了IMEI号为" + imei_begin + "的制单", null);
@@ -1805,30 +1813,29 @@ namespace WindowsForms_print
                                     btFormat.SubStrings["IMEI"].Value = imei_begin_pre + imei_begin.ToString().PadLeft(5, '0');
                                     //记录打印信息日志
                                     ProductTime = System.DateTime.Now.ToString("yyyy.MM.dd HH:mm:ss:fff");
-                                    list.Add(new PrintMessage()
-                                    {
-                                        Zhidan = this.CB_ZhiDan.Text.Trim(),
-                                        IMEI = imei_begin_pre + imei_begin.ToString().PadLeft(5, '0'),
-                                        IMEIStart = this.IMEI_num1.Text.Trim(),
-                                        IMEIEnd = this.IMEI_num2.Text.Trim(),
-                                        SN = "",
-                                        IMEIRel = this.IMEIRel.Text.Trim(),
-                                        SIM = "",
-                                        VIP = "",
-                                        BAT = "",
-                                        SoftModel = this.SoftModel.Text.Trim(),
-                                        Version = this.SoftwareVersion.Text.Trim(),
-                                        Remark = this.Remake.Text.Trim(),
-                                        JS_PrintTime = ProductTime,
-                                        JS_TemplatePath = this.Select_Template1.Text.Trim(),
-                                        CH_PrintTime = "",
-                                        CH_TemplatePath1 = null,
-                                        CH_TemplatePath2 = null,
-                                        ICCID = "",
-                                        MAC = "",
-                                        Equipment = ""
-                                    });
-                                    if (PMB.InsertPrintMessageBLL(list))
+                                    PList.Claer();
+                                    PList.Zhidan = this.CB_ZhiDan.Text.Trim();
+                                    PList.IMEI = imei_begin_pre + imei_begin.ToString().PadLeft(5, '0');
+                                    PList.IMEIStart = this.IMEI_num1.Text.Trim();
+                                    PList.IMEIEnd = this.IMEI_num2.Text.Trim();
+                                    PList.SN = "";
+                                    PList.IMEIRel = this.IMEIRel.Text.Trim();
+                                    PList.SIM = "";
+                                    PList.VIP = "";
+                                    PList.BAT = "";
+                                    PList.SoftModel = this.SoftModel.Text.Trim();
+                                    PList.Version = this.SoftwareVersion.Text.Trim();
+                                    PList.Remark = this.Remake.Text.Trim();
+                                    PList.JS_PrintTime = ProductTime;
+                                    PList.JS_TemplatePath = this.Select_Template1.Text.Trim();
+                                    PList.CH_PrintTime = "";
+                                    PList.CH_TemplatePath1 = null;
+                                    PList.CH_TemplatePath2 = null;
+                                    PList.ICCID = "";
+                                    PList.MAC = "";
+                                    PList.Equipment = "";
+                                    PList.JSUserName = this.UserShow.Text;
+                                    if (PMB.InsertPrintMessageBLL(PList))
                                     {
                                         btFormat.Print();
                                         //Form1.Log("批量打印了IMEI号为" + imei_begin + "的制单", null);
@@ -1857,6 +1864,11 @@ namespace WindowsForms_print
         {
             if (e.KeyChar == 13)
             {
+                if (this.UserShow.Text == "")
+                {
+                    this.reminder.AppendText("请先登录\r\n");
+                    return;
+                }
                 if (this.CB_ZhiDan.Text == "")
                 {
                     player2.Play();
@@ -1876,8 +1888,15 @@ namespace WindowsForms_print
                 {
                     player1.Play();
                     this.reminder.AppendText("请获取制单数据\r\n");
-                    this.PrintNum.Clear();
-                    this.PrintNum.Focus();
+                    this.HexPrintNum.Clear();
+                    this.HexPrintNum.Focus();
+                    return;
+                }
+                if (this.ToLock.Enabled == true)
+                {
+                    this.reminder.AppendText("请锁定\r\n");
+                    this.HexPrintNum.Clear();
+                    this.HexPrintNum.Focus();
                     return;
                 }
                 if (this.HexPrintNum.Text != "" && IsNumeric(this.HexPrintNum.Text))
@@ -1970,30 +1989,29 @@ namespace WindowsForms_print
                                                 btFormat.SubStrings["SN"].Value = sn_bef + sn_aft;
                                                 //记录打印信息日志
                                                 ProductTime = System.DateTime.Now.ToString("yyyy.MM.dd HH:mm:ss:fff");
-                                                list.Add(new PrintMessage()
-                                                {
-                                                    Zhidan = this.CB_ZhiDan.Text.Trim(),
-                                                    IMEI = imei_begin,
-                                                    IMEIStart = this.IMEI_num1.Text.Trim(),
-                                                    IMEIEnd = this.IMEI_num2.Text.Trim(),
-                                                    SN = sn_bef + sn_aft,
-                                                    IMEIRel = this.IMEIRel.Text.Trim(),
-                                                    SIM = "",
-                                                    VIP = "",
-                                                    BAT = "",
-                                                    SoftModel = this.SoftModel.Text.Trim(),
-                                                    Version = this.SoftwareVersion.Text.Trim(),
-                                                    Remark = this.Remake.Text.Trim(),
-                                                    JS_PrintTime = ProductTime,
-                                                    JS_TemplatePath = this.Select_Template1.Text.Trim(),
-                                                    CH_PrintTime = "",
-                                                    CH_TemplatePath1 = null,
-                                                    CH_TemplatePath2 = null,
-                                                    ICCID = "",
-                                                    MAC = "",
-                                                    Equipment = ""
-                                                });
-                                                if (PMB.InsertPrintMessageBLL(list))
+                                                PList.Claer();
+                                                PList.Zhidan = this.CB_ZhiDan.Text.Trim();
+                                                PList.IMEI = imei_begin;
+                                                PList.IMEIStart = this.IMEI_num1.Text.Trim();
+                                                PList.IMEIEnd = this.IMEI_num2.Text.Trim();
+                                                PList.SN = sn_bef + sn_aft;
+                                                PList.IMEIRel = this.IMEIRel.Text.Trim();
+                                                PList.SIM = "";
+                                                PList.VIP = "";
+                                                PList.BAT = "";
+                                                PList.SoftModel = this.SoftModel.Text.Trim();
+                                                PList.Version = this.SoftwareVersion.Text.Trim();
+                                                PList.Remark = this.Remake.Text.Trim();
+                                                PList.JS_PrintTime = ProductTime;
+                                                PList.JS_TemplatePath = this.Select_Template1.Text.Trim();
+                                                PList.CH_PrintTime = "";
+                                                PList.CH_TemplatePath1 = null;
+                                                PList.CH_TemplatePath2 = null;
+                                                PList.ICCID = "";
+                                                PList.MAC = "";
+                                                PList.Equipment = "";
+                                                PList.JSUserName = this.UserShow.Text;
+                                                if (PMB.InsertPrintMessageBLL(PList))
                                                 {
                                                     btFormat.Print();
                                                     //Form1.Log("批量打印了IMEI号为" + imei_begin + "的制单", null);
@@ -2027,30 +2045,29 @@ namespace WindowsForms_print
                                                 btFormat.SubStrings["SN"].Value = SNHexNum;
                                                 //记录打印信息日志
                                                 ProductTime = System.DateTime.Now.ToString("yyyy.MM.dd HH:mm:ss:fff");
-                                                list.Add(new PrintMessage()
-                                                {
-                                                    Zhidan = this.CB_ZhiDan.Text.Trim(),
-                                                    IMEI = imei_begin,
-                                                    IMEIStart = this.IMEI_num1.Text.Trim(),
-                                                    IMEIEnd = this.IMEI_num2.Text.Trim(),
-                                                    SN = SNHexNum,
-                                                    IMEIRel = this.IMEIRel.Text.Trim(),
-                                                    SIM = "",
-                                                    VIP = "",
-                                                    BAT = "",
-                                                    SoftModel = this.SoftModel.Text.Trim(),
-                                                    Version = this.SoftwareVersion.Text.Trim(),
-                                                    Remark = this.Remake.Text.Trim(),
-                                                    JS_PrintTime = ProductTime,
-                                                    JS_TemplatePath = this.Select_Template1.Text.Trim(),
-                                                    CH_PrintTime = "",
-                                                    CH_TemplatePath1 = null,
-                                                    CH_TemplatePath2 = null,
-                                                    ICCID = "",
-                                                    MAC = "",
-                                                    Equipment = ""
-                                                });
-                                                if (PMB.InsertPrintMessageBLL(list))
+                                                PList.Claer();
+                                                PList.Zhidan = this.CB_ZhiDan.Text.Trim();
+                                                PList.IMEI = imei_begin;
+                                                PList.IMEIStart = this.IMEI_num1.Text.Trim();
+                                                PList.IMEIEnd = this.IMEI_num2.Text.Trim();
+                                                PList.SN = SNHexNum;
+                                                PList.IMEIRel = this.IMEIRel.Text.Trim();
+                                                PList.SIM = "";
+                                                PList.VIP = "";
+                                                PList.BAT = "";
+                                                PList.SoftModel = this.SoftModel.Text.Trim();
+                                                PList.Version = this.SoftwareVersion.Text.Trim();
+                                                PList.Remark = this.Remake.Text.Trim();
+                                                PList.JS_PrintTime = ProductTime;
+                                                PList.JS_TemplatePath = this.Select_Template1.Text.Trim();
+                                                PList.CH_PrintTime = "";
+                                                PList.CH_TemplatePath1 = null;
+                                                PList.CH_TemplatePath2 = null;
+                                                PList.ICCID = "";
+                                                PList.MAC = "";
+                                                PList.Equipment = "";
+                                                PList.JSUserName = this.UserShow.Text;
+                                                if (PMB.InsertPrintMessageBLL(PList))
                                                 {
                                                     btFormat.Print();
                                                     //Form1.Log("批量打印了IMEI号为" + imei_begin + "的制单", null);
@@ -2082,27 +2099,26 @@ namespace WindowsForms_print
                                         btFormat.SubStrings["SN"].Value = "";
                                         //记录打印信息日志
                                         ProductTime = System.DateTime.Now.ToString("yyyy.MM.dd HH:mm:ss:fff");
-                                        list.Add(new PrintMessage()
-                                        {
-                                            Zhidan = this.CB_ZhiDan.Text.Trim(),
-                                            IMEI = imei_begin,
-                                            IMEIStart = this.IMEI_num1.Text.Trim(),
-                                            IMEIEnd = this.IMEI_num2.Text.Trim(),
-                                            SN = "",
-                                            IMEIRel = this.IMEIRel.Text.Trim(),
-                                            SIM = "",
-                                            VIP = "",
-                                            BAT = "",
-                                            SoftModel = this.SoftModel.Text.Trim(),
-                                            Version = this.SoftwareVersion.Text.Trim(),
-                                            Remark = this.Remake.Text.Trim(),
-                                            JS_PrintTime = ProductTime,
-                                            JS_TemplatePath = this.Select_Template1.Text.Trim(),
-                                            CH_PrintTime = "",
-                                            CH_TemplatePath1 = null,
-                                            CH_TemplatePath2 = null
-                                        });
-                                        if (PMB.InsertPrintMessageBLL(list))
+                                        PList.Claer();
+                                        PList.Zhidan = this.CB_ZhiDan.Text.Trim();
+                                        PList.IMEI = imei_begin;
+                                        PList.IMEIStart = this.IMEI_num1.Text.Trim();
+                                        PList.IMEIEnd = this.IMEI_num2.Text.Trim();
+                                        PList.SN = "";
+                                        PList.IMEIRel = this.IMEIRel.Text.Trim();
+                                        PList.SIM = "";
+                                        PList.VIP = "";
+                                        PList.BAT = "";
+                                        PList.SoftModel = this.SoftModel.Text.Trim();
+                                        PList.Version = this.SoftwareVersion.Text.Trim();
+                                        PList.Remark = this.Remake.Text.Trim();
+                                        PList.JS_PrintTime = ProductTime;
+                                        PList.JS_TemplatePath = this.Select_Template1.Text.Trim();
+                                        PList.CH_PrintTime = "";
+                                        PList.CH_TemplatePath1 = null;
+                                        PList.CH_TemplatePath2 = null;
+                                        PList.JSUserName = this.UserShow.Text;
+                                        if (PMB.InsertPrintMessageBLL(PList))
                                         {
                                             btFormat.Print();
                                             //Form1.Log("批量打印了IMEI号为" + imei_begin + "的制单", null);
@@ -2159,30 +2175,29 @@ namespace WindowsForms_print
                                                     btFormat.SubStrings["SN"].Value = sn_bef + sn_aft;
                                                     //记录打印信息日志
                                                     ProductTime = System.DateTime.Now.ToString("yyyy.MM.dd HH:mm:ss:fff");
-                                                    list.Add(new PrintMessage()
-                                                    {
-                                                        Zhidan = this.CB_ZhiDan.Text.Trim(),
-                                                        IMEI = imei_begin,
-                                                        IMEIStart = this.IMEI_num1.Text.Trim(),
-                                                        IMEIEnd = this.IMEI_num2.Text.Trim(),
-                                                        SN = sn_bef + sn_aft,
-                                                        IMEIRel = this.IMEIRel.Text.Trim(),
-                                                        SIM = "",
-                                                        VIP = "",
-                                                        BAT = "",
-                                                        SoftModel = this.SoftModel.Text.Trim(),
-                                                        Version = this.SoftwareVersion.Text.Trim(),
-                                                        Remark = this.Remake.Text.Trim(),
-                                                        JS_PrintTime = ProductTime,
-                                                        JS_TemplatePath = this.Select_Template1.Text.Trim(),
-                                                        CH_PrintTime = "",
-                                                        CH_TemplatePath1 = null,
-                                                        CH_TemplatePath2 = null,
-                                                        ICCID = "",
-                                                        MAC = "",
-                                                        Equipment = ""
-                                                    });
-                                                    if (PMB.InsertPrintMessageBLL(list))
+                                                    PList.Claer();
+                                                    PList.Zhidan = this.CB_ZhiDan.Text.Trim();
+                                                    PList.IMEI = imei_begin;
+                                                    PList.IMEIStart = this.IMEI_num1.Text.Trim();
+                                                    PList.IMEIEnd = this.IMEI_num2.Text.Trim();
+                                                    PList.SN = sn_bef + sn_aft;
+                                                    PList.IMEIRel = this.IMEIRel.Text.Trim();
+                                                    PList.SIM = "";
+                                                    PList.VIP = "";
+                                                    PList.BAT = "";
+                                                    PList.SoftModel = this.SoftModel.Text.Trim();
+                                                    PList.Version = this.SoftwareVersion.Text.Trim();
+                                                    PList.Remark = this.Remake.Text.Trim();
+                                                    PList.JS_PrintTime = ProductTime;
+                                                    PList.JS_TemplatePath = this.Select_Template1.Text.Trim();
+                                                    PList.CH_PrintTime = "";
+                                                    PList.CH_TemplatePath1 = null;
+                                                    PList.CH_TemplatePath2 = null;
+                                                    PList.ICCID = "";
+                                                    PList.MAC = "";
+                                                    PList.Equipment = "";
+                                                    PList.JSUserName = this.UserShow.Text;
+                                                    if (PMB.InsertPrintMessageBLL(PList))
                                                     {
                                                         btFormat.Print();
                                                         //Form1.Log("批量打印了IMEI号为" + imei_begin + "的制单", null);
@@ -2225,30 +2240,29 @@ namespace WindowsForms_print
                                                     btFormat.SubStrings["SN"].Value = SNHexNum;
                                                     //记录打印信息日志
                                                     ProductTime = System.DateTime.Now.ToString("yyyy.MM.dd HH:mm:ss:fff");
-                                                    list.Add(new PrintMessage()
-                                                    {
-                                                        Zhidan = this.CB_ZhiDan.Text.Trim(),
-                                                        IMEI = imei_begin,
-                                                        IMEIStart = this.IMEI_num1.Text.Trim(),
-                                                        IMEIEnd = this.IMEI_num2.Text.Trim(),
-                                                        SN = SNHexNum,
-                                                        IMEIRel = this.IMEIRel.Text.Trim(),
-                                                        SIM = "",
-                                                        VIP = "",
-                                                        BAT = "",
-                                                        SoftModel = this.SoftModel.Text.Trim(),
-                                                        Version = this.SoftwareVersion.Text.Trim(),
-                                                        Remark = this.Remake.Text.Trim(),
-                                                        JS_PrintTime = ProductTime,
-                                                        JS_TemplatePath = this.Select_Template1.Text.Trim(),
-                                                        CH_PrintTime = "",
-                                                        CH_TemplatePath1 = null,
-                                                        CH_TemplatePath2 = null,
-                                                        ICCID = "",
-                                                        MAC = "",
-                                                        Equipment = ""
-                                                    });
-                                                    if (PMB.InsertPrintMessageBLL(list))
+                                                    PList.Claer();
+                                                    PList.Zhidan = this.CB_ZhiDan.Text.Trim();
+                                                    PList.IMEI = imei_begin;
+                                                    PList.IMEIStart = this.IMEI_num1.Text.Trim();
+                                                    PList.IMEIEnd = this.IMEI_num2.Text.Trim();
+                                                    PList.SN = SNHexNum;
+                                                    PList.IMEIRel = this.IMEIRel.Text.Trim();
+                                                    PList.SIM = "";
+                                                    PList.VIP = "";
+                                                    PList.BAT = "";
+                                                    PList.SoftModel = this.SoftModel.Text.Trim();
+                                                    PList.Version = this.SoftwareVersion.Text.Trim();
+                                                    PList.Remark = this.Remake.Text.Trim();
+                                                    PList.JS_PrintTime = ProductTime;
+                                                    PList.JS_TemplatePath = this.Select_Template1.Text.Trim();
+                                                    PList.CH_PrintTime = "";
+                                                    PList.CH_TemplatePath1 = null;
+                                                    PList.CH_TemplatePath2 = null;
+                                                    PList.ICCID = "";
+                                                    PList.MAC = "";
+                                                    PList.Equipment = "";
+                                                    PList.JSUserName = this.UserShow.Text;
+                                                    if (PMB.InsertPrintMessageBLL(PList))
                                                     {
                                                         btFormat.Print();
                                                         //Form1.Log("批量打印了IMEI号为" + imei_begin + "的制单", null);
@@ -2287,27 +2301,26 @@ namespace WindowsForms_print
                                         btFormat.SubStrings["SN"].Value = "";
                                         //记录打印信息日志
                                         ProductTime = System.DateTime.Now.ToString("yyyy.MM.dd HH:mm:ss:fff");
-                                        list.Add(new PrintMessage()
-                                        {
-                                            Zhidan = this.CB_ZhiDan.Text.Trim(),
-                                            IMEI = imei_begin,
-                                            IMEIStart = this.IMEI_num1.Text.Trim(),
-                                            IMEIEnd = this.IMEI_num2.Text.Trim(),
-                                            SN = "",
-                                            IMEIRel = this.IMEIRel.Text.Trim(),
-                                            SIM = "",
-                                            VIP = "",
-                                            BAT = "",
-                                            SoftModel = this.SoftModel.Text.Trim(),
-                                            Version = this.SoftwareVersion.Text.Trim(),
-                                            Remark = this.Remake.Text.Trim(),
-                                            JS_PrintTime = ProductTime,
-                                            JS_TemplatePath = this.Select_Template1.Text.Trim(),
-                                            CH_PrintTime = "",
-                                            CH_TemplatePath1 = null,
-                                            CH_TemplatePath2 = null
-                                        });
-                                        if (PMB.InsertPrintMessageBLL(list))
+                                        PList.Claer();
+                                        PList.Zhidan = this.CB_ZhiDan.Text.Trim();
+                                        PList.IMEI = imei_begin;
+                                        PList.IMEIStart = this.IMEI_num1.Text.Trim();
+                                        PList.IMEIEnd = this.IMEI_num2.Text.Trim();
+                                        PList.SN = "";
+                                        PList.IMEIRel = this.IMEIRel.Text.Trim();
+                                        PList.SIM = "";
+                                        PList.VIP = "";
+                                        PList.BAT = "";
+                                        PList.SoftModel = this.SoftModel.Text.Trim();
+                                        PList.Version = this.SoftwareVersion.Text.Trim();
+                                        PList.Remark = this.Remake.Text.Trim();
+                                        PList.JS_PrintTime = ProductTime;
+                                        PList.JS_TemplatePath = this.Select_Template1.Text.Trim();
+                                        PList.CH_PrintTime = "";
+                                        PList.CH_TemplatePath1 = null;
+                                        PList.CH_TemplatePath2 = null;
+                                        PList.JSUserName = this.UserShow.Text;
+                                        if (PMB.InsertPrintMessageBLL(PList))
                                         {
                                             btFormat.Print();
                                             //Form1.Log("批量打印了IMEI号为" + imei_begin + "的制单", null);
@@ -2353,30 +2366,29 @@ namespace WindowsForms_print
                                     btFormat.SubStrings["IMEI"].Value = imei_begin;
                                     //记录打印信息日志
                                     ProductTime = System.DateTime.Now.ToString("yyyy.MM.dd HH:mm:ss:fff");
-                                    list.Add(new PrintMessage()
-                                    {
-                                        Zhidan = this.CB_ZhiDan.Text.Trim(),
-                                        IMEI = imei_begin,
-                                        IMEIStart = this.IMEI_num1.Text.Trim(),
-                                        IMEIEnd = this.IMEI_num2.Text.Trim(),
-                                        SN = "",
-                                        IMEIRel = this.IMEIRel.Text.Trim(),
-                                        SIM = "",
-                                        VIP = "",
-                                        BAT = "",
-                                        SoftModel = this.SoftModel.Text.Trim(),
-                                        Version = this.SoftwareVersion.Text.Trim(),
-                                        Remark = this.Remake.Text.Trim(),
-                                        JS_PrintTime = ProductTime,
-                                        JS_TemplatePath = this.Select_Template1.Text.Trim(),
-                                        CH_PrintTime = "",
-                                        CH_TemplatePath1 = null,
-                                        CH_TemplatePath2 = null,
-                                        ICCID = "",
-                                        MAC = "",
-                                        Equipment = ""
-                                    });
-                                    if (PMB.InsertPrintMessageBLL(list))
+                                    PList.Claer();
+                                    PList.Zhidan = this.CB_ZhiDan.Text.Trim();
+                                    PList.IMEI = imei_begin;
+                                    PList.IMEIStart = this.IMEI_num1.Text.Trim();
+                                    PList.IMEIEnd = this.IMEI_num2.Text.Trim();
+                                    PList.SN = "";
+                                    PList.IMEIRel = this.IMEIRel.Text.Trim();
+                                    PList.SIM = "";
+                                    PList.VIP = "";
+                                    PList.BAT = "";
+                                    PList.SoftModel = this.SoftModel.Text.Trim();
+                                    PList.Version = this.SoftwareVersion.Text.Trim();
+                                    PList.Remark = this.Remake.Text.Trim();
+                                    PList.JS_PrintTime = ProductTime;
+                                    PList.JS_TemplatePath = this.Select_Template1.Text.Trim();
+                                    PList.CH_PrintTime = "";
+                                    PList.CH_TemplatePath1 = null;
+                                    PList.CH_TemplatePath2 = null;
+                                    PList.ICCID = "";
+                                    PList.MAC = "";
+                                    PList.Equipment = "";
+                                    PList.JSUserName = this.UserShow.Text;
+                                    if (PMB.InsertPrintMessageBLL(PList))
                                     {
                                         btFormat.Print();
                                         //Form1.Log("批量打印了IMEI号为" + imei_begin + "的制单", null);
@@ -2405,16 +2417,37 @@ namespace WindowsForms_print
         {
             if (e.KeyChar == 13)
             {
+                if (this.UserShow.Text == "")
+                {
+                    this.reminder.AppendText("请先登录\r\n");
+                    return;
+                }
+                if (this.CB_ZhiDan.Text == "")
+                {
+                    player2.Play();
+                    this.reminder.AppendText("请先选择制单\r\n");
+                    this.IMEI_Start.Clear();
+                    this.IMEI_Start.Focus();
+                    return;
+                }
+                if (this.StartZhiDan == 0)
+                {
+                    this.reminder.AppendText("请获取制单数据\r\n");
+                    this.IMEI_Start.Clear();
+                    this.IMEI_Start.Focus();
+                    return;
+                }
+
+                if (this.ToLock.Enabled == true)
+                {
+                    this.reminder.AppendText("请锁定\r\n");
+                    this.IMEI_Start.Clear();
+                    this.IMEI_Start.Focus();
+                    return;
+                }
 
                 if (this.CB_ZhiDan.Text != "")
                 {
-                    if (this.StartZhiDan == 0)
-                    {
-                        this.reminder.AppendText("请获取制单数据\r\n");
-                        this.IMEI_Start.Clear();
-                        this.IMEI_Start.Focus();
-                        return;
-                    }
 
                     if (this.NoCheckCode.Checked == false)
                     {
@@ -2805,31 +2838,30 @@ namespace WindowsForms_print
                                         ValueToTemplate(btFormat);
                                         //记录打印信息日志
                                         ProductTime = System.DateTime.Now.ToString("yyyy.MM.dd HH:mm:ss:fff");
-                                        list.Add(new PrintMessage()
-                                        {
-                                            Zhidan = this.CB_ZhiDan.Text.Trim(),
-                                            IMEI = this.IMEI_Start.Text.Trim(),
-                                            IMEIStart = this.IMEI_num1.Text.Trim(),
-                                            IMEIEnd = this.IMEI_num2.Text.Trim(),
-                                            SN = "",
-                                            IMEIRel = this.IMEIRel.Text.Trim(),
-                                            SIM = simstr != "" ? simstr : "",
-                                            VIP = vipstr != "" ? vipstr : "",
-                                            BAT = batstr != "" ? batstr : "",
-                                            SoftModel = this.SoftModel.Text.Trim(),
-                                            Version = this.SoftwareVersion.Text.Trim(),
-                                            Remark = this.Remake.Text.Trim(),
-                                            JS_PrintTime = ProductTime,
-                                            JS_TemplatePath = this.Select_Template1.Text.Trim(),
-                                            CH_PrintTime = "",
-                                            CH_TemplatePath1 = null,
-                                            CH_TemplatePath2 = null,
-                                            ICCID = iccidstr != "" ? iccidstr : "",
-                                            MAC = macstr != "" ? macstr : "",
-                                            Equipment = equistr != "" ? equistr : "",
-                                            RFID = rfidstr != "" ? rfidstr : ""
-                                        });
-                                        if (PMB.InsertPrintMessageBLL(list))
+                                        PList.Claer();
+                                        PList.Zhidan = this.CB_ZhiDan.Text.Trim();
+                                        PList.IMEI = this.IMEI_Start.Text.Trim();
+                                        PList.IMEIStart = this.IMEI_num1.Text.Trim();
+                                        PList.IMEIEnd = this.IMEI_num2.Text.Trim();
+                                        PList.SN = "";
+                                        PList.IMEIRel = this.IMEIRel.Text.Trim();
+                                        PList.SIM = simstr != "" ? simstr : "";
+                                        PList.VIP = vipstr != "" ? vipstr : "";
+                                        PList.BAT = batstr != "" ? batstr : "";
+                                        PList.SoftModel = this.SoftModel.Text.Trim();
+                                        PList.Version = this.SoftwareVersion.Text.Trim();
+                                        PList.Remark = this.Remake.Text.Trim();
+                                        PList.JS_PrintTime = ProductTime;
+                                        PList.JS_TemplatePath = this.Select_Template1.Text.Trim();
+                                        PList.CH_PrintTime = "";
+                                        PList.CH_TemplatePath1 = null;
+                                        PList.CH_TemplatePath2 = null;
+                                        PList.ICCID = iccidstr != "" ? iccidstr : "";
+                                        PList.MAC = macstr != "" ? macstr : "";
+                                        PList.Equipment = equistr != "" ? equistr : "";
+                                        PList.RFID = rfidstr != "" ? rfidstr : "";
+                                        PList.JSUserName = this.UserShow.Text;
+                                        if (PMB.InsertPrintMessageBLL(PList))
                                         {
                                             long sn1_suffix = long.Parse(SN1_num.Text.Remove(0, (this.SN1_num.Text.Length) - s));
                                             if (MOPB.UpdateSNnumberBLL(this.CB_ZhiDan.Text, sn1_suffix.ToString().PadLeft(s, '0'), (long.Parse(this.IMEI_Start.Text.Substring(0, 14)) + 1).ToString()))
@@ -3138,31 +3170,30 @@ namespace WindowsForms_print
                                             if (this.SN1_num.Text != "")
                                             {
                                                 btFormat.SubStrings["SN"].Value = this.SN1_num.Text;
-                                                list.Add(new PrintMessage()
-                                                {
-                                                    Zhidan = this.CB_ZhiDan.Text.Trim(),
-                                                    IMEI = this.IMEI_Start.Text.Trim(),
-                                                    IMEIStart = this.IMEI_num1.Text.Trim(),
-                                                    IMEIEnd = this.IMEI_num2.Text.Trim(),
-                                                    SN = this.SN1_num.Text,
-                                                    IMEIRel = this.IMEIRel.Text.Trim(),
-                                                    SIM = simstr != "" ? simstr : "",
-                                                    VIP = vipstr != "" ? vipstr : "",
-                                                    BAT = batstr != "" ? batstr : "",
-                                                    SoftModel = this.SoftModel.Text.Trim(),
-                                                    Version = this.SoftwareVersion.Text.Trim(),
-                                                    Remark = this.Remake.Text.Trim(),
-                                                    JS_PrintTime = ProductTime,
-                                                    JS_TemplatePath = this.Select_Template1.Text.Trim(),
-                                                    CH_PrintTime = "",
-                                                    CH_TemplatePath1 = null,
-                                                    CH_TemplatePath2 = null,
-                                                    ICCID = iccidstr != "" ? iccidstr : "",
-                                                    MAC = macstr != "" ? macstr : "",
-                                                    Equipment = equistr != "" ? equistr : "",
-                                                    RFID = rfidstr != "" ? rfidstr : ""
-                                                });
-                                                if (PMB.InsertPrintMessageBLL(list))
+                                                PList.Claer();
+                                                PList.Zhidan = this.CB_ZhiDan.Text.Trim();
+                                                PList.IMEI = this.IMEI_Start.Text.Trim();
+                                                PList.IMEIStart = this.IMEI_num1.Text.Trim();
+                                                PList.IMEIEnd = this.IMEI_num2.Text.Trim();
+                                                PList.SN = this.SN1_num.Text;
+                                                PList.IMEIRel = this.IMEIRel.Text.Trim();
+                                                PList.SIM = simstr != "" ? simstr : "";
+                                                PList.VIP = vipstr != "" ? vipstr : "";
+                                                PList.BAT = batstr != "" ? batstr : "";
+                                                PList.SoftModel = this.SoftModel.Text.Trim();
+                                                PList.Version = this.SoftwareVersion.Text.Trim();
+                                                PList.Remark = this.Remake.Text.Trim();
+                                                PList.JS_PrintTime = ProductTime;
+                                                PList.JS_TemplatePath = this.Select_Template1.Text.Trim();
+                                                PList.CH_PrintTime = "";
+                                                PList.CH_TemplatePath1 = null;
+                                                PList.CH_TemplatePath2 = null;
+                                                PList.ICCID = iccidstr != "" ? iccidstr : "";
+                                                PList.MAC = macstr != "" ? macstr : "";
+                                                PList.Equipment = equistr != "" ? equistr : "";
+                                                PList.RFID = rfidstr != "" ? rfidstr : "";
+                                                PList.JSUserName = this.UserShow.Text;
+                                                if (PMB.InsertPrintMessageBLL(PList))
                                                 {
                                                     string sn1_prefix = SN1_num.Text.Substring(0, this.SN1_num.Text.Length - s);
                                                     long sn1_suffix = long.Parse(SN1_num.Text.Remove(0, (this.SN1_num.Text.Length) - s));
@@ -3183,31 +3214,30 @@ namespace WindowsForms_print
                                             else
                                             {
                                                 btFormat.SubStrings["SN"].Value = "";
-                                                list.Add(new PrintMessage()
-                                                {
-                                                    Zhidan = this.CB_ZhiDan.Text.Trim(),
-                                                    IMEI = this.IMEI_Start.Text.Trim(),
-                                                    IMEIStart = this.IMEI_num1.Text.Trim(),
-                                                    IMEIEnd = this.IMEI_num2.Text.Trim(),
-                                                    SN = "",
-                                                    IMEIRel = this.IMEIRel.Text.Trim(),
-                                                    SIM = simstr != "" ? simstr : "",
-                                                    VIP = vipstr != "" ? vipstr : "",
-                                                    BAT = batstr != "" ? batstr : "",
-                                                    SoftModel = this.SoftModel.Text.Trim(),
-                                                    Version = this.SoftwareVersion.Text.Trim(),
-                                                    Remark = this.Remake.Text.Trim(),
-                                                    JS_PrintTime = ProductTime,
-                                                    JS_TemplatePath = this.Select_Template1.Text.Trim(),
-                                                    CH_PrintTime = "",
-                                                    CH_TemplatePath1 = null,
-                                                    CH_TemplatePath2 = null,
-                                                    ICCID = iccidstr != "" ? iccidstr : "",
-                                                    MAC = macstr != "" ? macstr : "",
-                                                    Equipment = equistr != "" ? equistr : "",
-                                                    RFID = rfidstr != "" ? rfidstr : ""
-                                                });
-                                                if (PMB.InsertPrintMessageBLL(list))
+                                                PList.Claer();
+                                                PList.Zhidan = this.CB_ZhiDan.Text.Trim();
+                                                PList.IMEI = this.IMEI_Start.Text.Trim();
+                                                PList.IMEIStart = this.IMEI_num1.Text.Trim();
+                                                PList.IMEIEnd = this.IMEI_num2.Text.Trim();
+                                                PList.SN = "";
+                                                PList.IMEIRel = this.IMEIRel.Text.Trim();
+                                                PList.SIM = simstr != "" ? simstr : "";
+                                                PList.VIP = vipstr != "" ? vipstr : "";
+                                                PList.BAT = batstr != "" ? batstr : "";
+                                                PList.SoftModel = this.SoftModel.Text.Trim();
+                                                PList.Version = this.SoftwareVersion.Text.Trim();
+                                                PList.Remark = this.Remake.Text.Trim();
+                                                PList.JS_PrintTime = ProductTime;
+                                                PList.JS_TemplatePath = this.Select_Template1.Text.Trim();
+                                                PList.CH_PrintTime = "";
+                                                PList.CH_TemplatePath1 = null;
+                                                PList.CH_TemplatePath2 = null;
+                                                PList.ICCID = iccidstr != "" ? iccidstr : "";
+                                                PList.MAC = macstr != "" ? macstr : "";
+                                                PList.Equipment = equistr != "" ? equistr : "";
+                                                PList.RFID = rfidstr != "" ? rfidstr : "";
+                                                PList.JSUserName = this.UserShow.Text;
+                                                if (PMB.InsertPrintMessageBLL(PList))
                                                 {
                                                     if (MOPB.UpdateSNnumberBLL(this.CB_ZhiDan.Text, "", (long.Parse(this.IMEI_Start.Text.Substring(0, 14)) + 1).ToString()))
                                                     {
@@ -3254,31 +3284,30 @@ namespace WindowsForms_print
                                             //记录打印信息日志
                                             ProductTime = System.DateTime.Now.ToString("yyyy.MM.dd HH:mm:ss:fff");
                                             btFormat.SubStrings["SN"].Value = snstr;
-                                            list.Add(new PrintMessage()
-                                            {
-                                                Zhidan = this.CB_ZhiDan.Text.Trim(),
-                                                IMEI = this.IMEI_Start.Text.Trim(),
-                                                IMEIStart = this.IMEI_num1.Text.Trim(),
-                                                IMEIEnd = this.IMEI_num2.Text.Trim(),
-                                                SN = this.SN1_num.Text,
-                                                IMEIRel = this.IMEIRel.Text.Trim(),
-                                                SIM = simstr != "" ? simstr : "",
-                                                VIP = vipstr != "" ? vipstr : "",
-                                                BAT = batstr != "" ? batstr : "",
-                                                SoftModel = this.SoftModel.Text.Trim(),
-                                                Version = this.SoftwareVersion.Text.Trim(),
-                                                Remark = this.Remake.Text.Trim(),
-                                                JS_PrintTime = ProductTime,
-                                                JS_TemplatePath = this.Select_Template1.Text.Trim(),
-                                                CH_PrintTime = "",
-                                                CH_TemplatePath1 = null,
-                                                CH_TemplatePath2 = null,
-                                                ICCID = iccidstr != "" ? iccidstr : "",
-                                                MAC = macstr != "" ? macstr : "",
-                                                Equipment = equistr != "" ? equistr : "",
-                                                RFID = rfidstr != "" ? rfidstr : ""
-                                            });
-                                            if (PMB.InsertPrintMessageBLL(list))
+                                            PList.Claer();
+                                            PList.Zhidan = this.CB_ZhiDan.Text.Trim();
+                                            PList.IMEI = this.IMEI_Start.Text.Trim();
+                                            PList.IMEIStart = this.IMEI_num1.Text.Trim();
+                                            PList.IMEIEnd = this.IMEI_num2.Text.Trim();
+                                            PList.SN = this.SN1_num.Text;
+                                            PList.IMEIRel = this.IMEIRel.Text.Trim();
+                                            PList.SIM = simstr != "" ? simstr : "";
+                                            PList.VIP = vipstr != "" ? vipstr : "";
+                                            PList.BAT = batstr != "" ? batstr : "";
+                                            PList.SoftModel = this.SoftModel.Text.Trim();
+                                            PList.Version = this.SoftwareVersion.Text.Trim();
+                                            PList.Remark = this.Remake.Text.Trim();
+                                            PList.JS_PrintTime = ProductTime;
+                                            PList.JS_TemplatePath = this.Select_Template1.Text.Trim();
+                                            PList.CH_PrintTime = "";
+                                            PList.CH_TemplatePath1 = null;
+                                            PList.CH_TemplatePath2 = null;
+                                            PList.ICCID = iccidstr != "" ? iccidstr : "";
+                                            PList.MAC = macstr != "" ? macstr : "";
+                                            PList.Equipment = equistr != "" ? equistr : "";
+                                            PList.RFID = rfidstr != "" ? rfidstr : "";
+                                            PList.JSUserName =this.UserShow.Text;
+                                            if (PMB.InsertPrintMessageBLL(PList))
                                             {
                                                 string sn1_prefix = snstr.Substring(0, snstr.Length - s);
                                                 long sn1_suffix = long.Parse(snstr.Remove(0, (snstr.Length) - s));
@@ -3604,31 +3633,30 @@ namespace WindowsForms_print
                                             if (!PMB.CheckSNBLL(this.SN1_num.Text))
                                             {
                                                 btFormat.SubStrings["SN"].Value = this.SN1_num.Text;
-                                                list.Add(new PrintMessage()
-                                                {
-                                                    Zhidan = this.CB_ZhiDan.Text.Trim(),
-                                                    IMEI = this.IMEI_Start.Text.Trim(),
-                                                    IMEIStart = this.IMEI_num1.Text.Trim(),
-                                                    IMEIEnd = this.IMEI_num2.Text.Trim(),
-                                                    SN = this.SN1_num.Text,
-                                                    IMEIRel = this.IMEIRel.Text.Trim(),
-                                                    SIM = simstr != "" ? simstr : "",
-                                                    VIP = vipstr != "" ? vipstr : "",
-                                                    BAT = batstr != "" ? batstr : "",
-                                                    SoftModel = this.SoftModel.Text.Trim(),
-                                                    Version = this.SoftwareVersion.Text.Trim(),
-                                                    Remark = this.Remake.Text.Trim(),
-                                                    JS_PrintTime = ProductTime,
-                                                    JS_TemplatePath = this.Select_Template1.Text.Trim(),
-                                                    CH_PrintTime = "",
-                                                    CH_TemplatePath1 = null,
-                                                    CH_TemplatePath2 = null,
-                                                    ICCID = iccidstr != "" ? iccidstr : "",
-                                                    MAC = macstr != "" ? macstr : "",
-                                                    Equipment = equistr != "" ? equistr : "",
-                                                    RFID = rfidstr != "" ? rfidstr : ""
-                                                });
-                                                if (PMB.InsertPrintMessageBLL(list))
+                                                PList.Claer();
+                                                PList.Zhidan = this.CB_ZhiDan.Text.Trim();
+                                                PList.IMEI = this.IMEI_Start.Text.Trim();
+                                                PList.IMEIStart = this.IMEI_num1.Text.Trim();
+                                                PList.IMEIEnd = this.IMEI_num2.Text.Trim();
+                                                PList.SN = this.SN1_num.Text;
+                                                PList.IMEIRel = this.IMEIRel.Text.Trim();
+                                                PList.SIM = simstr != "" ? simstr : "";
+                                                PList.VIP = vipstr != "" ? vipstr : "";
+                                                PList.BAT = batstr != "" ? batstr : "";
+                                                PList.SoftModel = this.SoftModel.Text.Trim();
+                                                PList.Version = this.SoftwareVersion.Text.Trim();
+                                                PList.Remark = this.Remake.Text.Trim();
+                                                PList.JS_PrintTime = ProductTime;
+                                                PList.JS_TemplatePath = this.Select_Template1.Text.Trim();
+                                                PList.CH_PrintTime = "";
+                                                PList.CH_TemplatePath1 = null;
+                                                PList.CH_TemplatePath2 = null;
+                                                PList.ICCID = iccidstr != "" ? iccidstr : "";
+                                                PList.MAC = macstr != "" ? macstr : "";
+                                                PList.Equipment = equistr != "" ? equistr : "";
+                                                PList.RFID = rfidstr != "" ? rfidstr : "";
+                                                PList.JSUserName =this.UserShow.Text;
+                                                if (PMB.InsertPrintMessageBLL(PList))
                                                 {
                                                     string sn1_prefix = SN1_num.Text.Substring(0, this.SN1_num.Text.Length - s);
                                                     long sn1_suffix = long.Parse(SN1_num.Text.Remove(0, (this.SN1_num.Text.Length) - s));
@@ -3659,31 +3687,30 @@ namespace WindowsForms_print
                                         else
                                         {
                                             btFormat.SubStrings["SN"].Value = "";
-                                            list.Add(new PrintMessage()
-                                            {
-                                                Zhidan = this.CB_ZhiDan.Text.Trim(),
-                                                IMEI = this.IMEI_Start.Text.Trim(),
-                                                IMEIStart = this.IMEI_num1.Text.Trim(),
-                                                IMEIEnd = this.IMEI_num2.Text.Trim(),
-                                                SN = "",
-                                                IMEIRel = this.IMEIRel.Text.Trim(),
-                                                SIM = simstr != "" ? simstr : "",
-                                                VIP = vipstr != "" ? vipstr : "",
-                                                BAT = batstr != "" ? batstr : "",
-                                                SoftModel = this.SoftModel.Text.Trim(),
-                                                Version = this.SoftwareVersion.Text.Trim(),
-                                                Remark = this.Remake.Text.Trim(),
-                                                JS_PrintTime = ProductTime,
-                                                JS_TemplatePath = this.Select_Template1.Text.Trim(),
-                                                CH_PrintTime = "",
-                                                CH_TemplatePath1 = null,
-                                                CH_TemplatePath2 = null,
-                                                ICCID = iccidstr != "" ? iccidstr : "",
-                                                MAC = macstr != "" ? macstr : "",
-                                                Equipment = equistr != "" ? equistr : "",
-                                                RFID = rfidstr != "" ? rfidstr : ""
-                                            });
-                                            if (PMB.InsertPrintMessageBLL(list))
+                                            PList.Claer();
+                                            PList.Zhidan = this.CB_ZhiDan.Text.Trim();
+                                            PList.IMEI = this.IMEI_Start.Text.Trim();
+                                            PList.IMEIStart = this.IMEI_num1.Text.Trim();
+                                            PList.IMEIEnd = this.IMEI_num2.Text.Trim();
+                                            PList.SN = "";
+                                            PList.IMEIRel = this.IMEIRel.Text.Trim();
+                                            PList.SIM = simstr != "" ? simstr : "";
+                                            PList.VIP = vipstr != "" ? vipstr : "";
+                                            PList.BAT = batstr != "" ? batstr : "";
+                                            PList.SoftModel = this.SoftModel.Text.Trim();
+                                            PList.Version = this.SoftwareVersion.Text.Trim();
+                                            PList.Remark = this.Remake.Text.Trim();
+                                            PList.JS_PrintTime = ProductTime;
+                                            PList.JS_TemplatePath = this.Select_Template1.Text.Trim();
+                                            PList.CH_PrintTime = "";
+                                            PList.CH_TemplatePath1 = null;
+                                            PList.CH_TemplatePath2 = null;
+                                            PList.ICCID = iccidstr != "" ? iccidstr : "";
+                                            PList.MAC = macstr != "" ? macstr : "";
+                                            PList.Equipment = equistr != "" ? equistr : "";
+                                            PList.RFID = rfidstr != "" ? rfidstr : "";
+                                            PList.JSUserName = this.UserShow.Text;
+                                            if (PMB.InsertPrintMessageBLL(PList))
                                             {
                                                 if (MOPB.UpdateSNnumberBLL(this.CB_ZhiDan.Text, "", (long.Parse(this.IMEI_Start.Text.Substring(0, 14)) + 1).ToString()))
                                                 {
@@ -4005,31 +4032,30 @@ namespace WindowsForms_print
                                         if (this.SN1_num.Text != "")
                                         {
                                             btFormat.SubStrings["SN"].Value = this.SN1_num.Text;
-                                            list.Add(new PrintMessage()
-                                            {
-                                                Zhidan = this.CB_ZhiDan.Text.Trim(),
-                                                IMEI = this.IMEI_Start.Text.Trim(),
-                                                IMEIStart = this.IMEI_num1.Text.Trim(),
-                                                IMEIEnd = this.IMEI_num2.Text.Trim(),
-                                                SN = this.SN1_num.Text,
-                                                IMEIRel = this.IMEIRel.Text.Trim(),
-                                                SIM = simstr != "" ? simstr : "",
-                                                VIP = vipstr != "" ? vipstr : "",
-                                                BAT = batstr != "" ? batstr : "",
-                                                SoftModel = this.SoftModel.Text.Trim(),
-                                                Version = this.SoftwareVersion.Text.Trim(),
-                                                Remark = this.Remake.Text.Trim(),
-                                                JS_PrintTime = ProductTime,
-                                                JS_TemplatePath = this.Select_Template1.Text.Trim(),
-                                                CH_PrintTime = "",
-                                                CH_TemplatePath1 = null,
-                                                CH_TemplatePath2 = null,
-                                                ICCID = iccidstr != "" ? iccidstr : "",
-                                                MAC = macstr != "" ? macstr : "",
-                                                Equipment = equistr != "" ? equistr : "",
-                                                RFID = rfidstr != "" ? rfidstr : ""
-                                            });
-                                            if (PMB.InsertPrintMessageBLL(list))
+                                            PList.Claer();
+                                            PList.Zhidan = this.CB_ZhiDan.Text.Trim();
+                                            PList.IMEI = this.IMEI_Start.Text.Trim();
+                                            PList.IMEIStart = this.IMEI_num1.Text.Trim();
+                                            PList.IMEIEnd = this.IMEI_num2.Text.Trim();
+                                            PList.SN = this.SN1_num.Text;
+                                            PList.IMEIRel = this.IMEIRel.Text.Trim();
+                                            PList.SIM = simstr != "" ? simstr : "";
+                                            PList.VIP = vipstr != "" ? vipstr : "";
+                                            PList.BAT = batstr != "" ? batstr : "";
+                                            PList.SoftModel = this.SoftModel.Text.Trim();
+                                            PList.Version = this.SoftwareVersion.Text.Trim();
+                                            PList.Remark = this.Remake.Text.Trim();
+                                            PList.JS_PrintTime = ProductTime;
+                                            PList.JS_TemplatePath = this.Select_Template1.Text.Trim();
+                                            PList.CH_PrintTime = "";
+                                            PList.CH_TemplatePath1 = null;
+                                            PList.CH_TemplatePath2 = null;
+                                            PList.ICCID = iccidstr != "" ? iccidstr : "";
+                                            PList.MAC = macstr != "" ? macstr : "";
+                                            PList.Equipment = equistr != "" ? equistr : "";
+                                            PList.RFID = rfidstr != "" ? rfidstr : "";
+                                            PList.JSUserName =this.UserShow.Text;
+                                            if (PMB.InsertPrintMessageBLL(PList))
                                             {
                                                 string sn1_prefix = SN1_num.Text.Substring(0, this.SN1_num.Text.Length - s);
                                                 long sn1_suffix = long.Parse(SN1_num.Text.Remove(0, (this.SN1_num.Text.Length) - s));
@@ -4048,31 +4074,30 @@ namespace WindowsForms_print
                                         else
                                         {
                                             btFormat.SubStrings["SN"].Value = "";
-                                            list.Add(new PrintMessage()
-                                            {
-                                                Zhidan = this.CB_ZhiDan.Text.Trim(),
-                                                IMEI = this.IMEI_Start.Text.Trim(),
-                                                IMEIStart = this.IMEI_num1.Text.Trim(),
-                                                IMEIEnd = this.IMEI_num2.Text.Trim(),
-                                                SN = "",
-                                                IMEIRel = this.IMEIRel.Text.Trim(),
-                                                SIM = simstr != "" ? simstr : "",
-                                                VIP = vipstr != "" ? vipstr : "",
-                                                BAT = batstr != "" ? batstr : "",
-                                                SoftModel = this.SoftModel.Text.Trim(),
-                                                Version = this.SoftwareVersion.Text.Trim(),
-                                                Remark = this.Remake.Text.Trim(),
-                                                JS_PrintTime = ProductTime,
-                                                JS_TemplatePath = this.Select_Template1.Text.Trim(),
-                                                CH_PrintTime = "",
-                                                CH_TemplatePath1 = null,
-                                                CH_TemplatePath2 = null,
-                                                ICCID = iccidstr != "" ? iccidstr : "",
-                                                MAC = macstr != "" ? macstr : "",
-                                                Equipment = equistr != "" ? equistr : "",
-                                                RFID = rfidstr != "" ? rfidstr : ""
-                                            });
-                                            if (PMB.InsertPrintMessageBLL(list))
+                                            PList.Claer();
+                                            PList.Zhidan = this.CB_ZhiDan.Text.Trim();
+                                            PList.IMEI = this.IMEI_Start.Text.Trim();
+                                            PList.IMEIStart = this.IMEI_num1.Text.Trim();
+                                            PList.IMEIEnd = this.IMEI_num2.Text.Trim();
+                                            PList.SN = "";
+                                            PList.IMEIRel = this.IMEIRel.Text.Trim();
+                                            PList.SIM = simstr != "" ? simstr : "";
+                                            PList.VIP = vipstr != "" ? vipstr : "";
+                                            PList.BAT = batstr != "" ? batstr : "";
+                                            PList.SoftModel = this.SoftModel.Text.Trim();
+                                            PList.Version = this.SoftwareVersion.Text.Trim();
+                                            PList.Remark = this.Remake.Text.Trim();
+                                            PList.JS_PrintTime = ProductTime;
+                                            PList.JS_TemplatePath = this.Select_Template1.Text.Trim();
+                                            PList.CH_PrintTime = "";
+                                            PList.CH_TemplatePath1 = null;
+                                            PList.CH_TemplatePath2 = null;
+                                            PList.ICCID = iccidstr != "" ? iccidstr : "";
+                                            PList.MAC = macstr != "" ? macstr : "";
+                                            PList.Equipment = equistr != "" ? equistr : "";
+                                            PList.RFID = rfidstr != "" ? rfidstr : "";
+                                            PList.JSUserName = this.UserShow.Text;
+                                            if (PMB.InsertPrintMessageBLL(PList))
                                             {
                                                 string sn2_suffix;
                                                 if (this.SN2_num.Text != "")
@@ -4403,31 +4428,30 @@ namespace WindowsForms_print
                                             if (!PMB.CheckSNBLL(this.SN1_num.Text))
                                             {
                                                 btFormat.SubStrings["SN"].Value = this.SN1_num.Text;
-                                                list.Add(new PrintMessage()
-                                                {
-                                                    Zhidan = this.CB_ZhiDan.Text.Trim(),
-                                                    IMEI = this.IMEI_Start.Text.Trim(),
-                                                    IMEIStart = this.IMEI_num1.Text.Trim(),
-                                                    IMEIEnd = this.IMEI_num2.Text.Trim(),
-                                                    SN = this.SN1_num.Text,
-                                                    IMEIRel = this.IMEIRel.Text.Trim(),
-                                                    SIM = simstr != "" ? simstr : "",
-                                                    VIP = vipstr != "" ? vipstr : "",
-                                                    BAT = batstr != "" ? batstr : "",
-                                                    SoftModel = this.SoftModel.Text.Trim(),
-                                                    Version = this.SoftwareVersion.Text.Trim(),
-                                                    Remark = this.Remake.Text.Trim(),
-                                                    JS_PrintTime = ProductTime,
-                                                    JS_TemplatePath = this.Select_Template1.Text.Trim(),
-                                                    CH_PrintTime = "",
-                                                    CH_TemplatePath1 = null,
-                                                    CH_TemplatePath2 = null,
-                                                    ICCID = iccidstr != "" ? iccidstr : "",
-                                                    MAC = macstr != "" ? macstr : "",
-                                                    Equipment = equistr != "" ? equistr : "",
-                                                    RFID = rfidstr != "" ? rfidstr : ""
-                                                });
-                                                if (PMB.InsertPrintMessageBLL(list))
+                                                PList.Claer();
+                                                PList.Zhidan = this.CB_ZhiDan.Text.Trim();
+                                                PList.IMEI = this.IMEI_Start.Text.Trim();
+                                                PList.IMEIStart = this.IMEI_num1.Text.Trim();
+                                                PList.IMEIEnd = this.IMEI_num2.Text.Trim();
+                                                PList.SN = this.SN1_num.Text;
+                                                PList.IMEIRel = this.IMEIRel.Text.Trim();
+                                                PList.SIM = simstr != "" ? simstr : "";
+                                                PList.VIP = vipstr != "" ? vipstr : "";
+                                                PList.BAT = batstr != "" ? batstr : "";
+                                                PList.SoftModel = this.SoftModel.Text.Trim();
+                                                PList.Version = this.SoftwareVersion.Text.Trim();
+                                                PList.Remark = this.Remake.Text.Trim();
+                                                PList.JS_PrintTime = ProductTime;
+                                                PList.JS_TemplatePath = this.Select_Template1.Text.Trim();
+                                                PList.CH_PrintTime = "";
+                                                PList.CH_TemplatePath1 = null;
+                                                PList.CH_TemplatePath2 = null;
+                                                PList.ICCID = iccidstr != "" ? iccidstr : "";
+                                                PList.MAC = macstr != "" ? macstr : "";
+                                                PList.Equipment = equistr != "" ? equistr : "";
+                                                PList.RFID = rfidstr != "" ? rfidstr : "";
+                                                PList.JSUserName = this.UserShow.Text;
+                                                if (PMB.InsertPrintMessageBLL(PList))
                                                 {
                                                     string sn1_prefix = SN1_num.Text.Substring(0, this.SN1_num.Text.Length - s);
                                                     long sn1_suffix = long.Parse(SN1_num.Text.Remove(0, (this.SN1_num.Text.Length) - s));
@@ -4456,31 +4480,30 @@ namespace WindowsForms_print
                                         else
                                         {
                                             btFormat.SubStrings["SN"].Value = "";
-                                            list.Add(new PrintMessage()
-                                            {
-                                                Zhidan = this.CB_ZhiDan.Text.Trim(),
-                                                IMEI = this.IMEI_Start.Text.Trim(),
-                                                IMEIStart = this.IMEI_num1.Text.Trim(),
-                                                IMEIEnd = this.IMEI_num2.Text.Trim(),
-                                                SN = "",
-                                                IMEIRel = this.IMEIRel.Text.Trim(),
-                                                SIM = simstr != "" ? simstr : "",
-                                                VIP = vipstr != "" ? vipstr : "",
-                                                BAT = batstr != "" ? batstr : "",
-                                                SoftModel = this.SoftModel.Text.Trim(),
-                                                Version = this.SoftwareVersion.Text.Trim(),
-                                                Remark = this.Remake.Text.Trim(),
-                                                JS_PrintTime = ProductTime,
-                                                JS_TemplatePath = this.Select_Template1.Text.Trim(),
-                                                CH_PrintTime = "",
-                                                CH_TemplatePath1 = null,
-                                                CH_TemplatePath2 = null,
-                                                ICCID = iccidstr != "" ? iccidstr : "",
-                                                MAC = macstr != "" ? macstr : "",
-                                                Equipment = equistr != "" ? equistr : "",
-                                                RFID = rfidstr != "" ? rfidstr : ""
-                                            });
-                                            if (PMB.InsertPrintMessageBLL(list))
+                                            PList.Claer();
+                                            PList.Zhidan = this.CB_ZhiDan.Text.Trim();
+                                            PList.IMEI = this.IMEI_Start.Text.Trim();
+                                            PList.IMEIStart = this.IMEI_num1.Text.Trim();
+                                            PList.IMEIEnd = this.IMEI_num2.Text.Trim();
+                                            PList.SN = "";
+                                            PList.IMEIRel = this.IMEIRel.Text.Trim();
+                                            PList.SIM = simstr != "" ? simstr : "";
+                                            PList.VIP = vipstr != "" ? vipstr : "";
+                                            PList.BAT = batstr != "" ? batstr : "";
+                                            PList.SoftModel = this.SoftModel.Text.Trim();
+                                            PList.Version = this.SoftwareVersion.Text.Trim();
+                                            PList.Remark = this.Remake.Text.Trim();
+                                            PList.JS_PrintTime = ProductTime;
+                                            PList.JS_TemplatePath = this.Select_Template1.Text.Trim();
+                                            PList.CH_PrintTime = "";
+                                            PList.CH_TemplatePath1 = null;
+                                            PList.CH_TemplatePath2 = null;
+                                            PList.ICCID = iccidstr != "" ? iccidstr : "";
+                                            PList.MAC = macstr != "" ? macstr : "";
+                                            PList.Equipment = equistr != "" ? equistr : "";
+                                            PList.RFID = rfidstr != "" ? rfidstr : "";
+                                            PList.JSUserName =this.UserShow.Text;
+                                            if (PMB.InsertPrintMessageBLL(PList))
                                             {
                                                 if (MOPB.UpdateSNnumberBLL(this.CB_ZhiDan.Text, "", (long.Parse(this.IMEI_Start.Text) + 1).ToString()))
                                                 {
@@ -4797,31 +4820,30 @@ namespace WindowsForms_print
                                     {
                                         //记录打印信息日志
                                         ProductTime = System.DateTime.Now.ToString("yyyy.MM.dd HH:mm:ss:fff");
-                                        list.Add(new PrintMessage()
-                                        {
-                                            Zhidan = this.CB_ZhiDan.Text.Trim(),
-                                            IMEI = this.IMEI_Start.Text.Trim(),
-                                            IMEIStart = this.IMEI_num1.Text.Trim(),
-                                            IMEIEnd = this.IMEI_num2.Text.Trim(),
-                                            SN = "",
-                                            IMEIRel = this.IMEIRel.Text.Trim(),
-                                            SIM = simstr != "" ? simstr : "",
-                                            VIP = vipstr != "" ? vipstr : "",
-                                            BAT = batstr != "" ? batstr : "",
-                                            SoftModel = this.SoftModel.Text.Trim(),
-                                            Version = this.SoftwareVersion.Text.Trim(),
-                                            Remark = this.Remake.Text.Trim(),
-                                            JS_PrintTime = ProductTime,
-                                            JS_TemplatePath = this.Select_Template1.Text.Trim(),
-                                            CH_PrintTime = "",
-                                            CH_TemplatePath1 = null,
-                                            CH_TemplatePath2 = null,
-                                            ICCID = iccidstr != "" ? iccidstr : "",
-                                            MAC = macstr != "" ? macstr : "",
-                                            Equipment = equistr != "" ? equistr : "",
-                                            RFID = rfidstr != "" ? rfidstr : ""
-                                        });
-                                        if (PMB.InsertPrintMessageBLL(list))
+                                        PList.Claer();
+                                        PList.Zhidan = this.CB_ZhiDan.Text.Trim();
+                                        PList.IMEI = this.IMEI_Start.Text.Trim();
+                                        PList.IMEIStart = this.IMEI_num1.Text.Trim();
+                                        PList.IMEIEnd = this.IMEI_num2.Text.Trim();
+                                        PList.SN = "";
+                                        PList.IMEIRel = this.IMEIRel.Text.Trim();
+                                        PList.SIM = simstr != "" ? simstr : "";
+                                        PList.VIP = vipstr != "" ? vipstr : "";
+                                        PList.BAT = batstr != "" ? batstr : "";
+                                        PList.SoftModel = this.SoftModel.Text.Trim();
+                                        PList.Version = this.SoftwareVersion.Text.Trim();
+                                        PList.Remark = this.Remake.Text.Trim();
+                                        PList.JS_PrintTime = ProductTime;
+                                        PList.JS_TemplatePath = this.Select_Template1.Text.Trim();
+                                        PList.CH_PrintTime = "";
+                                        PList.CH_TemplatePath1 = null;
+                                        PList.CH_TemplatePath2 = null;
+                                        PList.ICCID = iccidstr != "" ? iccidstr : "";
+                                        PList.MAC = macstr != "" ? macstr : "";
+                                        PList.Equipment = equistr != "" ? equistr : "";
+                                        PList.RFID = rfidstr != "" ? rfidstr : "";
+                                        PList.JSUserName =this.UserShow.Text;
+                                        if (PMB.InsertPrintMessageBLL(PList))
                                         {
                                             long sn1_suffix = long.Parse(SN1_num.Text.Remove(0, (this.SN1_num.Text.Length) - s));
                                             if (MOPB.UpdateSNnumberBLL(this.CB_ZhiDan.Text, sn1_suffix.ToString().PadLeft(s, '0'), (long.Parse(this.IMEI_Start.Text) + 1).ToString()))
@@ -4877,6 +4899,35 @@ namespace WindowsForms_print
         {
             if (e.KeyChar == 13)
             {
+                if (this.UserShow.Text == "")
+                {
+                    this.reminder.AppendText("请先登录\r\n");
+                    return;
+                }
+                if (this.CB_ZhiDan.Text == "")
+                {
+                    player2.Play();
+                    this.reminder.AppendText("请先选择制单\r\n");
+                    this.Re_IMEINum.Clear();
+                    this.Re_IMEINum.Focus();
+                    return;
+                }
+                if (this.StartZhiDan == 0)
+                {
+                    this.reminder.AppendText("请获取制单数据\r\n");
+                    this.Re_IMEINum.Clear();
+                    this.Re_IMEINum.Focus();
+                    return;
+                }
+
+                if (this.ToLock.Enabled == true)
+                {
+                    this.reminder.AppendText("请锁定\r\n");
+                    this.Re_IMEINum.Clear();
+                    this.Re_IMEINum.Focus();
+                    return;
+                }
+
                 if (this.Re_IMEINum.Text != "")
                 {
                     if (this.Re_Nocheckcode.Checked == false)
@@ -5366,11 +5417,27 @@ namespace WindowsForms_print
                         this.ReImeiNum1.Focus();
                         return;
                     }
+                    if (this.CB_ZhiDan.Text == "")
+                    {
+                        player2.Play();
+                        this.reminder.AppendText("请先选择制单\r\n");
+                        this.ReImeiNum1.Clear();
+                        this.ReImeiNum1.Focus();
+                        return;
+                    }
                     if (this.StartZhiDan == 0)
                     {
                         this.reminder.AppendText("请获取制单数据\r\n");
-                        this.PrintNum.Clear();
-                        this.PrintNum.Focus();
+                        this.ReImeiNum1.Clear();
+                        this.ReImeiNum1.Focus();
+                        return;
+                    }
+
+                    if(this.ToLock.Enabled == true)
+                    {
+                        this.reminder.AppendText("请锁定\r\n");
+                        this.ReImeiNum1.Clear();
+                        this.ReImeiNum1.Focus();
                         return;
                     }
                     if (this.Re_Nocheckcode.Checked == false)
@@ -5731,6 +5798,9 @@ namespace WindowsForms_print
             this.PrintMode1.Enabled = true;
             this.PrintMode2.Enabled = true;
 
+            this.SiginIN.Enabled = true;
+            this.QuitBt.Enabled = true;
+
             if (this.PrintOne.Checked == true)
             {
                 this.CheckIMEI2.Enabled = true;
@@ -5764,6 +5834,12 @@ namespace WindowsForms_print
         //锁定
         private void ToLock_Click(object sender, EventArgs e)
         {
+            if(this.UserShow.Text == "")
+            {
+                this.reminder.AppendText("请先登录\r\n");
+                return;
+            }
+
             if (this.CB_ZhiDan.Text == "")
             {
                 player.Play();
@@ -5831,6 +5907,9 @@ namespace WindowsForms_print
             this.PrintMode1.Enabled = false;
             this.PrintMode2.Enabled = false;
 
+            this.SiginIN.Enabled = false;
+            this.QuitBt.Enabled = false;
+
             if (this.RePrintOne.Checked == true || this.RePrintMore.Checked == true)
             {
                 this.IMEI_Start.ReadOnly = true;
@@ -5840,7 +5919,19 @@ namespace WindowsForms_print
             this.TemplateNum.ReadOnly = true;
             this.ToUnlock.Enabled = true;
 
-            if(this.CB_ZhiDan.Text != "")
+            if (this.PrintOne.Checked == true)
+                this.IMEI_Start.Focus();
+
+            if (this.PrintMore.Checked == true)
+                this.PrintNum.Focus();
+
+            if (this.RePrintOne.Checked == true)
+                this.Re_IMEINum.Focus();
+
+            if (this.RePrintMore.Checked == true)
+                this.ReImeiNum1.Focus();
+
+            if (this.CB_ZhiDan.Text != "")
             {
                 MOPB.UpdateJS_TemplatePathDAL(this.CB_ZhiDan.Text, lj);
             }
@@ -5981,6 +6072,8 @@ namespace WindowsForms_print
                     this.PrintOne.Checked = Convert.ToBoolean(a.PrintOneByOne);
                     if(this.PrintOne.Checked == true)
                     {
+                        //if (this.PrintMore.Checked == true)
+                        //    this.PrintMore.Checked = false;
                         this.CheckIMEI2.Enabled = true;
                         this.CheckSIM.Enabled = true;
                         this.CheckBAT.Enabled = true;
@@ -5998,19 +6091,65 @@ namespace WindowsForms_print
                         this.RelationEquipment.Enabled = true;
                         this.RelationVIP.Enabled = true;
                         this.RelationRFID.Enabled = true;
+
+                        this.PrintNum.ReadOnly = true;
+                        this.Re_IMEINum.ReadOnly = true;
+                        this.ReImeiNum1.ReadOnly = true;
+                        this.ReImeiNum2.ReadOnly = true;
+                        this.PrintNum.Clear();
+                        this.Re_IMEINum.Clear();
+                        this.ReImeiNum1.Clear();
+                        this.ReImeiNum2.Clear();
+                        this.IMEI_Start.Clear();
+                        this.IMEI_Start.Focus();
+                        this.IMEI_Start.ReadOnly = false;
                     }
 
 
                     this.PrintMore.Checked = Convert.ToBoolean(a.Pltplot);
+                    if (this.PrintMore.Checked == true)
+                    {
+                        this.CheckIMEI2.Enabled = false;
+                        this.CheckSIM.Enabled = false;
+                        this.CheckBAT.Enabled = false;
+                        this.CheckICCID.Enabled = false;
+                        this.CheckMAC.Enabled = false;
+                        this.CheckEquipment.Enabled = false;
+                        this.CheckVIP.Enabled = false;
+                        this.CheckRFID.Enabled = false;
+
+                        this.RelationSN.Enabled = false;
+                        this.RelationSIM.Enabled = false;
+                        this.RelationICCID.Enabled = false;
+                        this.RelationBAT.Enabled = false;
+                        this.RelationMAC.Enabled = false;
+                        this.RelationEquipment.Enabled = false;
+                        this.RelationVIP.Enabled = false;
+                        this.RelationRFID.Enabled = false;
+
+                        this.Re_IMEINum.ReadOnly = true;
+                        this.IMEI_Start.ReadOnly = true;
+                        this.ReImeiNum1.ReadOnly = true;
+                        this.ReImeiNum2.ReadOnly = true;
+                        this.Re_IMEINum.Clear();
+                        this.ReImeiNum1.Clear();
+                        this.ReImeiNum2.Clear();
+                        this.IMEI_Start.Clear();
+
+                        this.PrintNum.Clear();
+                        this.PrintNum.Focus();
+                        this.PrintNum.ReadOnly = false;
+                    }
                     this.SnFromCustomer.Checked = Convert.ToBoolean(a.CustomerSupplySN);
                     this.NoCheckCode.Checked = Convert.ToBoolean(a.NoPrintCheckCode);
                     this.NoSn.Checked = Convert.ToBoolean(a.NoPrintingSN);
                     this.Hexadecimal.Checked = Convert.ToBoolean(a.IMEIHexadecimal);
                     this.SNHex.Checked = Convert.ToBoolean(a.SNHexadecimal);
                     this.RePrintOne.Checked = Convert.ToBoolean(a.ReplayOneByOne);
-
                     if (this.RePrintOne.Checked == true)
                     {
+                        //if (this.PrintMore.Checked == true)
+                        //    this.PrintMore.Checked = false;
                         this.CheckIMEI2.Enabled = true;
                         this.CheckSIM.Enabled = true;
                         this.CheckBAT.Enabled = true;
@@ -6028,9 +6167,57 @@ namespace WindowsForms_print
                         this.RelationEquipment.Enabled = true;
                         this.RelationVIP.Enabled = true;
                         this.RelationRFID.Enabled = true;
+
+                        this.PrintNum.ReadOnly = true;
+                        this.IMEI_Start.ReadOnly = true;
+                        this.ReImeiNum1.ReadOnly = true;
+                        this.ReImeiNum2.ReadOnly = true;
+                        this.PrintNum.Clear();
+                        this.ReImeiNum1.Clear();
+                        this.ReImeiNum2.Clear();
+                        this.IMEI_Start.Clear();
+                        this.Re_IMEINum.Clear();
+                        this.Re_IMEINum.Focus();
+                        this.Re_IMEINum.ReadOnly = false;
                     }
 
-                    this.PrintMore.Checked = Convert.ToBoolean(a.BattingInBatches);
+                    this.RePrintMore.Checked = Convert.ToBoolean(a.BattingInBatches);
+                    if (this.RePrintMore.Checked == true)
+                    {
+                        //if (this.PrintMore.Checked == true)
+                        //    this.PrintMore.Checked = false;
+                        this.CheckIMEI2.Enabled = false;
+                        this.CheckSIM.Enabled = false;
+                        this.CheckBAT.Enabled = false;
+                        this.CheckICCID.Enabled = false;
+                        this.CheckMAC.Enabled = false;
+                        this.CheckEquipment.Enabled = false;
+                        this.CheckVIP.Enabled = false;
+                        this.CheckRFID.Enabled = false;
+
+                        this.RelationSN.Enabled = false;
+                        this.RelationSIM.Enabled = false;
+                        this.RelationICCID.Enabled = false;
+                        this.RelationBAT.Enabled = false;
+                        this.RelationMAC.Enabled = false;
+                        this.RelationEquipment.Enabled = false;
+                        this.RelationVIP.Enabled = false;
+                        this.RelationRFID.Enabled = false;
+
+                        this.Re_IMEINum.ReadOnly = true;
+                        this.IMEI_Start.ReadOnly = true;
+                        this.PrintNum.ReadOnly = true;
+                        this.Re_IMEINum.Clear();
+                        this.PrintNum.Clear();
+                        this.IMEI_Start.Clear();
+
+                        this.ReImeiNum1.Clear();
+                        this.ReImeiNum2.Clear();
+                        this.ReImeiNum1.Focus();
+                        this.ReImeiNum1.ReadOnly = false;
+                        this.ReImeiNum2.ReadOnly = false;
+                    }
+
                     this.Re_Nocheckcode.Checked = Convert.ToBoolean(a.NoParityBit);
                     this.RePrintHex.Checked = Convert.ToBoolean(a.Hexadecimal);
 
@@ -6053,7 +6240,7 @@ namespace WindowsForms_print
                     this.PrintMode1.Checked = Convert.ToBoolean(a.PrintMode1);
                     this.PrintMode2.Checked = Convert.ToBoolean(a.PrintMode2);
 
-                    if(this.PrintOne.Checked == false && this.PrintMore.Checked == false && this.RePrintOne.Checked == false)
+                    if(this.PrintOne.Checked == false && this.PrintMore.Checked == false && this.RePrintOne.Checked == false && this.RePrintMore.Checked == false)
                     {
                         this.PrintMore.Checked = true;
                         this.CheckIMEI2.Enabled = false;
@@ -6073,6 +6260,19 @@ namespace WindowsForms_print
                         this.RelationEquipment.Enabled = false;
                         this.RelationVIP.Enabled = false;
                         this.RelationRFID.Enabled = false;
+
+                        this.Re_IMEINum.ReadOnly = true;
+                        this.IMEI_Start.ReadOnly = true;
+                        this.ReImeiNum1.ReadOnly = true;
+                        this.ReImeiNum2.ReadOnly = true;
+                        this.Re_IMEINum.Clear();
+                        this.ReImeiNum1.Clear();
+                        this.ReImeiNum2.Clear();
+                        this.IMEI_Start.Clear();
+
+                        this.PrintNum.Clear();
+                        this.PrintNum.Focus();
+                        this.PrintNum.ReadOnly = false;
                     }
                 }
             }
@@ -6316,6 +6516,36 @@ namespace WindowsForms_print
             {
                 CheckFields[7] = "IMEI13";
             }
+        }
+
+
+        //用户登录
+        private void SiginIN_Click(object sender, EventArgs e)
+        {
+            SignIn sigin = new SignIn();
+            sigin.ShowDialog();
+            if (sigin.UserNamestr1 != "")
+            {
+                this.UserShow.Text = sigin.UserNamestr1;
+            }
+            if (sigin.Usertype1 != "")
+            {
+                this.UserTypeShow.Text = sigin.Usertype1;
+            }
+        }
+
+        //退出
+        private void QuitBt_Click(object sender, EventArgs e)
+        {
+           if( MessageBox.Show("是否退出当前账号？", "系统提示", MessageBoxButtons.OKCancel, MessageBoxIcon.Asterisk) == DialogResult.Cancel)
+            {
+                return;
+            }
+            else
+            {
+                this.UserShow.Clear();
+            }
+
         }
 
 

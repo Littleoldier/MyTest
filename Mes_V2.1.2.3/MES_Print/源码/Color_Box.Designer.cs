@@ -149,6 +149,13 @@
             this.ICCID_prefix = new System.Windows.Forms.TextBox();
             this.reminder = new System.Windows.Forms.TextBox();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
+            this.QuitBt = new System.Windows.Forms.Button();
+            this.UserLAbel = new System.Windows.Forms.Label();
+            this.UserTypeShow = new System.Windows.Forms.TextBox();
+            this.UserShow = new System.Windows.Forms.TextBox();
+            this.labelUserType = new System.Windows.Forms.Label();
+            this.SiginIN = new System.Windows.Forms.Button();
+            this.Bind_DGV = new System.Windows.Forms.DataGridView();
             this.CheckSN = new System.Windows.Forms.CheckBox();
             this.CheckRFID = new System.Windows.Forms.CheckBox();
             this.CheckEquipment = new System.Windows.Forms.CheckBox();
@@ -157,12 +164,22 @@
             this.CheckBAT = new System.Windows.Forms.CheckBox();
             this.CheckVIP = new System.Windows.Forms.CheckBox();
             this.CheckSIM = new System.Windows.Forms.CheckBox();
+            this.BIndingCount = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.BindingState = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.IMEINumber = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.SIMNumber = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.VIPNumber = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.BATNumber = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.ICCIDNumber = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.MACNumber = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.EquipmentNumber = new System.Windows.Forms.DataGridViewTextBoxColumn();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer2)).BeginInit();
             this.splitContainer2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
             this.splitContainer1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.Bind_DGV)).BeginInit();
             this.SuspendLayout();
             // 
             // splitContainer2
@@ -175,7 +192,7 @@
             // NoCheckCode
             // 
             this.NoCheckCode.AutoSize = true;
-            this.NoCheckCode.Location = new System.Drawing.Point(895, 154);
+            this.NoCheckCode.Location = new System.Drawing.Point(1735, 317);
             this.NoCheckCode.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.NoCheckCode.Name = "NoCheckCode";
             this.NoCheckCode.Size = new System.Drawing.Size(119, 19);
@@ -186,7 +203,7 @@
             // choose_bat
             // 
             this.choose_bat.AutoSize = true;
-            this.choose_bat.Location = new System.Drawing.Point(1003, 26);
+            this.choose_bat.Location = new System.Drawing.Point(1451, 238);
             this.choose_bat.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.choose_bat.Name = "choose_bat";
             this.choose_bat.Size = new System.Drawing.Size(83, 19);
@@ -198,7 +215,7 @@
             // choose_iccid
             // 
             this.choose_iccid.AutoSize = true;
-            this.choose_iccid.Location = new System.Drawing.Point(1120, 26);
+            this.choose_iccid.Location = new System.Drawing.Point(1569, 238);
             this.choose_iccid.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.choose_iccid.Name = "choose_iccid";
             this.choose_iccid.Size = new System.Drawing.Size(99, 19);
@@ -210,7 +227,7 @@
             // choose_vip
             // 
             this.choose_vip.AutoSize = true;
-            this.choose_vip.Location = new System.Drawing.Point(895, 26);
+            this.choose_vip.Location = new System.Drawing.Point(1569, 203);
             this.choose_vip.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.choose_vip.Name = "choose_vip";
             this.choose_vip.Size = new System.Drawing.Size(83, 19);
@@ -222,7 +239,7 @@
             // choose_mac
             // 
             this.choose_mac.AutoSize = true;
-            this.choose_mac.Location = new System.Drawing.Point(1245, 26);
+            this.choose_mac.Location = new System.Drawing.Point(1451, 276);
             this.choose_mac.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.choose_mac.Name = "choose_mac";
             this.choose_mac.Size = new System.Drawing.Size(104, 19);
@@ -234,7 +251,7 @@
             // choose_sim
             // 
             this.choose_sim.AutoSize = true;
-            this.choose_sim.Location = new System.Drawing.Point(779, 26);
+            this.choose_sim.Location = new System.Drawing.Point(1452, 203);
             this.choose_sim.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.choose_sim.Name = "choose_sim";
             this.choose_sim.Size = new System.Drawing.Size(83, 19);
@@ -246,7 +263,7 @@
             // RemindInputName
             // 
             this.RemindInputName.AutoSize = true;
-            this.RemindInputName.Location = new System.Drawing.Point(787, 212);
+            this.RemindInputName.Location = new System.Drawing.Point(762, 23);
             this.RemindInputName.Name = "RemindInputName";
             this.RemindInputName.Size = new System.Drawing.Size(122, 15);
             this.RemindInputName.TabIndex = 0;
@@ -255,7 +272,7 @@
             // choose_Equipment
             // 
             this.choose_Equipment.AutoSize = true;
-            this.choose_Equipment.Location = new System.Drawing.Point(1362, 26);
+            this.choose_Equipment.Location = new System.Drawing.Point(1569, 276);
             this.choose_Equipment.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.choose_Equipment.Name = "choose_Equipment";
             this.choose_Equipment.Size = new System.Drawing.Size(104, 19);
@@ -267,7 +284,7 @@
             // label27
             // 
             this.label27.AutoSize = true;
-            this.label27.Location = new System.Drawing.Point(1034, 212);
+            this.label27.Location = new System.Drawing.Point(1009, 23);
             this.label27.Name = "label27";
             this.label27.Size = new System.Drawing.Size(82, 15);
             this.label27.TabIndex = 8;
@@ -276,7 +293,7 @@
             // NoPaper
             // 
             this.NoPaper.AutoSize = true;
-            this.NoPaper.Location = new System.Drawing.Point(779, 154);
+            this.NoPaper.Location = new System.Drawing.Point(1735, 276);
             this.NoPaper.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.NoPaper.Name = "NoPaper";
             this.NoPaper.Size = new System.Drawing.Size(104, 19);
@@ -298,7 +315,7 @@
             // 
             this.Re_RemindInputName.AutoSize = true;
             this.Re_RemindInputName.Font = new System.Drawing.Font("宋体", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.Re_RemindInputName.Location = new System.Drawing.Point(1263, 212);
+            this.Re_RemindInputName.Location = new System.Drawing.Point(1238, 23);
             this.Re_RemindInputName.Name = "Re_RemindInputName";
             this.Re_RemindInputName.Size = new System.Drawing.Size(144, 15);
             this.Re_RemindInputName.TabIndex = 9;
@@ -332,7 +349,7 @@
             // 
             // IMEI_Start
             // 
-            this.IMEI_Start.Location = new System.Drawing.Point(779, 235);
+            this.IMEI_Start.Location = new System.Drawing.Point(754, 46);
             this.IMEI_Start.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.IMEI_Start.Name = "IMEI_Start";
             this.IMEI_Start.ReadOnly = true;
@@ -354,7 +371,7 @@
             this.AutoTest.AutoSize = true;
             this.AutoTest.Checked = true;
             this.AutoTest.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.AutoTest.Location = new System.Drawing.Point(1003, 110);
+            this.AutoTest.Location = new System.Drawing.Point(1731, 17);
             this.AutoTest.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.AutoTest.Name = "AutoTest";
             this.AutoTest.Size = new System.Drawing.Size(74, 19);
@@ -373,7 +390,7 @@
             // 
             // PrintDate
             // 
-            this.PrintDate.Location = new System.Drawing.Point(1013, 235);
+            this.PrintDate.Location = new System.Drawing.Point(988, 46);
             this.PrintDate.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.PrintDate.Name = "PrintDate";
             this.PrintDate.ReadOnly = true;
@@ -404,7 +421,7 @@
             // 
             // Re_IMEINum
             // 
-            this.Re_IMEINum.Location = new System.Drawing.Point(1245, 235);
+            this.Re_IMEINum.Location = new System.Drawing.Point(1220, 46);
             this.Re_IMEINum.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.Re_IMEINum.Name = "Re_IMEINum";
             this.Re_IMEINum.ReadOnly = true;
@@ -415,7 +432,7 @@
             // label13
             // 
             this.label13.AutoSize = true;
-            this.label13.Location = new System.Drawing.Point(15, 359);
+            this.label13.Location = new System.Drawing.Point(15, 353);
             this.label13.Name = "label13";
             this.label13.Size = new System.Drawing.Size(99, 15);
             this.label13.TabIndex = 11;
@@ -426,7 +443,7 @@
             this.Couple.AutoSize = true;
             this.Couple.Checked = true;
             this.Couple.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.Couple.Location = new System.Drawing.Point(1120, 110);
+            this.Couple.Location = new System.Drawing.Point(1820, 17);
             this.Couple.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.Couple.Name = "Couple";
             this.Couple.Size = new System.Drawing.Size(74, 19);
@@ -446,7 +463,7 @@
             // label29
             // 
             this.label29.AutoSize = true;
-            this.label29.Location = new System.Drawing.Point(791, 341);
+            this.label29.Location = new System.Drawing.Point(766, 152);
             this.label29.Name = "label29";
             this.label29.Size = new System.Drawing.Size(106, 15);
             this.label29.TabIndex = 14;
@@ -483,7 +500,7 @@
             // 
             // SIMStart
             // 
-            this.SIMStart.Location = new System.Drawing.Point(779, 362);
+            this.SIMStart.Location = new System.Drawing.Point(754, 173);
             this.SIMStart.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.SIMStart.Name = "SIMStart";
             this.SIMStart.ReadOnly = true;
@@ -505,7 +522,7 @@
             this.WriteImei.AutoSize = true;
             this.WriteImei.Checked = true;
             this.WriteImei.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.WriteImei.Location = new System.Drawing.Point(1245, 110);
+            this.WriteImei.Location = new System.Drawing.Point(1731, 52);
             this.WriteImei.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.WriteImei.Name = "WriteImei";
             this.WriteImei.Size = new System.Drawing.Size(74, 19);
@@ -525,7 +542,7 @@
             // label31
             // 
             this.label31.AutoSize = true;
-            this.label31.Location = new System.Drawing.Point(1026, 342);
+            this.label31.Location = new System.Drawing.Point(1001, 153);
             this.label31.Name = "label31";
             this.label31.Size = new System.Drawing.Size(106, 15);
             this.label31.TabIndex = 18;
@@ -562,7 +579,7 @@
             // 
             // VIPStart
             // 
-            this.VIPStart.Location = new System.Drawing.Point(1013, 362);
+            this.VIPStart.Location = new System.Drawing.Point(988, 173);
             this.VIPStart.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.VIPStart.Name = "VIPStart";
             this.VIPStart.ReadOnly = true;
@@ -584,7 +601,7 @@
             this.ParamDownload.AutoSize = true;
             this.ParamDownload.Checked = true;
             this.ParamDownload.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.ParamDownload.Location = new System.Drawing.Point(1362, 110);
+            this.ParamDownload.Location = new System.Drawing.Point(1820, 52);
             this.ParamDownload.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.ParamDownload.Name = "ParamDownload";
             this.ParamDownload.Size = new System.Drawing.Size(74, 19);
@@ -595,7 +612,7 @@
             // label26
             // 
             this.label26.AutoSize = true;
-            this.label26.Location = new System.Drawing.Point(1263, 342);
+            this.label26.Location = new System.Drawing.Point(1238, 153);
             this.label26.Name = "label26";
             this.label26.Size = new System.Drawing.Size(106, 15);
             this.label26.TabIndex = 110;
@@ -633,7 +650,7 @@
             // label30
             // 
             this.label30.AutoSize = true;
-            this.label30.Location = new System.Drawing.Point(791, 412);
+            this.label30.Location = new System.Drawing.Point(766, 223);
             this.label30.Name = "label30";
             this.label30.Size = new System.Drawing.Size(122, 15);
             this.label30.TabIndex = 110;
@@ -673,7 +690,7 @@
             // label32
             // 
             this.label32.AutoSize = true;
-            this.label32.Location = new System.Drawing.Point(1026, 412);
+            this.label32.Location = new System.Drawing.Point(1001, 223);
             this.label32.Name = "label32";
             this.label32.Size = new System.Drawing.Size(112, 15);
             this.label32.TabIndex = 110;
@@ -711,7 +728,7 @@
             // label36
             // 
             this.label36.AutoSize = true;
-            this.label36.Location = new System.Drawing.Point(1261, 412);
+            this.label36.Location = new System.Drawing.Point(1236, 223);
             this.label36.Name = "label36";
             this.label36.Size = new System.Drawing.Size(112, 15);
             this.label36.TabIndex = 110;
@@ -730,7 +747,7 @@
             // 
             // IMEI_num1
             // 
-            this.IMEI_num1.Location = new System.Drawing.Point(127, 359);
+            this.IMEI_num1.Location = new System.Drawing.Point(127, 353);
             this.IMEI_num1.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.IMEI_num1.Name = "IMEI_num1";
             this.IMEI_num1.ReadOnly = true;
@@ -739,7 +756,7 @@
             // 
             // BATStart
             // 
-            this.BATStart.Location = new System.Drawing.Point(1245, 362);
+            this.BATStart.Location = new System.Drawing.Point(1220, 173);
             this.BATStart.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.BATStart.Name = "BATStart";
             this.BATStart.ReadOnly = true;
@@ -775,7 +792,7 @@
             // 
             // ICCIDStart
             // 
-            this.ICCIDStart.Location = new System.Drawing.Point(779, 434);
+            this.ICCIDStart.Location = new System.Drawing.Point(754, 245);
             this.ICCIDStart.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.ICCIDStart.Name = "ICCIDStart";
             this.ICCIDStart.ReadOnly = true;
@@ -812,7 +829,7 @@
             // 
             // MACStart
             // 
-            this.MACStart.Location = new System.Drawing.Point(1013, 434);
+            this.MACStart.Location = new System.Drawing.Point(988, 245);
             this.MACStart.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.MACStart.Name = "MACStart";
             this.MACStart.ReadOnly = true;
@@ -850,7 +867,7 @@
             // 
             // EquipmentStart
             // 
-            this.EquipmentStart.Location = new System.Drawing.Point(1247, 434);
+            this.EquipmentStart.Location = new System.Drawing.Point(1222, 245);
             this.EquipmentStart.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.EquipmentStart.Name = "EquipmentStart";
             this.EquipmentStart.ReadOnly = true;
@@ -891,7 +908,7 @@
             // choose_reprint
             // 
             this.choose_reprint.AutoSize = true;
-            this.choose_reprint.Location = new System.Drawing.Point(1247, 211);
+            this.choose_reprint.Location = new System.Drawing.Point(1222, 22);
             this.choose_reprint.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.choose_reprint.Name = "choose_reprint";
             this.choose_reprint.Size = new System.Drawing.Size(18, 17);
@@ -931,7 +948,7 @@
             // label37
             // 
             this.label37.AutoSize = true;
-            this.label37.Location = new System.Drawing.Point(791, 275);
+            this.label37.Location = new System.Drawing.Point(766, 86);
             this.label37.Name = "label37";
             this.label37.Size = new System.Drawing.Size(38, 15);
             this.label37.TabIndex = 128;
@@ -968,7 +985,7 @@
             // 
             // ShowSN
             // 
-            this.ShowSN.Location = new System.Drawing.Point(779, 296);
+            this.ShowSN.Location = new System.Drawing.Point(754, 107);
             this.ShowSN.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.ShowSN.Name = "ShowSN";
             this.ShowSN.ReadOnly = true;
@@ -978,7 +995,7 @@
             // label25
             // 
             this.label25.AutoSize = true;
-            this.label25.Location = new System.Drawing.Point(363, 359);
+            this.label25.Location = new System.Drawing.Point(363, 353);
             this.label25.Name = "label25";
             this.label25.Size = new System.Drawing.Size(121, 15);
             this.label25.TabIndex = 45;
@@ -1007,7 +1024,7 @@
             // label38
             // 
             this.label38.AutoSize = true;
-            this.label38.Location = new System.Drawing.Point(1473, 214);
+            this.label38.Location = new System.Drawing.Point(1449, 378);
             this.label38.Name = "label38";
             this.label38.Size = new System.Drawing.Size(120, 15);
             this.label38.TabIndex = 130;
@@ -1028,7 +1045,7 @@
             // label28
             // 
             this.label28.AutoSize = true;
-            this.label28.Location = new System.Drawing.Point(1473, 275);
+            this.label28.Location = new System.Drawing.Point(1449, 452);
             this.label28.Name = "label28";
             this.label28.Size = new System.Drawing.Size(120, 15);
             this.label28.TabIndex = 130;
@@ -1046,7 +1063,7 @@
             // UpdateIMEIBySim
             // 
             this.UpdateIMEIBySim.AutoSize = true;
-            this.UpdateIMEIBySim.Location = new System.Drawing.Point(1491, 26);
+            this.UpdateIMEIBySim.Location = new System.Drawing.Point(1735, 203);
             this.UpdateIMEIBySim.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.UpdateIMEIBySim.Name = "UpdateIMEIBySim";
             this.UpdateIMEIBySim.Size = new System.Drawing.Size(145, 19);
@@ -1066,7 +1083,7 @@
             // 
             // Tempalte1Num
             // 
-            this.Tempalte1Num.Location = new System.Drawing.Point(1475, 235);
+            this.Tempalte1Num.Location = new System.Drawing.Point(1451, 399);
             this.Tempalte1Num.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.Tempalte1Num.Name = "Tempalte1Num";
             this.Tempalte1Num.Size = new System.Drawing.Size(99, 25);
@@ -1106,7 +1123,7 @@
             // UpdataSimByImei
             // 
             this.UpdataSimByImei.AutoSize = true;
-            this.UpdataSimByImei.Location = new System.Drawing.Point(1491, 70);
+            this.UpdataSimByImei.Location = new System.Drawing.Point(1735, 238);
             this.UpdataSimByImei.Margin = new System.Windows.Forms.Padding(4);
             this.UpdataSimByImei.Name = "UpdataSimByImei";
             this.UpdataSimByImei.Size = new System.Drawing.Size(145, 19);
@@ -1117,7 +1134,7 @@
             // 
             // VIP_digits
             // 
-            this.VIP_digits.Location = new System.Drawing.Point(496, 359);
+            this.VIP_digits.Location = new System.Drawing.Point(496, 353);
             this.VIP_digits.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.VIP_digits.Name = "VIP_digits";
             this.VIP_digits.ReadOnly = true;
@@ -1126,7 +1143,7 @@
             // 
             // Tempalte2Num
             // 
-            this.Tempalte2Num.Location = new System.Drawing.Point(1475, 296);
+            this.Tempalte2Num.Location = new System.Drawing.Point(1451, 473);
             this.Tempalte2Num.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.Tempalte2Num.Name = "Tempalte2Num";
             this.Tempalte2Num.Size = new System.Drawing.Size(99, 25);
@@ -1136,7 +1153,7 @@
             // 
             // VIP_prefix
             // 
-            this.VIP_prefix.Location = new System.Drawing.Point(583, 359);
+            this.VIP_prefix.Location = new System.Drawing.Point(583, 353);
             this.VIP_prefix.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.VIP_prefix.Name = "VIP_prefix";
             this.VIP_prefix.ReadOnly = true;
@@ -1146,7 +1163,7 @@
             // label12
             // 
             this.label12.AutoSize = true;
-            this.label12.Location = new System.Drawing.Point(32, 439);
+            this.label12.Location = new System.Drawing.Point(32, 440);
             this.label12.Name = "label12";
             this.label12.Size = new System.Drawing.Size(82, 15);
             this.label12.TabIndex = 10;
@@ -1154,7 +1171,7 @@
             // 
             // GLB_SN
             // 
-            this.GLB_SN.Location = new System.Drawing.Point(1013, 295);
+            this.GLB_SN.Location = new System.Drawing.Point(988, 106);
             this.GLB_SN.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.GLB_SN.Name = "GLB_SN";
             this.GLB_SN.ReadOnly = true;
@@ -1185,7 +1202,7 @@
             // 
             // SoftwareVersion
             // 
-            this.SoftwareVersion.Location = new System.Drawing.Point(127, 432);
+            this.SoftwareVersion.Location = new System.Drawing.Point(127, 433);
             this.SoftwareVersion.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.SoftwareVersion.Name = "SoftwareVersion";
             this.SoftwareVersion.ReadOnly = true;
@@ -1213,7 +1230,7 @@
             // label6
             // 
             this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(357, 436);
+            this.label6.Location = new System.Drawing.Point(357, 437);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(127, 15);
             this.label6.TabIndex = 45;
@@ -1222,7 +1239,7 @@
             // label23
             // 
             this.label23.AutoSize = true;
-            this.label23.Location = new System.Drawing.Point(1034, 275);
+            this.label23.Location = new System.Drawing.Point(1009, 86);
             this.label23.Name = "label23";
             this.label23.Size = new System.Drawing.Size(83, 15);
             this.label23.TabIndex = 136;
@@ -1242,7 +1259,7 @@
             this.GPS.AutoSize = true;
             this.GPS.Checked = true;
             this.GPS.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.GPS.Location = new System.Drawing.Point(1491, 110);
+            this.GPS.Location = new System.Drawing.Point(1731, 90);
             this.GPS.Margin = new System.Windows.Forms.Padding(4);
             this.GPS.Name = "GPS";
             this.GPS.Size = new System.Drawing.Size(82, 19);
@@ -1266,7 +1283,7 @@
             // label39
             // 
             this.label39.AutoSize = true;
-            this.label39.Location = new System.Drawing.Point(1261, 275);
+            this.label39.Location = new System.Drawing.Point(1236, 86);
             this.label39.Name = "label39";
             this.label39.Size = new System.Drawing.Size(54, 15);
             this.label39.TabIndex = 136;
@@ -1274,7 +1291,7 @@
             // 
             // Equipment_digits
             // 
-            this.Equipment_digits.Location = new System.Drawing.Point(497, 432);
+            this.Equipment_digits.Location = new System.Drawing.Point(497, 433);
             this.Equipment_digits.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.Equipment_digits.Name = "Equipment_digits";
             this.Equipment_digits.ReadOnly = true;
@@ -1314,7 +1331,7 @@
             // 
             // Equipment_prefix
             // 
-            this.Equipment_prefix.Location = new System.Drawing.Point(584, 432);
+            this.Equipment_prefix.Location = new System.Drawing.Point(584, 433);
             this.Equipment_prefix.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.Equipment_prefix.Name = "Equipment_prefix";
             this.Equipment_prefix.ReadOnly = true;
@@ -1323,7 +1340,7 @@
             // 
             // RFIDStart
             // 
-            this.RFIDStart.Location = new System.Drawing.Point(1245, 295);
+            this.RFIDStart.Location = new System.Drawing.Point(1220, 106);
             this.RFIDStart.Margin = new System.Windows.Forms.Padding(4);
             this.RFIDStart.Name = "RFIDStart";
             this.RFIDStart.ReadOnly = true;
@@ -1344,13 +1361,13 @@
             this.reminder.BackColor = System.Drawing.Color.Linen;
             this.reminder.Font = new System.Drawing.Font("宋体", 16.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.reminder.ForeColor = System.Drawing.Color.Red;
-            this.reminder.Location = new System.Drawing.Point(787, 483);
+            this.reminder.Location = new System.Drawing.Point(756, 292);
             this.reminder.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.reminder.Multiline = true;
             this.reminder.Name = "reminder";
             this.reminder.ReadOnly = true;
             this.reminder.ScrollBars = System.Windows.Forms.ScrollBars.Both;
-            this.reminder.Size = new System.Drawing.Size(669, 252);
+            this.reminder.Size = new System.Drawing.Size(669, 207);
             this.reminder.TabIndex = 133;
             this.reminder.WordWrap = false;
             // 
@@ -1367,6 +1384,12 @@
             this.splitContainer1.Panel1.AllowDrop = true;
             this.splitContainer1.Panel1.AutoScroll = true;
             this.splitContainer1.Panel1.BackColor = System.Drawing.Color.Linen;
+            this.splitContainer1.Panel1.Controls.Add(this.QuitBt);
+            this.splitContainer1.Panel1.Controls.Add(this.UserLAbel);
+            this.splitContainer1.Panel1.Controls.Add(this.UserTypeShow);
+            this.splitContainer1.Panel1.Controls.Add(this.UserShow);
+            this.splitContainer1.Panel1.Controls.Add(this.labelUserType);
+            this.splitContainer1.Panel1.Controls.Add(this.SiginIN);
             this.splitContainer1.Panel1.Controls.Add(this.Re_Tem2);
             this.splitContainer1.Panel1.Controls.Add(this.Re_Tem1);
             this.splitContainer1.Panel1.Controls.Add(this.Refresh_template);
@@ -1393,6 +1416,7 @@
             this.splitContainer1.Panel2.AllowDrop = true;
             this.splitContainer1.Panel2.AutoScroll = true;
             this.splitContainer1.Panel2.BackColor = System.Drawing.Color.Linen;
+            this.splitContainer1.Panel2.Controls.Add(this.Bind_DGV);
             this.splitContainer1.Panel2.Controls.Add(this.CheckSN);
             this.splitContainer1.Panel2.Controls.Add(this.CheckRFID);
             this.splitContainer1.Panel2.Controls.Add(this.CheckEquipment);
@@ -1501,14 +1525,93 @@
             this.splitContainer1.Panel2.Controls.Add(this.VIPStart);
             this.splitContainer1.Panel2.Controls.Add(this.label30);
             this.splitContainer1.Panel2.Controls.Add(this.label26);
-            this.splitContainer1.Size = new System.Drawing.Size(1700, 900);
+            this.splitContainer1.Size = new System.Drawing.Size(2023, 900);
             this.splitContainer1.SplitterDistance = 149;
             this.splitContainer1.TabIndex = 0;
+            // 
+            // QuitBt
+            // 
+            this.QuitBt.Location = new System.Drawing.Point(1724, 91);
+            this.QuitBt.Name = "QuitBt";
+            this.QuitBt.Size = new System.Drawing.Size(144, 35);
+            this.QuitBt.TabIndex = 134;
+            this.QuitBt.Text = "退  出";
+            this.QuitBt.UseVisualStyleBackColor = true;
+            this.QuitBt.Click += new System.EventHandler(this.QuitBt_Click);
+            // 
+            // UserLAbel
+            // 
+            this.UserLAbel.AutoSize = true;
+            this.UserLAbel.Location = new System.Drawing.Point(1649, 16);
+            this.UserLAbel.Name = "UserLAbel";
+            this.UserLAbel.Size = new System.Drawing.Size(67, 15);
+            this.UserLAbel.TabIndex = 131;
+            this.UserLAbel.Text = "用户名：";
+            // 
+            // UserTypeShow
+            // 
+            this.UserTypeShow.Location = new System.Drawing.Point(1546, 98);
+            this.UserTypeShow.Name = "UserTypeShow";
+            this.UserTypeShow.ReadOnly = true;
+            this.UserTypeShow.Size = new System.Drawing.Size(144, 25);
+            this.UserTypeShow.TabIndex = 133;
+            this.UserTypeShow.Visible = false;
+            // 
+            // UserShow
+            // 
+            this.UserShow.Location = new System.Drawing.Point(1724, 13);
+            this.UserShow.Name = "UserShow";
+            this.UserShow.ReadOnly = true;
+            this.UserShow.Size = new System.Drawing.Size(144, 25);
+            this.UserShow.TabIndex = 130;
+            // 
+            // labelUserType
+            // 
+            this.labelUserType.AutoSize = true;
+            this.labelUserType.Location = new System.Drawing.Point(1461, 98);
+            this.labelUserType.Name = "labelUserType";
+            this.labelUserType.Size = new System.Drawing.Size(67, 15);
+            this.labelUserType.TabIndex = 132;
+            this.labelUserType.Text = "用户类：";
+            this.labelUserType.Visible = false;
+            // 
+            // SiginIN
+            // 
+            this.SiginIN.Location = new System.Drawing.Point(1724, 46);
+            this.SiginIN.Name = "SiginIN";
+            this.SiginIN.Size = new System.Drawing.Size(144, 33);
+            this.SiginIN.TabIndex = 129;
+            this.SiginIN.Text = "登  录";
+            this.SiginIN.UseVisualStyleBackColor = true;
+            this.SiginIN.Click += new System.EventHandler(this.SiginIN_Click);
+            // 
+            // Bind_DGV
+            // 
+            this.Bind_DGV.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.Bind_DGV.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.BIndingCount,
+            this.BindingState,
+            this.IMEINumber,
+            this.SIMNumber,
+            this.VIPNumber,
+            this.BATNumber,
+            this.ICCIDNumber,
+            this.MACNumber,
+            this.EquipmentNumber});
+            this.Bind_DGV.Location = new System.Drawing.Point(2, 559);
+            this.Bind_DGV.Name = "Bind_DGV";
+            this.Bind_DGV.ReadOnly = true;
+            this.Bind_DGV.RowHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.None;
+            this.Bind_DGV.RowHeadersVisible = false;
+            this.Bind_DGV.RowTemplate.Height = 27;
+            this.Bind_DGV.ShowEditingIcon = false;
+            this.Bind_DGV.Size = new System.Drawing.Size(2009, 176);
+            this.Bind_DGV.TabIndex = 150;
             // 
             // CheckSN
             // 
             this.CheckSN.AutoSize = true;
-            this.CheckSN.Location = new System.Drawing.Point(895, 110);
+            this.CheckSN.Location = new System.Drawing.Point(1452, 17);
             this.CheckSN.Name = "CheckSN";
             this.CheckSN.Size = new System.Drawing.Size(60, 19);
             this.CheckSN.TabIndex = 148;
@@ -1519,7 +1622,7 @@
             // CheckRFID
             // 
             this.CheckRFID.AutoSize = true;
-            this.CheckRFID.Location = new System.Drawing.Point(779, 110);
+            this.CheckRFID.Location = new System.Drawing.Point(1563, 131);
             this.CheckRFID.Name = "CheckRFID";
             this.CheckRFID.Size = new System.Drawing.Size(76, 19);
             this.CheckRFID.TabIndex = 147;
@@ -1530,7 +1633,7 @@
             // CheckEquipment
             // 
             this.CheckEquipment.AutoSize = true;
-            this.CheckEquipment.Location = new System.Drawing.Point(1362, 70);
+            this.CheckEquipment.Location = new System.Drawing.Point(1452, 90);
             this.CheckEquipment.Name = "CheckEquipment";
             this.CheckEquipment.Size = new System.Drawing.Size(89, 19);
             this.CheckEquipment.TabIndex = 146;
@@ -1541,7 +1644,7 @@
             // CheckMAC
             // 
             this.CheckMAC.AutoSize = true;
-            this.CheckMAC.Location = new System.Drawing.Point(1245, 70);
+            this.CheckMAC.Location = new System.Drawing.Point(1563, 52);
             this.CheckMAC.Name = "CheckMAC";
             this.CheckMAC.Size = new System.Drawing.Size(89, 19);
             this.CheckMAC.TabIndex = 145;
@@ -1552,7 +1655,7 @@
             // CheckICCID
             // 
             this.CheckICCID.AutoSize = true;
-            this.CheckICCID.Location = new System.Drawing.Point(1120, 70);
+            this.CheckICCID.Location = new System.Drawing.Point(1452, 52);
             this.CheckICCID.Name = "CheckICCID";
             this.CheckICCID.Size = new System.Drawing.Size(84, 19);
             this.CheckICCID.TabIndex = 144;
@@ -1563,7 +1666,7 @@
             // CheckBAT
             // 
             this.CheckBAT.AutoSize = true;
-            this.CheckBAT.Location = new System.Drawing.Point(1003, 70);
+            this.CheckBAT.Location = new System.Drawing.Point(1452, 131);
             this.CheckBAT.Name = "CheckBAT";
             this.CheckBAT.Size = new System.Drawing.Size(68, 19);
             this.CheckBAT.TabIndex = 143;
@@ -1574,7 +1677,7 @@
             // CheckVIP
             // 
             this.CheckVIP.AutoSize = true;
-            this.CheckVIP.Location = new System.Drawing.Point(895, 70);
+            this.CheckVIP.Location = new System.Drawing.Point(1563, 90);
             this.CheckVIP.Name = "CheckVIP";
             this.CheckVIP.Size = new System.Drawing.Size(68, 19);
             this.CheckVIP.TabIndex = 142;
@@ -1585,7 +1688,7 @@
             // CheckSIM
             // 
             this.CheckSIM.AutoSize = true;
-            this.CheckSIM.Location = new System.Drawing.Point(779, 70);
+            this.CheckSIM.Location = new System.Drawing.Point(1563, 17);
             this.CheckSIM.Name = "CheckSIM";
             this.CheckSIM.Size = new System.Drawing.Size(68, 19);
             this.CheckSIM.TabIndex = 141;
@@ -1593,12 +1696,65 @@
             this.CheckSIM.UseVisualStyleBackColor = true;
             this.CheckSIM.CheckedChanged += new System.EventHandler(this.CheckSIM_CheckedChanged);
             // 
+            // BIndingCount
+            // 
+            this.BIndingCount.HeaderText = "累计数";
+            this.BIndingCount.Name = "BIndingCount";
+            // 
+            // BindingState
+            // 
+            this.BindingState.HeaderText = "绑定状态";
+            this.BindingState.Name = "BindingState";
+            this.BindingState.Width = 128;
+            // 
+            // IMEINumber
+            // 
+            this.IMEINumber.HeaderText = "IMEI";
+            this.IMEINumber.Name = "IMEINumber";
+            this.IMEINumber.Width = 180;
+            // 
+            // SIMNumber
+            // 
+            this.SIMNumber.HeaderText = "SIM";
+            this.SIMNumber.Name = "SIMNumber";
+            this.SIMNumber.Width = 180;
+            // 
+            // VIPNumber
+            // 
+            this.VIPNumber.HeaderText = "VIP";
+            this.VIPNumber.Name = "VIPNumber";
+            this.VIPNumber.Width = 180;
+            // 
+            // BATNumber
+            // 
+            this.BATNumber.HeaderText = "BAT";
+            this.BATNumber.Name = "BATNumber";
+            this.BATNumber.Width = 180;
+            // 
+            // ICCIDNumber
+            // 
+            this.ICCIDNumber.HeaderText = "ICCID";
+            this.ICCIDNumber.Name = "ICCIDNumber";
+            this.ICCIDNumber.Width = 180;
+            // 
+            // MACNumber
+            // 
+            this.MACNumber.HeaderText = "MAC";
+            this.MACNumber.Name = "MACNumber";
+            this.MACNumber.Width = 180;
+            // 
+            // EquipmentNumber
+            // 
+            this.EquipmentNumber.HeaderText = "Equipment";
+            this.EquipmentNumber.Name = "EquipmentNumber";
+            this.EquipmentNumber.Width = 180;
+            // 
             // Color_Box
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.Linen;
-            this.ClientSize = new System.Drawing.Size(1700, 900);
+            this.ClientSize = new System.Drawing.Size(2023, 900);
             this.Controls.Add(this.splitContainer1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
@@ -1613,6 +1769,7 @@
             this.splitContainer1.Panel2.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).EndInit();
             this.splitContainer1.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.Bind_DGV)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -1747,5 +1904,21 @@
         private System.Windows.Forms.CheckBox CheckBAT;
         private System.Windows.Forms.CheckBox CheckVIP;
         private System.Windows.Forms.CheckBox CheckSIM;
+        private System.Windows.Forms.Label UserLAbel;
+        private System.Windows.Forms.TextBox UserShow;
+        private System.Windows.Forms.Button SiginIN;
+        private System.Windows.Forms.Button QuitBt;
+        private System.Windows.Forms.TextBox UserTypeShow;
+        private System.Windows.Forms.Label labelUserType;
+        private System.Windows.Forms.DataGridView Bind_DGV;
+        private System.Windows.Forms.DataGridViewTextBoxColumn BIndingCount;
+        private System.Windows.Forms.DataGridViewTextBoxColumn BindingState;
+        private System.Windows.Forms.DataGridViewTextBoxColumn IMEINumber;
+        private System.Windows.Forms.DataGridViewTextBoxColumn SIMNumber;
+        private System.Windows.Forms.DataGridViewTextBoxColumn VIPNumber;
+        private System.Windows.Forms.DataGridViewTextBoxColumn BATNumber;
+        private System.Windows.Forms.DataGridViewTextBoxColumn ICCIDNumber;
+        private System.Windows.Forms.DataGridViewTextBoxColumn MACNumber;
+        private System.Windows.Forms.DataGridViewTextBoxColumn EquipmentNumber;
     }
 }

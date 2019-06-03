@@ -27,6 +27,18 @@ namespace Print.Message.Bll
             }
         }
 
+        public bool InsertPrintMessageBLL(PrintMessage list)
+        {
+            if (PMD.InsertPrintMessageDAL(list) > 0)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
         public bool CheckCHOrJSIMEIBLL(string IMEInumber, int PrintType)
         {
             if (PMD.CheckCHOrJSIMEIDAL(IMEInumber,PrintType) > 0)
@@ -39,9 +51,9 @@ namespace Print.Message.Bll
             }
         }
 
-        public bool UpdateSN_SIM_ICCIDBLL(string IMEI, string CHPrintTime, string lj1, string lj2, string SIM, string ICCID, string SN, string zhidan, string RFID)
+        public bool UpdateSN_SIM_ICCIDBLL(string IMEI, string CHPrintTime, string lj1, string lj2, string SIM, string ICCID, string SN, string zhidan, string RFID, string CHUserName)
         {
-            if (PMD.UpdateSN_SIM_ICCIDDAL(IMEI, CHPrintTime, lj1, lj2, SIM, ICCID, SN,zhidan,RFID) > 0)
+            if (PMD.UpdateSN_SIM_ICCIDDAL(IMEI, CHPrintTime, lj1, lj2, SIM, ICCID, SN,zhidan,RFID, CHUserName) > 0)
             {
                 return true;
             }
@@ -51,9 +63,9 @@ namespace Print.Message.Bll
             }
         }
 
-        public bool UpdateSN_VIPBLL(string IMEI, string CHPrintTime, string lj1, string lj2, string VIP, string SN,string zhidan, string RFID)
+        public bool UpdateSN_VIPBLL(string IMEI, string CHPrintTime, string lj1, string lj2, string VIP, string SN,string zhidan, string RFID, string CHUserName)
         {
-            if (PMD.UpdateSN_VIPDAL(IMEI, CHPrintTime, lj1, lj2, VIP, SN,zhidan,RFID) > 0)
+            if (PMD.UpdateSN_VIPDAL(IMEI, CHPrintTime, lj1, lj2, VIP, SN,zhidan,RFID, CHUserName) > 0)
             {
                 return true;
             }
@@ -63,9 +75,9 @@ namespace Print.Message.Bll
             }
         }
 
-        public bool UpdateSN_SIM_VIP_ICCIDBLL(string IMEI, string CHPrintTime, string lj1, string lj2, string SIM, string VIP, string ICCID, string SN,string zhidan, string RFID)
+        public bool UpdateSN_SIM_VIP_ICCIDBLL(string IMEI, string CHPrintTime, string lj1, string lj2, string SIM, string VIP, string ICCID, string SN,string zhidan, string RFID, string CHUserName)
         {
-            if (PMD.UpdateSN_SIM_VIP_ICCIDDAL(IMEI, CHPrintTime, lj1, lj2, SIM, VIP,ICCID, SN,zhidan,RFID) > 0)
+            if (PMD.UpdateSN_SIM_VIP_ICCIDDAL(IMEI, CHPrintTime, lj1, lj2, SIM, VIP,ICCID, SN,zhidan,RFID, CHUserName) > 0)
             {
                 return true;
             }
@@ -75,9 +87,9 @@ namespace Print.Message.Bll
             }
         }
 
-        public bool UpdateSN_SIM_VIP_BAT_ICCIDBLL(string IMEI, string CHPrintTime, string lj1, string lj2, string SIM, string VIP, string BAT, string ICCID, string SN,string zhidan, string RFID)
+        public bool UpdateSN_SIM_VIP_BAT_ICCIDBLL(string IMEI, string CHPrintTime, string lj1, string lj2, string SIM, string VIP, string BAT, string ICCID, string SN,string zhidan, string RFID, string CHUserName)
         {
-            if (PMD.UpdateSN_SIM_VIP_BAT_ICCIDDAL(IMEI, CHPrintTime, lj1, lj2, SIM, VIP, BAT, ICCID, SN,zhidan,RFID) > 0)
+            if (PMD.UpdateSN_SIM_VIP_BAT_ICCIDDAL(IMEI, CHPrintTime, lj1, lj2, SIM, VIP, BAT, ICCID, SN,zhidan,RFID, CHUserName) > 0)
             {
                 return true;
             }
@@ -87,9 +99,9 @@ namespace Print.Message.Bll
             }
         }
 
-        public bool UpdateSN_VIP_BAT_ICCIDBLL(string IMEI, string CHPrintTime, string lj1, string lj2, string VIP, string BAT, string ICCID, string SN, string zhidan, string RFID)
+        public bool UpdateSN_VIP_BAT_ICCIDBLL(string IMEI, string CHPrintTime, string lj1, string lj2, string VIP, string BAT, string ICCID, string SN, string zhidan, string RFID, string CHUserName)
         {
-            if (PMD.UpdateSN_VIP_BAT_ICCIDDAL(IMEI, CHPrintTime, lj1, lj2, VIP, BAT, ICCID, SN,zhidan,RFID) > 0)
+            if (PMD.UpdateSN_VIP_BAT_ICCIDDAL(IMEI, CHPrintTime, lj1, lj2, VIP, BAT, ICCID, SN,zhidan,RFID, CHUserName) > 0)
             {
                 return true;
             }
@@ -99,9 +111,9 @@ namespace Print.Message.Bll
             }
         }
 
-        public bool UpdateSN_SIM_VIP_BAT_ICCID_MACBLL(string IMEI, string CHPrintTime, string lj1, string lj2, string SIM, string VIP, string BAT, string ICCID, string MAC, string SN, string zhidan, string RFID)
+        public bool UpdateSN_SIM_VIP_BAT_ICCID_MACBLL(string IMEI, string CHPrintTime, string lj1, string lj2, string SIM, string VIP, string BAT, string ICCID, string MAC, string SN, string zhidan, string RFID, string CHUserName)
         {
-            if (PMD.UpdateSN_SIM_VIP_BAT_ICCID_MACDAL(IMEI, CHPrintTime, lj1, lj2, SIM, VIP, BAT, ICCID,MAC, SN,zhidan,RFID) > 0)
+            if (PMD.UpdateSN_SIM_VIP_BAT_ICCID_MACDAL(IMEI, CHPrintTime, lj1, lj2, SIM, VIP, BAT, ICCID,MAC, SN,zhidan,RFID, CHUserName) > 0)
             {
                 return true;
             }
@@ -111,9 +123,9 @@ namespace Print.Message.Bll
             }
         }
 
-        public bool UpdateSN_SIM_VIP_BAT_ICCID_MAC_EquipmentBLL(string IMEI, string CHPrintTime, string lj1, string lj2, string SIM, string VIP, string BAT, string ICCID, string MAC,string Equipment, string SN,string zhidan, string RFID)
+        public bool UpdateSN_SIM_VIP_BAT_ICCID_MAC_EquipmentBLL(string IMEI, string CHPrintTime, string lj1, string lj2, string SIM, string VIP, string BAT, string ICCID, string MAC,string Equipment, string SN,string zhidan, string RFID, string CHUserName)
         {
-            if (PMD.UpdateSN_SIM_VIP_BAT_ICCID_MAC_EquipmentDAL(IMEI, CHPrintTime, lj1, lj2, SIM, VIP, BAT, ICCID, MAC,Equipment, SN,zhidan,RFID) > 0)
+            if (PMD.UpdateSN_SIM_VIP_BAT_ICCID_MAC_EquipmentDAL(IMEI, CHPrintTime, lj1, lj2, SIM, VIP, BAT, ICCID, MAC,Equipment, SN,zhidan,RFID, CHUserName) > 0)
             {
                 return true;
             }

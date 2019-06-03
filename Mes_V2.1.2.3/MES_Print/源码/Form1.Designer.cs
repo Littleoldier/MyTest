@@ -75,6 +75,30 @@
             this.tabPage1 = new System.Windows.Forms.TabPage();
             this.tabControl2 = new System.Windows.Forms.TabControl();
             this.tabPage4 = new System.Windows.Forms.TabPage();
+            this.QuitBt = new System.Windows.Forms.Button();
+            this.UserTypeShow = new System.Windows.Forms.TextBox();
+            this.labelUserType = new System.Windows.Forms.Label();
+            this.UserLAbel = new System.Windows.Forms.Label();
+            this.UserShow = new System.Windows.Forms.TextBox();
+            this.SiginIN = new System.Windows.Forms.Button();
+            this.PrintMode2 = new System.Windows.Forms.CheckBox();
+            this.PrintMode1 = new System.Windows.Forms.CheckBox();
+            this.CheckSIM = new System.Windows.Forms.CheckBox();
+            this.CheckRFID = new System.Windows.Forms.CheckBox();
+            this.CheckEquipment = new System.Windows.Forms.CheckBox();
+            this.CheckICCID = new System.Windows.Forms.CheckBox();
+            this.CheckMAC = new System.Windows.Forms.CheckBox();
+            this.CheckBAT = new System.Windows.Forms.CheckBox();
+            this.CheckVIP = new System.Windows.Forms.CheckBox();
+            this.CheckIMEI2 = new System.Windows.Forms.CheckBox();
+            this.RelationSIM = new System.Windows.Forms.CheckBox();
+            this.RelationRFID = new System.Windows.Forms.CheckBox();
+            this.RelationEquipment = new System.Windows.Forms.CheckBox();
+            this.RelationICCID = new System.Windows.Forms.CheckBox();
+            this.RelationMAC = new System.Windows.Forms.CheckBox();
+            this.RelationBAT = new System.Windows.Forms.CheckBox();
+            this.RelationVIP = new System.Windows.Forms.CheckBox();
+            this.RelationSN = new System.Windows.Forms.CheckBox();
             this.Get_ZhiDan_Data = new System.Windows.Forms.Button();
             this.RePrintHex = new System.Windows.Forms.CheckBox();
             this.SNHex = new System.Windows.Forms.CheckBox();
@@ -111,24 +135,6 @@
             this.CheckAndDelete = new System.Windows.Forms.TabPage();
             this.tabPage2 = new System.Windows.Forms.TabPage();
             this.tabPage3 = new System.Windows.Forms.TabPage();
-            this.RelationSIM = new System.Windows.Forms.CheckBox();
-            this.RelationRFID = new System.Windows.Forms.CheckBox();
-            this.RelationEquipment = new System.Windows.Forms.CheckBox();
-            this.RelationICCID = new System.Windows.Forms.CheckBox();
-            this.RelationMAC = new System.Windows.Forms.CheckBox();
-            this.RelationBAT = new System.Windows.Forms.CheckBox();
-            this.RelationVIP = new System.Windows.Forms.CheckBox();
-            this.RelationSN = new System.Windows.Forms.CheckBox();
-            this.CheckSIM = new System.Windows.Forms.CheckBox();
-            this.CheckRFID = new System.Windows.Forms.CheckBox();
-            this.CheckEquipment = new System.Windows.Forms.CheckBox();
-            this.CheckICCID = new System.Windows.Forms.CheckBox();
-            this.CheckMAC = new System.Windows.Forms.CheckBox();
-            this.CheckBAT = new System.Windows.Forms.CheckBox();
-            this.CheckVIP = new System.Windows.Forms.CheckBox();
-            this.CheckIMEI2 = new System.Windows.Forms.CheckBox();
-            this.PrintMode1 = new System.Windows.Forms.CheckBox();
-            this.PrintMode2 = new System.Windows.Forms.CheckBox();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.tabControl2.SuspendLayout();
@@ -139,7 +145,7 @@
             // 
             this.label1.AutoSize = true;
             this.label1.Font = new System.Drawing.Font("宋体", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.label1.Location = new System.Drawing.Point(69, 363);
+            this.label1.Location = new System.Drawing.Point(51, 351);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(100, 15);
             this.label1.TabIndex = 1;
@@ -147,7 +153,7 @@
             // 
             // IMEI_num1
             // 
-            this.IMEI_num1.Location = new System.Drawing.Point(173, 359);
+            this.IMEI_num1.Location = new System.Drawing.Point(155, 347);
             this.IMEI_num1.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.IMEI_num1.Name = "IMEI_num1";
             this.IMEI_num1.ReadOnly = true;
@@ -158,7 +164,7 @@
             // 
             this.label2.AutoSize = true;
             this.label2.Font = new System.Drawing.Font("宋体", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.label2.Location = new System.Drawing.Point(425, 452);
+            this.label2.Location = new System.Drawing.Point(407, 440);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(52, 15);
             this.label2.TabIndex = 3;
@@ -168,7 +174,7 @@
             // 
             this.label3.AutoSize = true;
             this.label3.Font = new System.Drawing.Font("宋体", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.label3.Location = new System.Drawing.Point(88, 319);
+            this.label3.Location = new System.Drawing.Point(70, 307);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(82, 15);
             this.label3.TabIndex = 4;
@@ -176,7 +182,7 @@
             // 
             // Remake
             // 
-            this.Remake.Location = new System.Drawing.Point(480, 446);
+            this.Remake.Location = new System.Drawing.Point(462, 434);
             this.Remake.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.Remake.Name = "Remake";
             this.Remake.ReadOnly = true;
@@ -185,7 +191,7 @@
             // 
             // SoftwareVersion
             // 
-            this.SoftwareVersion.Location = new System.Drawing.Point(173, 313);
+            this.SoftwareVersion.Location = new System.Drawing.Point(155, 301);
             this.SoftwareVersion.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.SoftwareVersion.Name = "SoftwareVersion";
             this.SoftwareVersion.ReadOnly = true;
@@ -216,7 +222,7 @@
             // 
             this.label6.AutoSize = true;
             this.label6.Font = new System.Drawing.Font("宋体", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.label6.Location = new System.Drawing.Point(72, 183);
+            this.label6.Location = new System.Drawing.Point(54, 171);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(98, 15);
             this.label6.TabIndex = 11;
@@ -224,7 +230,7 @@
             // 
             // SN1_num
             // 
-            this.SN1_num.Location = new System.Drawing.Point(173, 177);
+            this.SN1_num.Location = new System.Drawing.Point(155, 165);
             this.SN1_num.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.SN1_num.Name = "SN1_num";
             this.SN1_num.ReadOnly = true;
@@ -233,7 +239,7 @@
             // 
             // IMEI_num2
             // 
-            this.IMEI_num2.Location = new System.Drawing.Point(173, 403);
+            this.IMEI_num2.Location = new System.Drawing.Point(155, 391);
             this.IMEI_num2.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.IMEI_num2.Name = "IMEI_num2";
             this.IMEI_num2.ReadOnly = true;
@@ -268,7 +274,7 @@
             // 
             this.label9.AutoSize = true;
             this.label9.Font = new System.Drawing.Font("宋体", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.label9.Location = new System.Drawing.Point(117, 137);
+            this.label9.Location = new System.Drawing.Point(99, 125);
             this.label9.Name = "label9";
             this.label9.Size = new System.Drawing.Size(52, 15);
             this.label9.TabIndex = 17;
@@ -276,7 +282,7 @@
             // 
             // SoftModel
             // 
-            this.SoftModel.Location = new System.Drawing.Point(173, 132);
+            this.SoftModel.Location = new System.Drawing.Point(155, 120);
             this.SoftModel.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.SoftModel.Name = "SoftModel";
             this.SoftModel.ReadOnly = true;
@@ -287,7 +293,7 @@
             // 
             this.label10.AutoSize = true;
             this.label10.Font = new System.Drawing.Font("宋体", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.label10.Location = new System.Drawing.Point(103, 273);
+            this.label10.Location = new System.Drawing.Point(85, 261);
             this.label10.Name = "label10";
             this.label10.Size = new System.Drawing.Size(67, 15);
             this.label10.TabIndex = 19;
@@ -295,7 +301,7 @@
             // 
             // ProductNo
             // 
-            this.ProductNo.Location = new System.Drawing.Point(173, 269);
+            this.ProductNo.Location = new System.Drawing.Point(155, 257);
             this.ProductNo.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.ProductNo.Name = "ProductNo";
             this.ProductNo.ReadOnly = true;
@@ -306,7 +312,7 @@
             // 
             this.label11.AutoSize = true;
             this.label11.Font = new System.Drawing.Font("宋体", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.label11.Location = new System.Drawing.Point(69, 410);
+            this.label11.Location = new System.Drawing.Point(51, 398);
             this.label11.Name = "label11";
             this.label11.Size = new System.Drawing.Size(100, 15);
             this.label11.TabIndex = 1;
@@ -317,7 +323,7 @@
             this.label7.AutoSize = true;
             this.label7.Font = new System.Drawing.Font("宋体", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.label7.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
-            this.label7.Location = new System.Drawing.Point(387, 139);
+            this.label7.Location = new System.Drawing.Point(369, 127);
             this.label7.Name = "label7";
             this.label7.Size = new System.Drawing.Size(92, 15);
             this.label7.TabIndex = 1;
@@ -327,7 +333,7 @@
             // 
             this.label12.AutoSize = true;
             this.label12.Font = new System.Drawing.Font("宋体", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.label12.Location = new System.Drawing.Point(385, 186);
+            this.label12.Location = new System.Drawing.Point(367, 174);
             this.label12.Name = "label12";
             this.label12.Size = new System.Drawing.Size(92, 15);
             this.label12.TabIndex = 1;
@@ -336,7 +342,7 @@
             // SIM_num1
             // 
             this.SIM_num1.ForeColor = System.Drawing.SystemColors.AppWorkspace;
-            this.SIM_num1.Location = new System.Drawing.Point(483, 133);
+            this.SIM_num1.Location = new System.Drawing.Point(465, 121);
             this.SIM_num1.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.SIM_num1.Name = "SIM_num1";
             this.SIM_num1.ReadOnly = true;
@@ -345,7 +351,7 @@
             // 
             // SIM_num2
             // 
-            this.SIM_num2.Location = new System.Drawing.Point(480, 180);
+            this.SIM_num2.Location = new System.Drawing.Point(462, 168);
             this.SIM_num2.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.SIM_num2.Name = "SIM_num2";
             this.SIM_num2.ReadOnly = true;
@@ -356,7 +362,7 @@
             // 
             this.label13.AutoSize = true;
             this.label13.Font = new System.Drawing.Font("宋体", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.label13.Location = new System.Drawing.Point(385, 229);
+            this.label13.Location = new System.Drawing.Point(367, 217);
             this.label13.Name = "label13";
             this.label13.Size = new System.Drawing.Size(92, 15);
             this.label13.TabIndex = 1;
@@ -366,7 +372,7 @@
             // 
             this.label14.AutoSize = true;
             this.label14.Font = new System.Drawing.Font("宋体", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.label14.Location = new System.Drawing.Point(385, 275);
+            this.label14.Location = new System.Drawing.Point(367, 263);
             this.label14.Name = "label14";
             this.label14.Size = new System.Drawing.Size(92, 15);
             this.label14.TabIndex = 1;
@@ -374,7 +380,7 @@
             // 
             // BAT_num1
             // 
-            this.BAT_num1.Location = new System.Drawing.Point(480, 223);
+            this.BAT_num1.Location = new System.Drawing.Point(462, 211);
             this.BAT_num1.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.BAT_num1.Name = "BAT_num1";
             this.BAT_num1.ReadOnly = true;
@@ -383,7 +389,7 @@
             // 
             // BAT_num2
             // 
-            this.BAT_num2.Location = new System.Drawing.Point(480, 269);
+            this.BAT_num2.Location = new System.Drawing.Point(462, 257);
             this.BAT_num2.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.BAT_num2.Name = "BAT_num2";
             this.BAT_num2.ReadOnly = true;
@@ -394,7 +400,7 @@
             // 
             this.label15.AutoSize = true;
             this.label15.Font = new System.Drawing.Font("宋体", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.label15.Location = new System.Drawing.Point(387, 317);
+            this.label15.Location = new System.Drawing.Point(369, 305);
             this.label15.Name = "label15";
             this.label15.Size = new System.Drawing.Size(92, 15);
             this.label15.TabIndex = 1;
@@ -404,7 +410,7 @@
             // 
             this.label16.AutoSize = true;
             this.label16.Font = new System.Drawing.Font("宋体", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.label16.Location = new System.Drawing.Point(385, 362);
+            this.label16.Location = new System.Drawing.Point(367, 350);
             this.label16.Name = "label16";
             this.label16.Size = new System.Drawing.Size(92, 15);
             this.label16.TabIndex = 1;
@@ -412,7 +418,7 @@
             // 
             // VIP_num1
             // 
-            this.VIP_num1.Location = new System.Drawing.Point(480, 311);
+            this.VIP_num1.Location = new System.Drawing.Point(462, 299);
             this.VIP_num1.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.VIP_num1.Name = "VIP_num1";
             this.VIP_num1.ReadOnly = true;
@@ -421,7 +427,7 @@
             // 
             // VIP_num2
             // 
-            this.VIP_num2.Location = new System.Drawing.Point(480, 356);
+            this.VIP_num2.Location = new System.Drawing.Point(462, 344);
             this.VIP_num2.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.VIP_num2.Name = "VIP_num2";
             this.VIP_num2.ReadOnly = true;
@@ -432,7 +438,7 @@
             // 
             this.label17.AutoSize = true;
             this.label17.Font = new System.Drawing.Font("宋体", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.label17.Location = new System.Drawing.Point(393, 410);
+            this.label17.Location = new System.Drawing.Point(375, 398);
             this.label17.Name = "label17";
             this.label17.Size = new System.Drawing.Size(84, 15);
             this.label17.TabIndex = 26;
@@ -440,7 +446,7 @@
             // 
             // IMEIRel
             // 
-            this.IMEIRel.Location = new System.Drawing.Point(480, 403);
+            this.IMEIRel.Location = new System.Drawing.Point(462, 391);
             this.IMEIRel.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.IMEIRel.Name = "IMEIRel";
             this.IMEIRel.ReadOnly = true;
@@ -490,7 +496,7 @@
             // 
             this.label19.AutoSize = true;
             this.label19.Font = new System.Drawing.Font("宋体", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.label19.Location = new System.Drawing.Point(72, 229);
+            this.label19.Location = new System.Drawing.Point(54, 217);
             this.label19.Name = "label19";
             this.label19.Size = new System.Drawing.Size(98, 15);
             this.label19.TabIndex = 32;
@@ -498,7 +504,7 @@
             // 
             // SN2_num
             // 
-            this.SN2_num.Location = new System.Drawing.Point(173, 222);
+            this.SN2_num.Location = new System.Drawing.Point(155, 210);
             this.SN2_num.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.SN2_num.Name = "SN2_num";
             this.SN2_num.ReadOnly = true;
@@ -556,7 +562,7 @@
             this.tabControl1.MinimumSize = new System.Drawing.Size(1, 1);
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
-            this.tabControl1.Size = new System.Drawing.Size(1676, 989);
+            this.tabControl1.Size = new System.Drawing.Size(1834, 989);
             this.tabControl1.SizeMode = System.Windows.Forms.TabSizeMode.Fixed;
             this.tabControl1.TabIndex = 47;
             this.tabControl1.SelectedIndexChanged += new System.EventHandler(this.tabControl1_SelectedIndexChanged);
@@ -568,7 +574,7 @@
             this.tabPage1.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.tabPage1.Name = "tabPage1";
             this.tabPage1.Padding = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.tabPage1.Size = new System.Drawing.Size(1668, 931);
+            this.tabPage1.Size = new System.Drawing.Size(1826, 931);
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "机身贴";
             this.tabPage1.UseVisualStyleBackColor = true;
@@ -588,7 +594,7 @@
             this.tabControl2.Name = "tabControl2";
             this.tabControl2.RightToLeft = System.Windows.Forms.RightToLeft.No;
             this.tabControl2.SelectedIndex = 0;
-            this.tabControl2.Size = new System.Drawing.Size(1662, 927);
+            this.tabControl2.Size = new System.Drawing.Size(1820, 927);
             this.tabControl2.SizeMode = System.Windows.Forms.TabSizeMode.Fixed;
             this.tabControl2.TabIndex = 45;
             this.tabControl2.DrawItem += new System.Windows.Forms.DrawItemEventHandler(this.tabControl2_DrawItem);
@@ -597,6 +603,12 @@
             // tabPage4
             // 
             this.tabPage4.BackColor = System.Drawing.Color.Linen;
+            this.tabPage4.Controls.Add(this.QuitBt);
+            this.tabPage4.Controls.Add(this.UserTypeShow);
+            this.tabPage4.Controls.Add(this.labelUserType);
+            this.tabPage4.Controls.Add(this.UserLAbel);
+            this.tabPage4.Controls.Add(this.UserShow);
+            this.tabPage4.Controls.Add(this.SiginIN);
             this.tabPage4.Controls.Add(this.PrintMode2);
             this.tabPage4.Controls.Add(this.PrintMode1);
             this.tabPage4.Controls.Add(this.CheckSIM);
@@ -694,9 +706,279 @@
             this.tabPage4.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.tabPage4.Name = "tabPage4";
             this.tabPage4.Padding = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.tabPage4.Size = new System.Drawing.Size(1554, 919);
+            this.tabPage4.Size = new System.Drawing.Size(1712, 919);
             this.tabPage4.TabIndex = 0;
             this.tabPage4.Text = "打印";
+            // 
+            // QuitBt
+            // 
+            this.QuitBt.Location = new System.Drawing.Point(1550, 105);
+            this.QuitBt.Name = "QuitBt";
+            this.QuitBt.Size = new System.Drawing.Size(144, 35);
+            this.QuitBt.TabIndex = 122;
+            this.QuitBt.Text = "退  出";
+            this.QuitBt.UseVisualStyleBackColor = true;
+            this.QuitBt.Click += new System.EventHandler(this.QuitBt_Click);
+            // 
+            // UserTypeShow
+            // 
+            this.UserTypeShow.Location = new System.Drawing.Point(1551, 165);
+            this.UserTypeShow.Name = "UserTypeShow";
+            this.UserTypeShow.ReadOnly = true;
+            this.UserTypeShow.Size = new System.Drawing.Size(144, 25);
+            this.UserTypeShow.TabIndex = 121;
+            this.UserTypeShow.Visible = false;
+            // 
+            // labelUserType
+            // 
+            this.labelUserType.AutoSize = true;
+            this.labelUserType.Location = new System.Drawing.Point(1579, 213);
+            this.labelUserType.Name = "labelUserType";
+            this.labelUserType.Size = new System.Drawing.Size(67, 15);
+            this.labelUserType.TabIndex = 120;
+            this.labelUserType.Text = "用户类：";
+            this.labelUserType.Visible = false;
+            // 
+            // UserLAbel
+            // 
+            this.UserLAbel.AutoSize = true;
+            this.UserLAbel.Location = new System.Drawing.Point(1465, 16);
+            this.UserLAbel.Name = "UserLAbel";
+            this.UserLAbel.Size = new System.Drawing.Size(67, 15);
+            this.UserLAbel.TabIndex = 119;
+            this.UserLAbel.Text = "用户名：";
+            // 
+            // UserShow
+            // 
+            this.UserShow.Location = new System.Drawing.Point(1550, 12);
+            this.UserShow.Name = "UserShow";
+            this.UserShow.ReadOnly = true;
+            this.UserShow.Size = new System.Drawing.Size(144, 25);
+            this.UserShow.TabIndex = 118;
+            // 
+            // SiginIN
+            // 
+            this.SiginIN.Location = new System.Drawing.Point(1550, 58);
+            this.SiginIN.Name = "SiginIN";
+            this.SiginIN.Size = new System.Drawing.Size(144, 33);
+            this.SiginIN.TabIndex = 117;
+            this.SiginIN.Text = "登  录";
+            this.SiginIN.UseVisualStyleBackColor = true;
+            this.SiginIN.Click += new System.EventHandler(this.SiginIN_Click);
+            // 
+            // PrintMode2
+            // 
+            this.PrintMode2.AutoSize = true;
+            this.PrintMode2.Location = new System.Drawing.Point(1373, 292);
+            this.PrintMode2.Name = "PrintMode2";
+            this.PrintMode2.Size = new System.Drawing.Size(97, 19);
+            this.PrintMode2.TabIndex = 116;
+            this.PrintMode2.Text = "打印模式2";
+            this.PrintMode2.UseVisualStyleBackColor = true;
+            this.PrintMode2.CheckedChanged += new System.EventHandler(this.PrintMode2_CheckedChanged);
+            // 
+            // PrintMode1
+            // 
+            this.PrintMode1.AutoSize = true;
+            this.PrintMode1.Location = new System.Drawing.Point(1262, 292);
+            this.PrintMode1.Name = "PrintMode1";
+            this.PrintMode1.Size = new System.Drawing.Size(97, 19);
+            this.PrintMode1.TabIndex = 115;
+            this.PrintMode1.Text = "打印模式1";
+            this.PrintMode1.UseVisualStyleBackColor = true;
+            this.PrintMode1.CheckedChanged += new System.EventHandler(this.PrintMode1_CheckedChanged);
+            // 
+            // CheckSIM
+            // 
+            this.CheckSIM.AutoSize = true;
+            this.CheckSIM.Enabled = false;
+            this.CheckSIM.Location = new System.Drawing.Point(1373, 126);
+            this.CheckSIM.Name = "CheckSIM";
+            this.CheckSIM.Size = new System.Drawing.Size(68, 19);
+            this.CheckSIM.TabIndex = 114;
+            this.CheckSIM.Text = "查SIM";
+            this.CheckSIM.UseVisualStyleBackColor = true;
+            this.CheckSIM.CheckedChanged += new System.EventHandler(this.CheckSIM_CheckedChanged);
+            // 
+            // CheckRFID
+            // 
+            this.CheckRFID.AutoSize = true;
+            this.CheckRFID.Enabled = false;
+            this.CheckRFID.Location = new System.Drawing.Point(1373, 209);
+            this.CheckRFID.Name = "CheckRFID";
+            this.CheckRFID.Size = new System.Drawing.Size(76, 19);
+            this.CheckRFID.TabIndex = 113;
+            this.CheckRFID.Text = "查RFID";
+            this.CheckRFID.UseVisualStyleBackColor = true;
+            this.CheckRFID.CheckedChanged += new System.EventHandler(this.CheckRFID_CheckedChanged);
+            // 
+            // CheckEquipment
+            // 
+            this.CheckEquipment.AutoSize = true;
+            this.CheckEquipment.Enabled = false;
+            this.CheckEquipment.Location = new System.Drawing.Point(1373, 246);
+            this.CheckEquipment.Name = "CheckEquipment";
+            this.CheckEquipment.Size = new System.Drawing.Size(89, 19);
+            this.CheckEquipment.TabIndex = 112;
+            this.CheckEquipment.Text = "查设备号";
+            this.CheckEquipment.UseVisualStyleBackColor = true;
+            this.CheckEquipment.CheckedChanged += new System.EventHandler(this.CheckEquipment_CheckedChanged);
+            // 
+            // CheckICCID
+            // 
+            this.CheckICCID.AutoSize = true;
+            this.CheckICCID.Enabled = false;
+            this.CheckICCID.Location = new System.Drawing.Point(1373, 165);
+            this.CheckICCID.Name = "CheckICCID";
+            this.CheckICCID.Size = new System.Drawing.Size(84, 19);
+            this.CheckICCID.TabIndex = 111;
+            this.CheckICCID.Text = "查ICCID";
+            this.CheckICCID.UseVisualStyleBackColor = true;
+            this.CheckICCID.CheckedChanged += new System.EventHandler(this.CheckICCID_CheckedChanged);
+            // 
+            // CheckMAC
+            // 
+            this.CheckMAC.AutoSize = true;
+            this.CheckMAC.Enabled = false;
+            this.CheckMAC.Location = new System.Drawing.Point(1262, 246);
+            this.CheckMAC.Name = "CheckMAC";
+            this.CheckMAC.Size = new System.Drawing.Size(89, 19);
+            this.CheckMAC.TabIndex = 110;
+            this.CheckMAC.Text = "查蓝牙号";
+            this.CheckMAC.UseVisualStyleBackColor = true;
+            this.CheckMAC.CheckedChanged += new System.EventHandler(this.CheckMAC_CheckedChanged);
+            // 
+            // CheckBAT
+            // 
+            this.CheckBAT.AutoSize = true;
+            this.CheckBAT.Enabled = false;
+            this.CheckBAT.Location = new System.Drawing.Point(1262, 165);
+            this.CheckBAT.Name = "CheckBAT";
+            this.CheckBAT.Size = new System.Drawing.Size(68, 19);
+            this.CheckBAT.TabIndex = 109;
+            this.CheckBAT.Text = "查BAT";
+            this.CheckBAT.UseVisualStyleBackColor = true;
+            this.CheckBAT.CheckedChanged += new System.EventHandler(this.CheckBAT_CheckedChanged);
+            // 
+            // CheckVIP
+            // 
+            this.CheckVIP.AutoSize = true;
+            this.CheckVIP.Enabled = false;
+            this.CheckVIP.Location = new System.Drawing.Point(1262, 211);
+            this.CheckVIP.Name = "CheckVIP";
+            this.CheckVIP.Size = new System.Drawing.Size(68, 19);
+            this.CheckVIP.TabIndex = 108;
+            this.CheckVIP.Text = "查VIP";
+            this.CheckVIP.UseVisualStyleBackColor = true;
+            this.CheckVIP.CheckedChanged += new System.EventHandler(this.CheckVIP_CheckedChanged);
+            // 
+            // CheckIMEI2
+            // 
+            this.CheckIMEI2.AutoSize = true;
+            this.CheckIMEI2.Enabled = false;
+            this.CheckIMEI2.Location = new System.Drawing.Point(1262, 126);
+            this.CheckIMEI2.Name = "CheckIMEI2";
+            this.CheckIMEI2.Size = new System.Drawing.Size(60, 19);
+            this.CheckIMEI2.TabIndex = 107;
+            this.CheckIMEI2.Text = "查SN";
+            this.CheckIMEI2.UseVisualStyleBackColor = true;
+            this.CheckIMEI2.CheckedChanged += new System.EventHandler(this.CheckIMEI2_CheckedChanged);
+            // 
+            // RelationSIM
+            // 
+            this.RelationSIM.AutoSize = true;
+            this.RelationSIM.Enabled = false;
+            this.RelationSIM.Location = new System.Drawing.Point(823, 126);
+            this.RelationSIM.Name = "RelationSIM";
+            this.RelationSIM.Size = new System.Drawing.Size(83, 19);
+            this.RelationSIM.TabIndex = 106;
+            this.RelationSIM.Text = "关联SIM";
+            this.RelationSIM.UseVisualStyleBackColor = true;
+            this.RelationSIM.CheckedChanged += new System.EventHandler(this.RelationSIM_CheckedChanged);
+            // 
+            // RelationRFID
+            // 
+            this.RelationRFID.AutoSize = true;
+            this.RelationRFID.Enabled = false;
+            this.RelationRFID.Location = new System.Drawing.Point(1103, 165);
+            this.RelationRFID.Name = "RelationRFID";
+            this.RelationRFID.Size = new System.Drawing.Size(91, 19);
+            this.RelationRFID.TabIndex = 105;
+            this.RelationRFID.Text = "关联RFID";
+            this.RelationRFID.UseVisualStyleBackColor = true;
+            this.RelationRFID.CheckedChanged += new System.EventHandler(this.RelationRFID_CheckedChanged);
+            // 
+            // RelationEquipment
+            // 
+            this.RelationEquipment.AutoSize = true;
+            this.RelationEquipment.Enabled = false;
+            this.RelationEquipment.Location = new System.Drawing.Point(975, 126);
+            this.RelationEquipment.Name = "RelationEquipment";
+            this.RelationEquipment.Size = new System.Drawing.Size(104, 19);
+            this.RelationEquipment.TabIndex = 104;
+            this.RelationEquipment.Text = "关联设备号";
+            this.RelationEquipment.UseVisualStyleBackColor = true;
+            this.RelationEquipment.CheckedChanged += new System.EventHandler(this.RelationEquipment_CheckedChanged);
+            // 
+            // RelationICCID
+            // 
+            this.RelationICCID.AutoSize = true;
+            this.RelationICCID.Enabled = false;
+            this.RelationICCID.Location = new System.Drawing.Point(1103, 126);
+            this.RelationICCID.Name = "RelationICCID";
+            this.RelationICCID.Size = new System.Drawing.Size(99, 19);
+            this.RelationICCID.TabIndex = 103;
+            this.RelationICCID.Text = "关联ICCID";
+            this.RelationICCID.UseVisualStyleBackColor = true;
+            this.RelationICCID.CheckedChanged += new System.EventHandler(this.RelationICCID_CheckedChanged);
+            // 
+            // RelationMAC
+            // 
+            this.RelationMAC.AutoSize = true;
+            this.RelationMAC.Enabled = false;
+            this.RelationMAC.Location = new System.Drawing.Point(975, 165);
+            this.RelationMAC.Name = "RelationMAC";
+            this.RelationMAC.Size = new System.Drawing.Size(104, 19);
+            this.RelationMAC.TabIndex = 102;
+            this.RelationMAC.Text = "关联蓝牙号";
+            this.RelationMAC.UseVisualStyleBackColor = true;
+            this.RelationMAC.CheckedChanged += new System.EventHandler(this.RelationMAC_CheckedChanged);
+            // 
+            // RelationBAT
+            // 
+            this.RelationBAT.AutoSize = true;
+            this.RelationBAT.Enabled = false;
+            this.RelationBAT.Location = new System.Drawing.Point(716, 165);
+            this.RelationBAT.Name = "RelationBAT";
+            this.RelationBAT.Size = new System.Drawing.Size(83, 19);
+            this.RelationBAT.TabIndex = 101;
+            this.RelationBAT.Text = "关联BAT";
+            this.RelationBAT.UseVisualStyleBackColor = true;
+            this.RelationBAT.CheckedChanged += new System.EventHandler(this.RelationBAT_CheckedChanged);
+            // 
+            // RelationVIP
+            // 
+            this.RelationVIP.AutoSize = true;
+            this.RelationVIP.Enabled = false;
+            this.RelationVIP.Location = new System.Drawing.Point(823, 165);
+            this.RelationVIP.Name = "RelationVIP";
+            this.RelationVIP.Size = new System.Drawing.Size(83, 19);
+            this.RelationVIP.TabIndex = 100;
+            this.RelationVIP.Text = "关联VIP";
+            this.RelationVIP.UseVisualStyleBackColor = true;
+            this.RelationVIP.CheckedChanged += new System.EventHandler(this.RelationVIP_CheckedChanged);
+            // 
+            // RelationSN
+            // 
+            this.RelationSN.AutoSize = true;
+            this.RelationSN.Enabled = false;
+            this.RelationSN.Location = new System.Drawing.Point(716, 126);
+            this.RelationSN.Name = "RelationSN";
+            this.RelationSN.Size = new System.Drawing.Size(75, 19);
+            this.RelationSN.TabIndex = 99;
+            this.RelationSN.Text = "关联SN";
+            this.RelationSN.UseVisualStyleBackColor = true;
+            this.RelationSN.CheckedChanged += new System.EventHandler(this.RelationSN_CheckedChanged);
             // 
             // Get_ZhiDan_Data
             // 
@@ -712,7 +994,7 @@
             // RePrintHex
             // 
             this.RePrintHex.AutoSize = true;
-            this.RePrintHex.Location = new System.Drawing.Point(1103, 249);
+            this.RePrintHex.Location = new System.Drawing.Point(1103, 248);
             this.RePrintHex.Margin = new System.Windows.Forms.Padding(4);
             this.RePrintHex.Name = "RePrintHex";
             this.RePrintHex.Size = new System.Drawing.Size(75, 19);
@@ -724,7 +1006,7 @@
             // SNHex
             // 
             this.SNHex.AutoSize = true;
-            this.SNHex.Location = new System.Drawing.Point(716, 319);
+            this.SNHex.Location = new System.Drawing.Point(716, 318);
             this.SNHex.Margin = new System.Windows.Forms.Padding(4);
             this.SNHex.Name = "SNHex";
             this.SNHex.Size = new System.Drawing.Size(91, 19);
@@ -737,6 +1019,7 @@
             this.HexPrintNum.Location = new System.Drawing.Point(715, 458);
             this.HexPrintNum.Margin = new System.Windows.Forms.Padding(4);
             this.HexPrintNum.Name = "HexPrintNum";
+            this.HexPrintNum.ReadOnly = true;
             this.HexPrintNum.Size = new System.Drawing.Size(204, 25);
             this.HexPrintNum.TabIndex = 84;
             this.HexPrintNum.Visible = false;
@@ -745,7 +1028,7 @@
             // Hexadecimal
             // 
             this.Hexadecimal.AutoSize = true;
-            this.Hexadecimal.Location = new System.Drawing.Point(823, 286);
+            this.Hexadecimal.Location = new System.Drawing.Point(823, 285);
             this.Hexadecimal.Margin = new System.Windows.Forms.Padding(4);
             this.Hexadecimal.Name = "Hexadecimal";
             this.Hexadecimal.Size = new System.Drawing.Size(107, 19);
@@ -780,7 +1063,7 @@
             this.reminder.BackColor = System.Drawing.Color.Linen;
             this.reminder.Font = new System.Drawing.Font("宋体", 15F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.reminder.ForeColor = System.Drawing.Color.Red;
-            this.reminder.Location = new System.Drawing.Point(715, 638);
+            this.reminder.Location = new System.Drawing.Point(715, 643);
             this.reminder.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.reminder.Multiline = true;
             this.reminder.Name = "reminder";
@@ -861,7 +1144,7 @@
             // NoSn
             // 
             this.NoSn.AutoSize = true;
-            this.NoSn.Location = new System.Drawing.Point(716, 286);
+            this.NoSn.Location = new System.Drawing.Point(716, 285);
             this.NoSn.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.NoSn.Name = "NoSn";
             this.NoSn.Size = new System.Drawing.Size(90, 19);
@@ -873,7 +1156,7 @@
             // Re_Nocheckcode
             // 
             this.Re_Nocheckcode.AutoSize = true;
-            this.Re_Nocheckcode.Location = new System.Drawing.Point(975, 249);
+            this.Re_Nocheckcode.Location = new System.Drawing.Point(975, 248);
             this.Re_Nocheckcode.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.Re_Nocheckcode.Name = "Re_Nocheckcode";
             this.Re_Nocheckcode.Size = new System.Drawing.Size(89, 19);
@@ -884,7 +1167,7 @@
             // NoCheckCode
             // 
             this.NoCheckCode.AutoSize = true;
-            this.NoCheckCode.Location = new System.Drawing.Point(823, 249);
+            this.NoCheckCode.Location = new System.Drawing.Point(823, 248);
             this.NoCheckCode.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.NoCheckCode.Name = "NoCheckCode";
             this.NoCheckCode.Size = new System.Drawing.Size(119, 19);
@@ -896,7 +1179,7 @@
             // SnFromCustomer
             // 
             this.SnFromCustomer.AutoSize = true;
-            this.SnFromCustomer.Location = new System.Drawing.Point(716, 249);
+            this.SnFromCustomer.Location = new System.Drawing.Point(716, 248);
             this.SnFromCustomer.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.SnFromCustomer.Name = "SnFromCustomer";
             this.SnFromCustomer.Size = new System.Drawing.Size(75, 19);
@@ -960,7 +1243,7 @@
             // RePrintMore
             // 
             this.RePrintMore.AutoSize = true;
-            this.RePrintMore.Location = new System.Drawing.Point(1103, 213);
+            this.RePrintMore.Location = new System.Drawing.Point(1103, 212);
             this.RePrintMore.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.RePrintMore.Name = "RePrintMore";
             this.RePrintMore.Size = new System.Drawing.Size(89, 19);
@@ -972,7 +1255,7 @@
             // RePrintOne
             // 
             this.RePrintOne.AutoSize = true;
-            this.RePrintOne.Location = new System.Drawing.Point(975, 213);
+            this.RePrintOne.Location = new System.Drawing.Point(975, 212);
             this.RePrintOne.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.RePrintOne.Name = "RePrintOne";
             this.RePrintOne.Size = new System.Drawing.Size(89, 19);
@@ -984,9 +1267,7 @@
             // PrintMore
             // 
             this.PrintMore.AutoSize = true;
-            this.PrintMore.Checked = true;
-            this.PrintMore.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.PrintMore.Location = new System.Drawing.Point(823, 214);
+            this.PrintMore.Location = new System.Drawing.Point(823, 213);
             this.PrintMore.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.PrintMore.Name = "PrintMore";
             this.PrintMore.Size = new System.Drawing.Size(89, 19);
@@ -998,7 +1279,7 @@
             // PrintOne
             // 
             this.PrintOne.AutoSize = true;
-            this.PrintOne.Location = new System.Drawing.Point(716, 213);
+            this.PrintOne.Location = new System.Drawing.Point(716, 212);
             this.PrintOne.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.PrintOne.Name = "PrintOne";
             this.PrintOne.Size = new System.Drawing.Size(89, 19);
@@ -1031,7 +1312,7 @@
             // 
             // IMEI_Present
             // 
-            this.IMEI_Present.Location = new System.Drawing.Point(173, 449);
+            this.IMEI_Present.Location = new System.Drawing.Point(155, 437);
             this.IMEI_Present.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.IMEI_Present.Name = "IMEI_Present";
             this.IMEI_Present.ReadOnly = true;
@@ -1042,7 +1323,7 @@
             // 
             this.label28.AutoSize = true;
             this.label28.Font = new System.Drawing.Font("宋体", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.label28.Location = new System.Drawing.Point(43, 453);
+            this.label28.Location = new System.Drawing.Point(25, 441);
             this.label28.Name = "label28";
             this.label28.Size = new System.Drawing.Size(129, 15);
             this.label28.TabIndex = 56;
@@ -1065,7 +1346,7 @@
             this.ExcelToPrint.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.ExcelToPrint.Name = "ExcelToPrint";
             this.ExcelToPrint.Padding = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.ExcelToPrint.Size = new System.Drawing.Size(1554, 919);
+            this.ExcelToPrint.Size = new System.Drawing.Size(1712, 919);
             this.ExcelToPrint.TabIndex = 1;
             this.ExcelToPrint.Text = "导入excel打印";
             // 
@@ -1075,7 +1356,7 @@
             this.CheckAndDelete.Location = new System.Drawing.Point(104, 4);
             this.CheckAndDelete.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.CheckAndDelete.Name = "CheckAndDelete";
-            this.CheckAndDelete.Size = new System.Drawing.Size(1554, 919);
+            this.CheckAndDelete.Size = new System.Drawing.Size(1712, 919);
             this.CheckAndDelete.TabIndex = 2;
             this.CheckAndDelete.Text = "查询与删除";
             // 
@@ -1086,7 +1367,7 @@
             this.tabPage2.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.tabPage2.Name = "tabPage2";
             this.tabPage2.Padding = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.tabPage2.Size = new System.Drawing.Size(1668, 931);
+            this.tabPage2.Size = new System.Drawing.Size(1826, 931);
             this.tabPage2.TabIndex = 1;
             this.tabPage2.Text = "彩盒贴打印";
             // 
@@ -1096,236 +1377,22 @@
             this.tabPage3.Location = new System.Drawing.Point(4, 54);
             this.tabPage3.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.tabPage3.Name = "tabPage3";
-            this.tabPage3.Size = new System.Drawing.Size(1668, 931);
+            this.tabPage3.Size = new System.Drawing.Size(1826, 931);
             this.tabPage3.TabIndex = 2;
             this.tabPage3.Text = "重打查询";
-            // 
-            // RelationSIM
-            // 
-            this.RelationSIM.AutoSize = true;
-            this.RelationSIM.Enabled = false;
-            this.RelationSIM.Location = new System.Drawing.Point(823, 127);
-            this.RelationSIM.Name = "RelationSIM";
-            this.RelationSIM.Size = new System.Drawing.Size(83, 19);
-            this.RelationSIM.TabIndex = 106;
-            this.RelationSIM.Text = "关联SIM";
-            this.RelationSIM.UseVisualStyleBackColor = true;
-            this.RelationSIM.CheckedChanged += new System.EventHandler(this.RelationSIM_CheckedChanged);
-            // 
-            // RelationRFID
-            // 
-            this.RelationRFID.AutoSize = true;
-            this.RelationRFID.Enabled = false;
-            this.RelationRFID.Location = new System.Drawing.Point(1103, 166);
-            this.RelationRFID.Name = "RelationRFID";
-            this.RelationRFID.Size = new System.Drawing.Size(91, 19);
-            this.RelationRFID.TabIndex = 105;
-            this.RelationRFID.Text = "关联RFID";
-            this.RelationRFID.UseVisualStyleBackColor = true;
-            this.RelationRFID.CheckedChanged += new System.EventHandler(this.RelationRFID_CheckedChanged);
-            // 
-            // RelationEquipment
-            // 
-            this.RelationEquipment.AutoSize = true;
-            this.RelationEquipment.Enabled = false;
-            this.RelationEquipment.Location = new System.Drawing.Point(975, 127);
-            this.RelationEquipment.Name = "RelationEquipment";
-            this.RelationEquipment.Size = new System.Drawing.Size(104, 19);
-            this.RelationEquipment.TabIndex = 104;
-            this.RelationEquipment.Text = "关联设备号";
-            this.RelationEquipment.UseVisualStyleBackColor = true;
-            this.RelationEquipment.CheckedChanged += new System.EventHandler(this.RelationEquipment_CheckedChanged);
-            // 
-            // RelationICCID
-            // 
-            this.RelationICCID.AutoSize = true;
-            this.RelationICCID.Enabled = false;
-            this.RelationICCID.Location = new System.Drawing.Point(1103, 127);
-            this.RelationICCID.Name = "RelationICCID";
-            this.RelationICCID.Size = new System.Drawing.Size(99, 19);
-            this.RelationICCID.TabIndex = 103;
-            this.RelationICCID.Text = "关联ICCID";
-            this.RelationICCID.UseVisualStyleBackColor = true;
-            this.RelationICCID.CheckedChanged += new System.EventHandler(this.RelationICCID_CheckedChanged);
-            // 
-            // RelationMAC
-            // 
-            this.RelationMAC.AutoSize = true;
-            this.RelationMAC.Enabled = false;
-            this.RelationMAC.Location = new System.Drawing.Point(975, 166);
-            this.RelationMAC.Name = "RelationMAC";
-            this.RelationMAC.Size = new System.Drawing.Size(104, 19);
-            this.RelationMAC.TabIndex = 102;
-            this.RelationMAC.Text = "关联蓝牙号";
-            this.RelationMAC.UseVisualStyleBackColor = true;
-            this.RelationMAC.CheckedChanged += new System.EventHandler(this.RelationMAC_CheckedChanged);
-            // 
-            // RelationBAT
-            // 
-            this.RelationBAT.AutoSize = true;
-            this.RelationBAT.Enabled = false;
-            this.RelationBAT.Location = new System.Drawing.Point(716, 166);
-            this.RelationBAT.Name = "RelationBAT";
-            this.RelationBAT.Size = new System.Drawing.Size(83, 19);
-            this.RelationBAT.TabIndex = 101;
-            this.RelationBAT.Text = "关联BAT";
-            this.RelationBAT.UseVisualStyleBackColor = true;
-            this.RelationBAT.CheckedChanged += new System.EventHandler(this.RelationBAT_CheckedChanged);
-            // 
-            // RelationVIP
-            // 
-            this.RelationVIP.AutoSize = true;
-            this.RelationVIP.Enabled = false;
-            this.RelationVIP.Location = new System.Drawing.Point(823, 166);
-            this.RelationVIP.Name = "RelationVIP";
-            this.RelationVIP.Size = new System.Drawing.Size(83, 19);
-            this.RelationVIP.TabIndex = 100;
-            this.RelationVIP.Text = "关联VIP";
-            this.RelationVIP.UseVisualStyleBackColor = true;
-            this.RelationVIP.CheckedChanged += new System.EventHandler(this.RelationVIP_CheckedChanged);
-            // 
-            // RelationSN
-            // 
-            this.RelationSN.AutoSize = true;
-            this.RelationSN.Enabled = false;
-            this.RelationSN.Location = new System.Drawing.Point(716, 127);
-            this.RelationSN.Name = "RelationSN";
-            this.RelationSN.Size = new System.Drawing.Size(75, 19);
-            this.RelationSN.TabIndex = 99;
-            this.RelationSN.Text = "关联SN";
-            this.RelationSN.UseVisualStyleBackColor = true;
-            this.RelationSN.CheckedChanged += new System.EventHandler(this.RelationSN_CheckedChanged);
-            // 
-            // CheckSIM
-            // 
-            this.CheckSIM.AutoSize = true;
-            this.CheckSIM.Enabled = false;
-            this.CheckSIM.Location = new System.Drawing.Point(1373, 127);
-            this.CheckSIM.Name = "CheckSIM";
-            this.CheckSIM.Size = new System.Drawing.Size(68, 19);
-            this.CheckSIM.TabIndex = 114;
-            this.CheckSIM.Text = "查SIM";
-            this.CheckSIM.UseVisualStyleBackColor = true;
-            this.CheckSIM.CheckedChanged += new System.EventHandler(this.CheckSIM_CheckedChanged);
-            // 
-            // CheckRFID
-            // 
-            this.CheckRFID.AutoSize = true;
-            this.CheckRFID.Enabled = false;
-            this.CheckRFID.Location = new System.Drawing.Point(1373, 210);
-            this.CheckRFID.Name = "CheckRFID";
-            this.CheckRFID.Size = new System.Drawing.Size(76, 19);
-            this.CheckRFID.TabIndex = 113;
-            this.CheckRFID.Text = "查RFID";
-            this.CheckRFID.UseVisualStyleBackColor = true;
-            this.CheckRFID.CheckedChanged += new System.EventHandler(this.CheckRFID_CheckedChanged);
-            // 
-            // CheckEquipment
-            // 
-            this.CheckEquipment.AutoSize = true;
-            this.CheckEquipment.Enabled = false;
-            this.CheckEquipment.Location = new System.Drawing.Point(1373, 247);
-            this.CheckEquipment.Name = "CheckEquipment";
-            this.CheckEquipment.Size = new System.Drawing.Size(89, 19);
-            this.CheckEquipment.TabIndex = 112;
-            this.CheckEquipment.Text = "查设备号";
-            this.CheckEquipment.UseVisualStyleBackColor = true;
-            this.CheckEquipment.CheckedChanged += new System.EventHandler(this.CheckEquipment_CheckedChanged);
-            // 
-            // CheckICCID
-            // 
-            this.CheckICCID.AutoSize = true;
-            this.CheckICCID.Enabled = false;
-            this.CheckICCID.Location = new System.Drawing.Point(1373, 166);
-            this.CheckICCID.Name = "CheckICCID";
-            this.CheckICCID.Size = new System.Drawing.Size(84, 19);
-            this.CheckICCID.TabIndex = 111;
-            this.CheckICCID.Text = "查ICCID";
-            this.CheckICCID.UseVisualStyleBackColor = true;
-            this.CheckICCID.CheckedChanged += new System.EventHandler(this.CheckICCID_CheckedChanged);
-            // 
-            // CheckMAC
-            // 
-            this.CheckMAC.AutoSize = true;
-            this.CheckMAC.Enabled = false;
-            this.CheckMAC.Location = new System.Drawing.Point(1262, 247);
-            this.CheckMAC.Name = "CheckMAC";
-            this.CheckMAC.Size = new System.Drawing.Size(89, 19);
-            this.CheckMAC.TabIndex = 110;
-            this.CheckMAC.Text = "查蓝牙号";
-            this.CheckMAC.UseVisualStyleBackColor = true;
-            this.CheckMAC.CheckedChanged += new System.EventHandler(this.CheckMAC_CheckedChanged);
-            // 
-            // CheckBAT
-            // 
-            this.CheckBAT.AutoSize = true;
-            this.CheckBAT.Enabled = false;
-            this.CheckBAT.Location = new System.Drawing.Point(1262, 166);
-            this.CheckBAT.Name = "CheckBAT";
-            this.CheckBAT.Size = new System.Drawing.Size(68, 19);
-            this.CheckBAT.TabIndex = 109;
-            this.CheckBAT.Text = "查BAT";
-            this.CheckBAT.UseVisualStyleBackColor = true;
-            this.CheckBAT.CheckedChanged += new System.EventHandler(this.CheckBAT_CheckedChanged);
-            // 
-            // CheckVIP
-            // 
-            this.CheckVIP.AutoSize = true;
-            this.CheckVIP.Enabled = false;
-            this.CheckVIP.Location = new System.Drawing.Point(1262, 212);
-            this.CheckVIP.Name = "CheckVIP";
-            this.CheckVIP.Size = new System.Drawing.Size(68, 19);
-            this.CheckVIP.TabIndex = 108;
-            this.CheckVIP.Text = "查VIP";
-            this.CheckVIP.UseVisualStyleBackColor = true;
-            this.CheckVIP.CheckedChanged += new System.EventHandler(this.CheckVIP_CheckedChanged);
-            // 
-            // CheckIMEI2
-            // 
-            this.CheckIMEI2.AutoSize = true;
-            this.CheckIMEI2.Enabled = false;
-            this.CheckIMEI2.Location = new System.Drawing.Point(1262, 127);
-            this.CheckIMEI2.Name = "CheckIMEI2";
-            this.CheckIMEI2.Size = new System.Drawing.Size(60, 19);
-            this.CheckIMEI2.TabIndex = 107;
-            this.CheckIMEI2.Text = "查SN";
-            this.CheckIMEI2.UseVisualStyleBackColor = true;
-            this.CheckIMEI2.CheckedChanged += new System.EventHandler(this.CheckIMEI2_CheckedChanged);
-            // 
-            // PrintMode1
-            // 
-            this.PrintMode1.AutoSize = true;
-            this.PrintMode1.Location = new System.Drawing.Point(1262, 293);
-            this.PrintMode1.Name = "PrintMode1";
-            this.PrintMode1.Size = new System.Drawing.Size(97, 19);
-            this.PrintMode1.TabIndex = 115;
-            this.PrintMode1.Text = "打印模式1";
-            this.PrintMode1.UseVisualStyleBackColor = true;
-            this.PrintMode1.CheckedChanged += new System.EventHandler(this.PrintMode1_CheckedChanged);
-            // 
-            // PrintMode2
-            // 
-            this.PrintMode2.AutoSize = true;
-            this.PrintMode2.Location = new System.Drawing.Point(1373, 293);
-            this.PrintMode2.Name = "PrintMode2";
-            this.PrintMode2.Size = new System.Drawing.Size(97, 19);
-            this.PrintMode2.TabIndex = 116;
-            this.PrintMode2.Text = "打印模式2";
-            this.PrintMode2.UseVisualStyleBackColor = true;
-            this.PrintMode2.CheckedChanged += new System.EventHandler(this.PrintMode2_CheckedChanged);
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1688, 1002);
+            this.ClientSize = new System.Drawing.Size(1834, 1002);
             this.Controls.Add(this.tabControl1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.MinimumSize = new System.Drawing.Size(18, 48);
             this.Name = "Form1";
-            this.Text = " MES-Print_1.0.14_201905241107";
+            this.Text = " MES-Print_1.0.15_201906030904";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Form1_FormClosing);
             this.Load += new System.EventHandler(this.Form1_Load);
             this.tabControl1.ResumeLayout(false);
@@ -1438,6 +1505,12 @@
         private System.Windows.Forms.CheckBox CheckIMEI2;
         private System.Windows.Forms.CheckBox PrintMode2;
         private System.Windows.Forms.CheckBox PrintMode1;
+        private System.Windows.Forms.Button SiginIN;
+        private System.Windows.Forms.Label UserLAbel;
+        private System.Windows.Forms.TextBox UserShow;
+        private System.Windows.Forms.TextBox UserTypeShow;
+        private System.Windows.Forms.Label labelUserType;
+        private System.Windows.Forms.Button QuitBt;
     }
 }
 

@@ -11,8 +11,6 @@
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
-    <IsWebBootstrapper>false</IsWebBootstrapper>
-    <TargetFrameworkProfile />
     <PublishUrl>publish\</PublishUrl>
     <Install>true</Install>
     <InstallFrom>Disk</InstallFrom>
@@ -25,8 +23,10 @@
     <MapFileExtensions>true</MapFileExtensions>
     <ApplicationRevision>0</ApplicationRevision>
     <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
+    <IsWebBootstrapper>false</IsWebBootstrapper>
     <UseApplicationTrust>false</UseApplicationTrust>
     <BootstrapperEnabled>true</BootstrapperEnabled>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <PlatformTarget>x86</PlatformTarget>
@@ -52,14 +52,13 @@
   <ItemGroup>
     <Reference Include="Seagull.BarTender.Print, Version=10.1.4.1, Culture=neutral, PublicKeyToken=109ff779a1b4cbc7, processorArchitecture=x86">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\..\..\..\工作资料\李维韩\MES彩盒&amp;&amp;机身\Debug\Seagull.BarTender.Print.dll</HintPath>
+      <HintPath>C:\SDK\Seagull.BarTender.Print.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
     <Reference Include="System.DirectoryServices" />
     <Reference Include="System.Speech" />
-    <Reference Include="System.Web.Extensions" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -109,6 +108,7 @@
     </Compile>
     <Compile Include="Pri-Bll\DataRelativeSheetBLL.cs" />
     <Compile Include="Pri-Bll\InputExcelBLL.cs" />
+    <Compile Include="Pri-Bll\LUserAccountBLL.cs" />
     <Compile Include="Pri-Bll\ManuExcelPrintParamBLL.cs" />
     <Compile Include="Pri-Bll\ManuFuselagePrintRecordParamBLL.cs" />
     <Compile Include="Pri-Bll\ManuOrderParamBLL.cs" />
@@ -122,6 +122,7 @@
     <Compile Include="Pri-Dal\Gps_ManuFuselagePrintRecordParam.cs" />
     <Compile Include="Pri-Dal\Gps_ManuOrderParam.cs" />
     <Compile Include="Pri-Dal\Gps_TestResult.cs" />
+    <Compile Include="Pri-Dal\LUserAccountDAL.cs" />
     <Compile Include="Pri-Dal\ManuExcelPrintParamDAL.cs" />
     <Compile Include="Pri-Dal\ManuFuselagePrintRecordParamDAL.cs" />
     <Compile Include="Pri-Dal\ManuOrderParamDAL.cs" />
@@ -144,6 +145,12 @@
     </Compile>
     <Compile Include="JS_Unlock.Designer.cs">
       <DependentUpon>JS_Unlock.cs</DependentUpon>
+    </Compile>
+    <Compile Include="SignIn.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="SignIn.Designer.cs">
+      <DependentUpon>SignIn.cs</DependentUpon>
     </Compile>
     <Compile Include="UpdateSqlConn.cs">
       <SubType>Form</SubType>
@@ -184,6 +191,9 @@
     </Compile>
     <EmbeddedResource Include="JS_Unlock.resx">
       <DependentUpon>JS_Unlock.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="SignIn.resx">
+      <DependentUpon>SignIn.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="UpdateSqlConn.resx">
       <DependentUpon>UpdateSqlConn.cs</DependentUpon>

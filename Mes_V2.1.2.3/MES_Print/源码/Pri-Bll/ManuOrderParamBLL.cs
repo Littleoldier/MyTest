@@ -98,9 +98,9 @@ namespace ManuOrder.Param.BLL
             }
         }
 
-        public bool UpdateCHAssociatedBLL(string IMEI, string CHPrintTime, string lj1, string lj2 ,string SIM,string VIP,string BAT,string ICCID,string MAC,string Equipment,string SN, string zhidan,string RFID)
+        public bool UpdateCHAssociatedBLL(string IMEI, string CHPrintTime, string lj1, string lj2 ,string SIM,string VIP,string BAT,string ICCID,string MAC,string Equipment,string SN, string zhidan,string RFID, string CHUserName)
         {
-            if (MOPD.UpdateCHAssociatedDAL(IMEI, CHPrintTime, lj1, lj2,SIM,VIP,BAT,ICCID,MAC,Equipment,SN,zhidan,RFID) > 0)
+            if (MOPD.UpdateCHAssociatedDAL(IMEI, CHPrintTime, lj1, lj2,SIM,VIP,BAT,ICCID,MAC,Equipment,SN,zhidan,RFID, CHUserName) > 0)
             {
                 return true;
             }

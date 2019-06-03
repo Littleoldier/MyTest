@@ -78,7 +78,11 @@ namespace WindowsForms_print
 
         List<PrintMessage> list = new List<PrintMessage>();
 
+        PrintMessage PList = new PrintMessage();
+
         List<DataRelativeSheet> drs = new List<DataRelativeSheet>();
+
+        DataRelativeSheet Drs = new DataRelativeSheet();
 
         List<ManuPrintRecordParam> mprp = new List<ManuPrintRecordParam>();
 
@@ -138,6 +142,11 @@ namespace WindowsForms_print
 
         //查询字段容器
         SortedDictionary<int, string> CheckFields = new SortedDictionary<int, string>();
+
+        //绑定累数
+        int BindingCountS;
+        int BindingCountF;
+        int UpInt1 , UpInt2 ;
 
         public Color_Box()
         {
@@ -1137,6 +1146,7 @@ namespace WindowsForms_print
                 {
                     if (!DRSB.CheckIMEIBLL(this.IMEI_Start.Text))
                     {
+                        player.Play();
                         this.reminder.AppendText(this.IMEI_Start.Text + "不存在关联表\r\n");
                         return;
                     }
@@ -1239,15 +1249,6 @@ namespace WindowsForms_print
                     {
                         this.reminder.AppendText(this.IMEI_Start.Text + "无关联\r\n");
                         this.IMEI_Start.Clear();
-                        this.SIMStart.Clear();
-                        this.VIPStart.Clear();
-                        this.BATStart.Clear();
-                        this.ICCIDStart.Clear();
-                        this.MACStart.Clear();
-                        this.EquipmentStart.Clear();
-                        this.ShowSN.Clear();
-                        this.GLB_SN.Clear();
-                        this.RFIDStart.Clear();
                         this.IMEI_Start.Focus();
                         return;
                     }
@@ -1327,15 +1328,6 @@ namespace WindowsForms_print
                     //ASS_sn = this.SN1_num.Text;
                     this.reminder.AppendText(this.IMEI_Start.Text + "无关联\r\n");
                     this.IMEI_Start.Clear();
-                    this.SIMStart.Clear();
-                    this.VIPStart.Clear();
-                    this.BATStart.Clear();
-                    this.ICCIDStart.Clear();
-                    this.MACStart.Clear();
-                    this.EquipmentStart.Clear();
-                    this.ShowSN.Clear();
-                    this.GLB_SN.Clear();
-                    this.RFIDStart.Clear();
                     this.IMEI_Start.Focus();
                     return;
                 }
@@ -1399,31 +1391,30 @@ namespace WindowsForms_print
                                 DRSB.InsertRelativeSheetBLL(drs);
                             }
                             //记录打印信息日志
-                            list.Add(new PrintMessage()
-                            {
-                                Zhidan = this.CB_ZhiDan.Text.Trim(),
-                                IMEI = this.IMEI_Start.Text.Trim(),
-                                IMEIStart = this.IMEI_num1.Text.Trim(),
-                                IMEIEnd = this.IMEI_num2.Text.Trim(),
-                                SN = ASS_sn,
-                                IMEIRel = this.IMEIRel.Text.Trim(),
-                                SIM = this.SIMStart.Text.Trim(),
-                                VIP = this.VIPStart.Text.Trim(),
-                                BAT = this.BATStart.Text.Trim(),
-                                SoftModel = this.SoftModel.Text.Trim(),
-                                Version = this.SoftwareVersion.Text.Trim(),
-                                Remark = this.Remake.Text.Trim(),
-                                JS_PrintTime = "",
-                                JS_TemplatePath = "",
-                                CH_PrintTime = ProductTime,
-                                CH_TemplatePath1 = this.Select_Template1.Text,
-                                CH_TemplatePath2 = this.Select_Template2.Text,
-                                ICCID = this.ICCIDStart.Text,
-                                MAC = this.MACStart.Text,
-                                Equipment = this.EquipmentStart.Text,
-                                RFID = this.RFIDStart.Text
-                            });
-                            if (PMB.InsertPrintMessageBLL(list))
+                            PList.Claer();
+                            PList.Zhidan = this.CB_ZhiDan.Text.Trim();
+                            PList.IMEI = this.IMEI_Start.Text.Trim();
+                            PList.IMEIStart = this.IMEI_num1.Text.Trim();
+                            PList.IMEIEnd = this.IMEI_num2.Text.Trim();
+                            PList.SN = ASS_sn;
+                            PList.IMEIRel = this.IMEIRel.Text.Trim();
+                            PList.SIM = this.SIMStart.Text.Trim();
+                            PList.VIP = this.VIPStart.Text.Trim();
+                            PList.BAT = this.BATStart.Text.Trim();
+                            PList.SoftModel = this.SoftModel.Text.Trim();
+                            PList.Version = this.SoftwareVersion.Text.Trim();
+                            PList.Remark = this.Remake.Text.Trim();
+                            PList.JS_PrintTime = "";
+                            PList.JS_TemplatePath = "";
+                            PList.CH_PrintTime = ProductTime;
+                            PList.CH_TemplatePath1 = this.Select_Template1.Text;
+                            PList.CH_TemplatePath2 = this.Select_Template2.Text;
+                            PList.ICCID = this.ICCIDStart.Text;
+                            PList.MAC = this.MACStart.Text;
+                            PList.Equipment = this.EquipmentStart.Text;
+                            PList.RFID = this.RFIDStart.Text;
+                            PList.CHUserName = this.UserShow.Text;
+                            if (PMB.InsertPrintMessageBLL(PList))
                             {
                                 if (SN1_num.Text != "" && Sn_mark == 1)
                                 {
@@ -1488,7 +1479,7 @@ namespace WindowsForms_print
                                     btFormat.SubStrings["SN"].Value = a.SN;
                                     DZSN = a.SN;
                                     this.ShowSN.Text = a.SN;
-                                    MOPB.UpdateCHAssociatedBLL(this.IMEI_Start.Text, ProductTime, this.Select_Template1.Text, this.Select_Template2.Text, this.SIMStart.Text, this.VIPStart.Text, this.BATStart.Text, this.ICCIDStart.Text, this.MACStart.Text, this.EquipmentStart.Text, a.SN,this.CB_ZhiDan.Text,this.RFIDStart.Text);
+                                    MOPB.UpdateCHAssociatedBLL(this.IMEI_Start.Text, ProductTime, this.Select_Template1.Text, this.Select_Template2.Text, this.SIMStart.Text, this.VIPStart.Text, this.BATStart.Text, this.ICCIDStart.Text, this.MACStart.Text, this.EquipmentStart.Text, a.SN,this.CB_ZhiDan.Text,this.RFIDStart.Text, this.UserShow.Text);
                                 }
                                 else
                                 {
@@ -1497,7 +1488,7 @@ namespace WindowsForms_print
                                         btFormat.SubStrings["SN"].Value = ASS_sn;
                                         DZSN = ASS_sn;
                                         this.ShowSN.Text = ASS_sn;
-                                        MOPB.UpdateCHAssociatedBLL(this.IMEI_Start.Text, ProductTime, this.Select_Template1.Text, this.Select_Template2.Text, this.SIMStart.Text, this.VIPStart.Text, this.BATStart.Text, this.ICCIDStart.Text, this.MACStart.Text, this.EquipmentStart.Text, ASS_sn, this.CB_ZhiDan.Text, this.RFIDStart.Text);
+                                        MOPB.UpdateCHAssociatedBLL(this.IMEI_Start.Text, ProductTime, this.Select_Template1.Text, this.Select_Template2.Text, this.SIMStart.Text, this.VIPStart.Text, this.BATStart.Text, this.ICCIDStart.Text, this.MACStart.Text, this.EquipmentStart.Text, ASS_sn, this.CB_ZhiDan.Text, this.RFIDStart.Text, this.UserShow.Text);
                                     }
                                     else
                                     {
@@ -1511,7 +1502,7 @@ namespace WindowsForms_print
                                             return;
                                         }
                                         this.ShowSN.Text = this.SN1_num.Text;
-                                        MOPB.UpdateCHAssociatedBLL(this.IMEI_Start.Text, ProductTime, this.Select_Template1.Text, this.Select_Template2.Text, this.SIMStart.Text, this.VIPStart.Text, this.BATStart.Text, this.ICCIDStart.Text, this.MACStart.Text, this.EquipmentStart.Text, this.SN1_num.Text, this.CB_ZhiDan.Text, this.RFIDStart.Text);
+                                        MOPB.UpdateCHAssociatedBLL(this.IMEI_Start.Text, ProductTime, this.Select_Template1.Text, this.Select_Template2.Text, this.SIMStart.Text, this.VIPStart.Text, this.BATStart.Text, this.ICCIDStart.Text, this.MACStart.Text, this.EquipmentStart.Text, this.SN1_num.Text, this.CB_ZhiDan.Text, this.RFIDStart.Text, this.UserShow.Text);
                                         if (this.SN1_num.Text != "")
                                         {
                                             sn1_prefix = SN1_num.Text.Substring(0, this.SN1_num.Text.Length - s);
@@ -1822,16 +1813,6 @@ namespace WindowsForms_print
                             return;
                         }
                     }
-                    //检查SIM卡号是否重号，是的话直接清空返回  //打印表
-                    if (PMB.CheckSIMBLL(this.SIMStart.Text))
-                    {
-                        player.Play();
-                        this.reminder.AppendText("SIM-"+this.SIMStart.Text+"重号\r\n");
-                        this.SIMStart.Clear();
-                        this.IMEI_Start.Clear();
-                        this.IMEI_Start.Focus();
-                        return;
-                    }
 
                     //根据SIM号更新IMEI号
                     if (this.UpdateIMEIBySim.Checked == true)
@@ -1844,9 +1825,27 @@ namespace WindowsForms_print
                         }
                     }
 
+                    //检查SIM卡号是否重号，是的话直接清空返回  //打印表
+                    if (PMB.CheckSIMBLL(this.SIMStart.Text))
+                    {
+                        player.Play();
+                        this.reminder.AppendText("SIM-" + this.SIMStart.Text + "重号\r\n");
+                        this.SIMStart.Clear();
+                        this.IMEI_Start.Clear();
+                        this.IMEI_Start.Focus();
+                        return;
+                    }
+                   
+                    //更新关联表SIM
+                    if (this.UpdataSimByImei.Checked == true)
+                    {
+                        DRSB.UpdateSIMByIMEIBLL(this.IMEI_Start.Text, this.SIMStart.Text);
+                        //this.reminder.AppendText(this.SIMStart.Text +"更新"+ this.IMEI_Start.Text +"\r\n");
+                    }
+
                     //检查制单号是否与关联表的制单号一致
                     string GLBzhidan = DRSB.SelectZhidanBySimBLL(this.SIMStart.Text);
-
+                    
                     //根据SIM卡号带出ICCID 有值带值，无值带空
                     this.ICCIDStart.Text = DRSB.SelectIccidBySimBLL(this.SIMStart.Text, G_zhidan);
                     if(this.ICCIDStart.Text == "-1")//用SIM号查出的制单号不与当前制单不一致 若一致则带出ICCID
@@ -1889,7 +1888,7 @@ namespace WindowsForms_print
                             }
                         }
                     }
-                    if(this.ICCIDStart.Text == "")
+                    if (this.ICCIDStart.Text == "")
                     {
                         player.Play();
                         this.reminder.AppendText("此SIM卡号带出的ICCID号为空\r\n");
@@ -1902,10 +1901,10 @@ namespace WindowsForms_print
                     ICCID = this.ICCIDStart.Text;
 
                     //更新关联表SIM（连带ICCID）//根据IMEI号更新SIM号与ICCID
-                    if(this.UpdataSimByImei.Checked == true)
-                    {
-                        DRSB.UpdateSIMByIMEIBLL(this.IMEI_Start.Text, this.SIMStart.Text, this.ICCIDStart.Text);
-                    }
+                    //if(this.UpdataSimByImei.Checked == true)
+                    //{
+                    //DRSB.UpdateSIMByIMEIBLL(this.IMEI_Start.Text, this.SIMStart.Text, this.ICCIDStart.Text);
+                    //}
                     //打印及跳转
                     if (AssociatedFields.Count == 1)
                     {
@@ -1962,32 +1961,31 @@ namespace WindowsForms_print
                                     DRSB.UpdateIMEIBySIMBLL(this.IMEI_Start.Text, this.SIMStart.Text);
                                 }
                                 //记录打印信息日志
-                                list.Add(new PrintMessage()
-                                {
-                                    Zhidan = this.CB_ZhiDan.Text.Trim(),
-                                    IMEI = this.IMEI_Start.Text.Trim(),
-                                    IMEIStart = this.IMEI_num1.Text.Trim(),
-                                    IMEIEnd = this.IMEI_num2.Text.Trim(),
-                                    SN = ASS_sn,
-                                    IMEIRel = this.IMEIRel.Text.Trim(),
-                                    SIM = this.SIMStart.Text.Trim(),
-                                    VIP = this.VIPStart.Text.Trim(),
-                                    BAT = this.BATStart.Text.Trim(),
-                                    SoftModel = this.SoftModel.Text.Trim(),
-                                    Version = this.SoftwareVersion.Text.Trim(),
-                                    Remark = this.Remake.Text.Trim(),
-                                    JS_PrintTime = "",
-                                    JS_TemplatePath = "",
-                                    CH_PrintTime = ProductTime,
-                                    CH_TemplatePath1 = this.Select_Template1.Text,
-                                    CH_TemplatePath2 = this.Select_Template2.Text,
-                                    ICCID = this.ICCIDStart.Text,
-                                    MAC = this.MACStart.Text,
-                                    Equipment = this.EquipmentStart.Text,
-                                    RFID = this.RFIDStart.Text
-                                });
+                                PList.Claer();
+                                PList.Zhidan = this.CB_ZhiDan.Text.Trim();
+                                PList.IMEI = this.IMEI_Start.Text.Trim();
+                                PList.IMEIStart = this.IMEI_num1.Text.Trim();
+                                PList.IMEIEnd = this.IMEI_num2.Text.Trim();
+                                PList.SN = ASS_sn;
+                                PList.IMEIRel = this.IMEIRel.Text.Trim();
+                                PList.SIM = this.SIMStart.Text.Trim();
+                                PList.VIP = this.VIPStart.Text.Trim();
+                                PList.BAT = this.BATStart.Text.Trim();
+                                PList.SoftModel = this.SoftModel.Text.Trim();
+                                PList.Version = this.SoftwareVersion.Text.Trim();
+                                PList.Remark = this.Remake.Text.Trim();
+                                PList.JS_PrintTime = "";
+                                PList.JS_TemplatePath = "";
+                                PList.CH_PrintTime = ProductTime;
+                                PList.CH_TemplatePath1 = this.Select_Template1.Text;
+                                PList.CH_TemplatePath2 = this.Select_Template2.Text;
+                                PList.ICCID = this.ICCIDStart.Text;
+                                PList.MAC = this.MACStart.Text;
+                                PList.Equipment = this.EquipmentStart.Text;
+                                PList.RFID = this.RFIDStart.Text;
+                                PList.CHUserName = this.UserShow.Text;
                                 //记录成功后更新订单配置表里的SN号
-                                if (PMB.InsertPrintMessageBLL(list))
+                                if (PMB.InsertPrintMessageBLL(PList))
                                 {
                                     if (SN1_num.Text != "" && Sn_mark == 1)
                                     {
@@ -2059,7 +2057,7 @@ namespace WindowsForms_print
                                         DZSN = a.SN;
                                         ASS_sn = a.SN;
                                         this.ShowSN.Text = a.SN;
-                                        PMB.UpdateSN_SIM_ICCIDBLL(this.IMEI_Start.Text, ProductTime, this.Select_Template1.Text, this.Select_Template2.Text, this.SIMStart.Text, this.ICCIDStart.Text, a.SN,this.CB_ZhiDan.Text, this.RFIDStart.Text);
+                                        PMB.UpdateSN_SIM_ICCIDBLL(this.IMEI_Start.Text, ProductTime, this.Select_Template1.Text, this.Select_Template2.Text, this.SIMStart.Text, this.ICCIDStart.Text, a.SN,this.CB_ZhiDan.Text, this.RFIDStart.Text, this.UserShow.Text);
                                     }
                                     else
                                     {
@@ -2078,7 +2076,7 @@ namespace WindowsForms_print
                                             }
                                             this.ShowSN.Text = this.SN1_num.Text;
                                             DZSN = this.SN1_num.Text;
-                                            PMB.UpdateSN_SIM_ICCIDBLL(this.IMEI_Start.Text, ProductTime, this.Select_Template1.Text, this.Select_Template2.Text, this.SIMStart.Text, this.ICCIDStart.Text, this.SN1_num.Text, this.CB_ZhiDan.Text, this.RFIDStart.Text);
+                                            PMB.UpdateSN_SIM_ICCIDBLL(this.IMEI_Start.Text, ProductTime, this.Select_Template1.Text, this.Select_Template2.Text, this.SIMStart.Text, this.ICCIDStart.Text, this.SN1_num.Text, this.CB_ZhiDan.Text, this.RFIDStart.Text, this.UserShow.Text);
                                             if (this.SN1_num.Text != "")
                                             {
                                                 sn1_prefix = SN1_num.Text.Substring(0, this.SN1_num.Text.Length - s);
@@ -2092,7 +2090,7 @@ namespace WindowsForms_print
                                         {
                                             btFormat.SubStrings["SN"].Value = ASS_sn;
                                             this.ShowSN.Text = ASS_sn;
-                                            PMB.UpdateSN_SIM_ICCIDBLL(this.IMEI_Start.Text, ProductTime, this.Select_Template1.Text, this.Select_Template2.Text, this.SIMStart.Text, this.ICCIDStart.Text, ASS_sn, this.CB_ZhiDan.Text, this.RFIDStart.Text);
+                                            PMB.UpdateSN_SIM_ICCIDBLL(this.IMEI_Start.Text, ProductTime, this.Select_Template1.Text, this.Select_Template2.Text, this.SIMStart.Text, this.ICCIDStart.Text, ASS_sn, this.CB_ZhiDan.Text, this.RFIDStart.Text, this.UserShow.Text);
                                         }
                                     }
                                 }
@@ -2123,19 +2121,63 @@ namespace WindowsForms_print
                         }
                         else
                         {
-                            int UpInt = 0;
+                            UpInt1 = 0;
+                            UpInt2 = 0;
                             //判断关联表是否有该SIM号，有的话根据该SIM号更新IMEI，无则插入一条记录
                             if (this.UpdateIMEIBySim.Checked == true)
                             {
                                 DRSB.UpdateIMEIBySIMBLL(this.IMEI_Start.Text, this.SIMStart.Text);
+                                UpInt1 = 1;
                             }
                             if (PMB.UpdateSimIccidBLL(this.IMEI_Start.Text, this.SIMStart.Text, this.ICCIDStart.Text))
                             {
-                                this.SIMStart.Clear();
-                                this.ICCIDStart.Clear();
-                                this.IMEI_Start.Clear();
-                                this.IMEI_Start.Focus();
+                                UpInt2 = 2;
                             }
+
+                            switch (UpInt1+ UpInt2)
+                            {
+                                case 0:
+                                    BindingCountF++;
+                                    Bind_DGV.Rows.Insert(0);
+                                    Bind_DGV.Rows[0].Cells[0].Value = BindingCountF.ToString();
+                                    Bind_DGV.Rows[0].Cells[1].Value = "未 绑 定";
+                                    Bind_DGV.Rows[0].Cells[2].Value = this.IMEI_Start.Text;
+                                    Bind_DGV.Rows[0].Cells[3].Value = this.SIMStart.Text;
+                                    player.Play();
+                                    break;
+                                case 1:
+                                    BindingCountS++;
+                                    Bind_DGV.Rows.Insert(0);
+                                    Bind_DGV.Rows[0].Cells[0].Value = BindingCountS.ToString();
+                                    Bind_DGV.Rows[0].Cells[1].Value = "更 新";
+                                    Bind_DGV.Rows[0].Cells[2].Value = this.IMEI_Start.Text;
+                                    Bind_DGV.Rows[0].Cells[3].Value = this.SIMStart.Text;
+                                    player4.Play();
+                                    break;
+                                case 2:
+                                    BindingCountS++;
+                                    Bind_DGV.Rows.Insert(0);
+                                    Bind_DGV.Rows[0].Cells[0].Value = BindingCountS.ToString();
+                                    Bind_DGV.Rows[0].Cells[1].Value = "绑 定";
+                                    Bind_DGV.Rows[0].Cells[2].Value = this.IMEI_Start.Text;
+                                    Bind_DGV.Rows[0].Cells[3].Value = this.SIMStart.Text;
+                                    player4.Play();
+                                    break;
+                                case 3:
+                                    BindingCountS++;
+                                    Bind_DGV.Rows.Insert(0);
+                                    Bind_DGV.Rows[0].Cells[0].Value = BindingCountS.ToString();
+                                    Bind_DGV.Rows[0].Cells[1].Value = "绑 定";
+                                    Bind_DGV.Rows[0].Cells[2].Value = this.IMEI_Start.Text;
+                                    Bind_DGV.Rows[0].Cells[3].Value = this.SIMStart.Text;
+                                    player4.Play();
+                                    break;
+                            }
+                            this.SIMStart.Clear();
+                            this.ICCIDStart.Clear();
+                            this.IMEI_Start.Clear();
+                            this.IMEI_Start.Focus();
+
                         }
                     }
                     else
@@ -2274,31 +2316,30 @@ namespace WindowsForms_print
                                     xc2 = 1;
                                 }
                                 //记录打印信息日志
-                                list.Add(new PrintMessage()
-                                {
-                                    Zhidan = this.CB_ZhiDan.Text.Trim(),
-                                    IMEI = this.IMEI_Start.Text.Trim(),
-                                    IMEIStart = this.IMEI_num1.Text.Trim(),
-                                    IMEIEnd = this.IMEI_num2.Text.Trim(),
-                                    SN = ASS_sn,
-                                    IMEIRel = this.IMEIRel.Text.Trim(),
-                                    SIM = this.SIMStart.Text.Trim(),
-                                    VIP = this.VIPStart.Text.Trim(),
-                                    BAT = this.BATStart.Text.Trim(),
-                                    SoftModel = this.SoftModel.Text.Trim(),
-                                    Version = this.SoftwareVersion.Text.Trim(),
-                                    Remark = this.Remake.Text.Trim(),
-                                    JS_PrintTime = "",
-                                    JS_TemplatePath = "",
-                                    CH_PrintTime = ProductTime,
-                                    CH_TemplatePath1 = this.Select_Template1.Text,
-                                    CH_TemplatePath2 = this.Select_Template2.Text,
-                                    ICCID = this.ICCIDStart.Text,
-                                    MAC = this.MACStart.Text,
-                                    Equipment = this.EquipmentStart.Text,
-                                    RFID = this.RFIDStart.Text
-                                });
-                                if (PMB.InsertPrintMessageBLL(list))
+                                PList.Claer();
+                                PList.Zhidan = this.CB_ZhiDan.Text.Trim();
+                                PList.IMEI = this.IMEI_Start.Text.Trim();
+                                PList.IMEIStart = this.IMEI_num1.Text.Trim();
+                                PList.IMEIEnd = this.IMEI_num2.Text.Trim();
+                                PList.SN = ASS_sn;
+                                PList.IMEIRel = this.IMEIRel.Text.Trim();
+                                PList.SIM = this.SIMStart.Text.Trim();
+                                PList.VIP = this.VIPStart.Text.Trim();
+                                PList.BAT = this.BATStart.Text.Trim();
+                                PList.SoftModel = this.SoftModel.Text.Trim();
+                                PList.Version = this.SoftwareVersion.Text.Trim();
+                                PList.Remark = this.Remake.Text.Trim();
+                                PList.JS_PrintTime = "";
+                                PList.JS_TemplatePath = "";
+                                PList.CH_PrintTime = ProductTime;
+                                PList.CH_TemplatePath1 = this.Select_Template1.Text;
+                                PList.CH_TemplatePath2 = this.Select_Template2.Text;
+                                PList.ICCID = this.ICCIDStart.Text;
+                                PList.MAC = this.MACStart.Text;
+                                PList.Equipment = this.EquipmentStart.Text;
+                                PList.RFID = this.RFIDStart.Text;
+                                PList.CHUserName = this.UserShow.Text;
+                                if (PMB.InsertPrintMessageBLL(PList))
                                 {
                                     if (DRSB.CheckIMEIBLL(this.IMEI_Start.Text))
                                     {
@@ -2415,7 +2456,7 @@ namespace WindowsForms_print
                                             });
                                             DRSB.InsertRelativeSheetBLL(drs);
                                         }
-                                        PMB.UpdateSN_VIPBLL(this.IMEI_Start.Text, ProductTime, this.Select_Template1.Text, this.Select_Template2.Text, this.VIPStart.Text, a.SN,this.CB_ZhiDan.Text, this.RFIDStart.Text);
+                                        PMB.UpdateSN_VIPBLL(this.IMEI_Start.Text, ProductTime, this.Select_Template1.Text, this.Select_Template2.Text, this.VIPStart.Text, a.SN,this.CB_ZhiDan.Text, this.RFIDStart.Text, this.UserShow.Text);
                                     }
                                     else
                                     {
@@ -2459,7 +2500,7 @@ namespace WindowsForms_print
                                                 });
                                                 DRSB.InsertRelativeSheetBLL(drs);
                                             }
-                                            PMB.UpdateSN_VIPBLL(this.IMEI_Start.Text, ProductTime, this.Select_Template1.Text, this.Select_Template2.Text, this.VIPStart.Text, this.SN1_num.Text, this.CB_ZhiDan.Text, this.RFIDStart.Text);
+                                            PMB.UpdateSN_VIPBLL(this.IMEI_Start.Text, ProductTime, this.Select_Template1.Text, this.Select_Template2.Text, this.VIPStart.Text, this.SN1_num.Text, this.CB_ZhiDan.Text, this.RFIDStart.Text, this.UserShow.Text);
                                             if (this.SN1_num.Text != "")
                                             {
                                                 sn1_prefix = SN1_num.Text.Substring(0, this.SN1_num.Text.Length - s);
@@ -2475,7 +2516,7 @@ namespace WindowsForms_print
                                             DZSN = ASS_sn;
                                             this.ShowSN.Text = ASS_sn;
                                             DRSB.UpdateVIPBLL(this.IMEI_Start.Text, this.VIPStart.Text);
-                                            PMB.UpdateSN_VIPBLL(this.IMEI_Start.Text, ProductTime, this.Select_Template1.Text, this.Select_Template2.Text, this.VIPStart.Text, ASS_sn, this.CB_ZhiDan.Text, this.RFIDStart.Text);
+                                            PMB.UpdateSN_VIPBLL(this.IMEI_Start.Text, ProductTime, this.Select_Template1.Text, this.Select_Template2.Text, this.VIPStart.Text, ASS_sn, this.CB_ZhiDan.Text, this.RFIDStart.Text, this.UserShow.Text);
                                         }
                                     }
                                 }
@@ -2538,10 +2579,25 @@ namespace WindowsForms_print
                                 PMB.UpdateVIPBLL(this.IMEI_Start.Text, this.VIPStart.Text);
                                 UpInt++;
                             }
-                            if (UpInt == 2)
+                            if (UpInt == 2 || UpInt == 1)
                             {
-                                this.reminder.AppendText(this.VIPStart.Text + "绑定" + this.IMEI_Start.Text + "\r\n");
+                                BindingCountS++;
+                                Bind_DGV.Rows.Insert(0);
+                                Bind_DGV.Rows[0].Cells[0].Value = BindingCountS.ToString();
+                                Bind_DGV.Rows[0].Cells[1].Value = "绑 定";
+                                Bind_DGV.Rows[0].Cells[2].Value = this.IMEI_Start.Text;
+                                Bind_DGV.Rows[0].Cells[4].Value = this.VIPStart.Text;
                                 player4.Play();
+                            }
+                            else
+                            {
+                                BindingCountF++;
+                                Bind_DGV.Rows.Insert(0);
+                                Bind_DGV.Rows[0].Cells[0].Value = BindingCountF.ToString();
+                                Bind_DGV.Rows[0].Cells[1].Value = "未 绑 定";
+                                Bind_DGV.Rows[0].Cells[2].Value = this.IMEI_Start.Text;
+                                Bind_DGV.Rows[0].Cells[4].Value = this.VIPStart.Text;
+                                player.Play();
                             }
                             this.IMEI_Start.Clear();
                             this.SIMStart.Clear();
@@ -2609,31 +2665,30 @@ namespace WindowsForms_print
                                     xc2 = 1;
                                 }
                                 //记录打印信息日志
-                                list.Add(new PrintMessage()
-                                {
-                                    Zhidan = this.CB_ZhiDan.Text.Trim(),
-                                    IMEI = this.IMEI_Start.Text.Trim(),
-                                    IMEIStart = this.IMEI_num1.Text.Trim(),
-                                    IMEIEnd = this.IMEI_num2.Text.Trim(),
-                                    SN = ASS_sn,
-                                    IMEIRel = this.IMEIRel.Text.Trim(),
-                                    SIM = this.SIMStart.Text.Trim(),
-                                    VIP = this.VIPStart.Text.Trim(),
-                                    BAT = this.BATStart.Text.Trim(),
-                                    SoftModel = this.SoftModel.Text.Trim(),
-                                    Version = this.SoftwareVersion.Text.Trim(),
-                                    Remark = this.Remake.Text.Trim(),
-                                    JS_PrintTime = "",
-                                    JS_TemplatePath = "",
-                                    CH_PrintTime = ProductTime,
-                                    CH_TemplatePath1 = this.Select_Template1.Text,
-                                    CH_TemplatePath2 = this.Select_Template2.Text,
-                                    ICCID = this.ICCIDStart.Text,
-                                    MAC = this.MACStart.Text,
-                                    Equipment = this.EquipmentStart.Text,
-                                    RFID = this.RFIDStart.Text
-                                });
-                                if (PMB.InsertPrintMessageBLL(list))
+                                PList.Claer();
+                                PList.Zhidan = this.CB_ZhiDan.Text.Trim();
+                                PList.IMEI = this.IMEI_Start.Text.Trim();
+                                PList.IMEIStart = this.IMEI_num1.Text.Trim();
+                                PList.IMEIEnd = this.IMEI_num2.Text.Trim();
+                                PList.SN = ASS_sn;
+                                PList.IMEIRel = this.IMEIRel.Text.Trim();
+                                PList.SIM = this.SIMStart.Text.Trim();
+                                PList.VIP = this.VIPStart.Text.Trim();
+                                PList.BAT = this.BATStart.Text.Trim();
+                                PList.SoftModel = this.SoftModel.Text.Trim();
+                                PList.Version = this.SoftwareVersion.Text.Trim();
+                                PList.Remark = this.Remake.Text.Trim();
+                                PList.JS_PrintTime = "";
+                                PList.JS_TemplatePath = "";
+                                PList.CH_PrintTime = ProductTime;
+                                PList.CH_TemplatePath1 = this.Select_Template1.Text;
+                                PList.CH_TemplatePath2 = this.Select_Template2.Text;
+                                PList.ICCID = this.ICCIDStart.Text;
+                                PList.MAC = this.MACStart.Text;
+                                PList.Equipment = this.EquipmentStart.Text;
+                                PList.RFID = this.RFIDStart.Text;
+                                PList.CHUserName = this.UserShow.Text;
+                                if (PMB.InsertPrintMessageBLL(PList))
                                 {
                                     //判断关联表是否有该SIM号，有的话根据该SIM号更新IMEI，无则插入一条记录
                                     if (this.UpdateIMEIBySim.Checked == true)
@@ -2735,7 +2790,7 @@ namespace WindowsForms_print
                                             DRSB.UpdateIMEIBySIMBLL(this.IMEI_Start.Text, this.SIMStart.Text);
                                         }
                                         DRSB.UpdateVIPBLL(this.IMEI_Start.Text, this.VIPStart.Text);
-                                        PMB.UpdateSN_SIM_VIP_ICCIDBLL(this.IMEI_Start.Text, ProductTime, this.Select_Template1.Text, this.Select_Template2.Text, this.SIMStart.Text, this.VIPStart.Text, this.ICCIDStart.Text, a.SN,this.CB_ZhiDan.Text, this.RFIDStart.Text);
+                                        PMB.UpdateSN_SIM_VIP_ICCIDBLL(this.IMEI_Start.Text, ProductTime, this.Select_Template1.Text, this.Select_Template2.Text, this.SIMStart.Text, this.VIPStart.Text, this.ICCIDStart.Text, a.SN,this.CB_ZhiDan.Text, this.RFIDStart.Text, this.UserShow.Text);
                                     }
                                     else
                                     {
@@ -2759,7 +2814,7 @@ namespace WindowsForms_print
                                                 DRSB.UpdateIMEIBySIMBLL(this.IMEI_Start.Text, this.SIMStart.Text);
                                             }
                                             DRSB.UpdateVIPBLL(this.IMEI_Start.Text, this.VIPStart.Text);
-                                            PMB.UpdateSN_SIM_VIP_ICCIDBLL(this.IMEI_Start.Text, ProductTime, this.Select_Template1.Text, this.Select_Template2.Text, this.SIMStart.Text, this.VIPStart.Text, this.ICCIDStart.Text, this.SN1_num.Text,this.CB_ZhiDan.Text, this.RFIDStart.Text);
+                                            PMB.UpdateSN_SIM_VIP_ICCIDBLL(this.IMEI_Start.Text, ProductTime, this.Select_Template1.Text, this.Select_Template2.Text, this.SIMStart.Text, this.VIPStart.Text, this.ICCIDStart.Text, this.SN1_num.Text,this.CB_ZhiDan.Text, this.RFIDStart.Text, this.UserShow.Text);
                                             if (this.SN1_num.Text != "")
                                             {
                                                 sn1_prefix = SN1_num.Text.Substring(0, this.SN1_num.Text.Length - s);
@@ -2775,7 +2830,7 @@ namespace WindowsForms_print
                                             DZSN = ASS_sn;
                                             this.ShowSN.Text = ASS_sn;
                                             DRSB.UpdateVIPBLL(this.IMEI_Start.Text, this.VIPStart.Text);
-                                            PMB.UpdateSN_SIM_VIP_ICCIDBLL(this.IMEI_Start.Text, ProductTime, this.Select_Template1.Text, this.Select_Template2.Text, this.SIMStart.Text, this.VIPStart.Text, this.ICCIDStart.Text, ASS_sn, this.CB_ZhiDan.Text, this.RFIDStart.Text);
+                                            PMB.UpdateSN_SIM_VIP_ICCIDBLL(this.IMEI_Start.Text, ProductTime, this.Select_Template1.Text, this.Select_Template2.Text, this.SIMStart.Text, this.VIPStart.Text, this.ICCIDStart.Text, ASS_sn, this.CB_ZhiDan.Text, this.RFIDStart.Text, this.UserShow.Text);
                                         }
                                     }
                                 }
@@ -2838,10 +2893,29 @@ namespace WindowsForms_print
                                 PMB.UpdateSimVipIccidBLL(this.IMEI_Start.Text, this.SIMStart.Text, this.VIPStart.Text, this.ICCIDStart.Text);
                                 UpInt++;
                             }
-                            if (UpInt == 2)
+                            if (UpInt == 2 || UpInt == 1)
                             {
-                                this.reminder.AppendText(this.VIPStart.Text + "绑定" + this.IMEI_Start.Text + "\r\n");
+                                BindingCountS++;
+                                Bind_DGV.Rows.Insert(0);
+                                Bind_DGV.Rows[0].Cells[0].Value = BindingCountS.ToString();
+                                Bind_DGV.Rows[0].Cells[1].Value = "绑 定";
+                                Bind_DGV.Rows[0].Cells[2].Value = this.IMEI_Start.Text;
+                                Bind_DGV.Rows[0].Cells[3].Value = this.SIMStart.Text;
+                                Bind_DGV.Rows[0].Cells[4].Value = this.VIPStart.Text;
+                                Bind_DGV.Rows[0].Cells[6].Value = this.ICCIDStart.Text;
                                 player4.Play();
+                            }
+                            else
+                            {
+                                BindingCountF++;
+                                Bind_DGV.Rows.Insert(0);
+                                Bind_DGV.Rows[0].Cells[0].Value = BindingCountF.ToString();
+                                Bind_DGV.Rows[0].Cells[1].Value = "未 绑 定";
+                                Bind_DGV.Rows[0].Cells[2].Value = this.IMEI_Start.Text;
+                                Bind_DGV.Rows[0].Cells[3].Value = this.SIMStart.Text;
+                                Bind_DGV.Rows[0].Cells[4].Value = this.VIPStart.Text;
+                                Bind_DGV.Rows[0].Cells[6].Value = this.ICCIDStart.Text;
+                                player.Play();
                             }
                             this.IMEI_Start.Clear();
                             this.SIMStart.Clear();
@@ -3000,31 +3074,30 @@ namespace WindowsForms_print
                                     xc2 = 1;
                                 }
                                 //记录打印信息日志
-                                list.Add(new PrintMessage()
-                                {
-                                    Zhidan = this.CB_ZhiDan.Text.Trim(),
-                                    IMEI = this.IMEI_Start.Text.Trim(),
-                                    IMEIStart = this.IMEI_num1.Text.Trim(),
-                                    IMEIEnd = this.IMEI_num2.Text.Trim(),
-                                    SN = ASS_sn,
-                                    IMEIRel = this.IMEIRel.Text.Trim(),
-                                    SIM = this.SIMStart.Text.Trim(),
-                                    VIP = this.VIPStart.Text.Trim(),
-                                    BAT = this.BATStart.Text.Trim(),
-                                    SoftModel = this.SoftModel.Text.Trim(),
-                                    Version = this.SoftwareVersion.Text.Trim(),
-                                    Remark = this.Remake.Text.Trim(),
-                                    JS_PrintTime = "",
-                                    JS_TemplatePath = "",
-                                    CH_PrintTime = ProductTime,
-                                    CH_TemplatePath1 = this.Select_Template1.Text,
-                                    CH_TemplatePath2 = this.Select_Template2.Text,
-                                    ICCID = this.ICCIDStart.Text,
-                                    MAC = this.MACStart.Text,
-                                    Equipment = this.EquipmentStart.Text,
-                                    RFID = this.RFIDStart.Text
-                                });
-                                if (PMB.InsertPrintMessageBLL(list))
+                                PList.Claer();
+                                PList.Zhidan = this.CB_ZhiDan.Text.Trim();
+                                PList.IMEI = this.IMEI_Start.Text.Trim();
+                                PList.IMEIStart = this.IMEI_num1.Text.Trim();
+                                PList.IMEIEnd = this.IMEI_num2.Text.Trim();
+                                PList.SN = ASS_sn;
+                                PList.IMEIRel = this.IMEIRel.Text.Trim();
+                                PList.SIM = this.SIMStart.Text.Trim();
+                                PList.VIP = this.VIPStart.Text.Trim();
+                                PList.BAT = this.BATStart.Text.Trim();
+                                PList.SoftModel = this.SoftModel.Text.Trim();
+                                PList.Version = this.SoftwareVersion.Text.Trim();
+                                PList.Remark = this.Remake.Text.Trim();
+                                PList.JS_PrintTime = "";
+                                PList.JS_TemplatePath = "";
+                                PList.CH_PrintTime = ProductTime;
+                                PList.CH_TemplatePath1 = this.Select_Template1.Text;
+                                PList.CH_TemplatePath2 = this.Select_Template2.Text;
+                                PList.ICCID = this.ICCIDStart.Text;
+                                PList.MAC = this.MACStart.Text;
+                                PList.Equipment = this.EquipmentStart.Text;
+                                PList.RFID = this.RFIDStart.Text;
+                                PList.CHUserName = this.UserShow.Text;
+                                if (PMB.InsertPrintMessageBLL(PList))
                                 {
                                     if (this.SIMStart.Text == "")
                                     {
@@ -3170,7 +3243,7 @@ namespace WindowsForms_print
                                             }
                                             DRSB.UpdateVipAndBatBLL(this.IMEI_Start.Text, this.VIPStart.Text, this.BATStart.Text);
                                         }
-                                        PMB.UpdateSN_SIM_VIP_BAT_ICCIDBLL(this.IMEI_Start.Text, ProductTime, this.Select_Template1.Text, this.Select_Template2.Text, this.SIMStart.Text, this.VIPStart.Text, this.BATStart.Text, this.ICCIDStart.Text, a.SN,this.CB_ZhiDan.Text, this.RFIDStart.Text);
+                                        PMB.UpdateSN_SIM_VIP_BAT_ICCIDBLL(this.IMEI_Start.Text, ProductTime, this.Select_Template1.Text, this.Select_Template2.Text, this.SIMStart.Text, this.VIPStart.Text, this.BATStart.Text, this.ICCIDStart.Text, a.SN,this.CB_ZhiDan.Text, this.RFIDStart.Text, this.UserShow.Text);
                                     }
                                     else
                                     {
@@ -3230,7 +3303,7 @@ namespace WindowsForms_print
                                                 }
                                                 DRSB.UpdateVipAndBatBLL(this.IMEI_Start.Text, this.VIPStart.Text, this.BATStart.Text);
                                             }
-                                            PMB.UpdateSN_SIM_VIP_BAT_ICCIDBLL(this.IMEI_Start.Text, ProductTime, this.Select_Template1.Text, this.Select_Template2.Text, this.SIMStart.Text, this.VIPStart.Text, this.BATStart.Text, this.ICCIDStart.Text, this.SN1_num.Text, this.CB_ZhiDan.Text, this.RFIDStart.Text);
+                                            PMB.UpdateSN_SIM_VIP_BAT_ICCIDBLL(this.IMEI_Start.Text, ProductTime, this.Select_Template1.Text, this.Select_Template2.Text, this.SIMStart.Text, this.VIPStart.Text, this.BATStart.Text, this.ICCIDStart.Text, this.SN1_num.Text, this.CB_ZhiDan.Text, this.RFIDStart.Text, this.UserShow.Text);
                                             if (this.SN1_num.Text != "")
                                             {
                                                 sn1_prefix = SN1_num.Text.Substring(0, this.SN1_num.Text.Length - s);
@@ -3246,7 +3319,7 @@ namespace WindowsForms_print
                                             DZSN = ASS_sn;
                                             this.ShowSN.Text = ASS_sn;
                                             DRSB.UpdateVipAndBatBLL(this.IMEI_Start.Text, this.VIPStart.Text, this.BATStart.Text);
-                                            PMB.UpdateSN_SIM_VIP_BAT_ICCIDBLL(this.IMEI_Start.Text, ProductTime, this.Select_Template1.Text, this.Select_Template2.Text, this.SIMStart.Text, this.VIPStart.Text, this.BATStart.Text, this.ICCIDStart.Text, ASS_sn, this.CB_ZhiDan.Text, this.RFIDStart.Text);
+                                            PMB.UpdateSN_SIM_VIP_BAT_ICCIDBLL(this.IMEI_Start.Text, ProductTime, this.Select_Template1.Text, this.Select_Template2.Text, this.SIMStart.Text, this.VIPStart.Text, this.BATStart.Text, this.ICCIDStart.Text, ASS_sn, this.CB_ZhiDan.Text, this.RFIDStart.Text, this.UserShow.Text);
                                         }
                                     }
                                 }
@@ -3308,10 +3381,31 @@ namespace WindowsForms_print
                                 PMB.UpdateVipAndBatBLL(this.IMEI_Start.Text, this.SIMStart.Text, this.VIPStart.Text, this.BATStart.Text, this.ICCIDStart.Text);
                                 UpInt++;
                             }
-                            if (UpInt == 2)
+                            if (UpInt == 2 || UpInt == 1)
                             {
-                                this.reminder.AppendText(this.BATStart.Text + "绑定" + this.IMEI_Start.Text + "\r\n");
+                                BindingCountS++;
+                                Bind_DGV.Rows.Insert(0);
+                                Bind_DGV.Rows[0].Cells[0].Value = BindingCountS.ToString();
+                                Bind_DGV.Rows[0].Cells[1].Value = "绑 定";
+                                Bind_DGV.Rows[0].Cells[2].Value = this.IMEI_Start.Text;
+                                Bind_DGV.Rows[0].Cells[3].Value = this.SIMStart.Text;
+                                Bind_DGV.Rows[0].Cells[4].Value = this.VIPStart.Text;
+                                Bind_DGV.Rows[0].Cells[5].Value = this.BATStart.Text;
+                                Bind_DGV.Rows[0].Cells[6].Value = this.ICCIDStart.Text;
                                 player4.Play();
+                            }
+                            else
+                            {
+                                BindingCountF++;
+                                Bind_DGV.Rows.Insert(0);
+                                Bind_DGV.Rows[0].Cells[0].Value = BindingCountF.ToString();
+                                Bind_DGV.Rows[0].Cells[1].Value = "未 绑 定";
+                                Bind_DGV.Rows[0].Cells[2].Value = this.IMEI_Start.Text;
+                                Bind_DGV.Rows[0].Cells[3].Value = this.SIMStart.Text;
+                                Bind_DGV.Rows[0].Cells[4].Value = this.VIPStart.Text;
+                                Bind_DGV.Rows[0].Cells[5].Value = this.BATStart.Text;
+                                Bind_DGV.Rows[0].Cells[6].Value = this.ICCIDStart.Text;
+                                player.Play();
                             }
                             this.IMEI_Start.Clear();
                             this.SIMStart.Clear();
@@ -3467,31 +3561,30 @@ namespace WindowsForms_print
                                     xc2 = 1;
                                 }
                                 //记录打印信息日志
-                                list.Add(new PrintMessage()
-                                {
-                                    Zhidan = this.CB_ZhiDan.Text.Trim(),
-                                    IMEI = this.IMEI_Start.Text.Trim(),
-                                    IMEIStart = this.IMEI_num1.Text.Trim(),
-                                    IMEIEnd = this.IMEI_num2.Text.Trim(),
-                                    SN = this.SN1_num.Text,
-                                    IMEIRel = this.IMEIRel.Text.Trim(),
-                                    SIM = this.SIMStart.Text.Trim(),
-                                    VIP = this.VIPStart.Text.Trim(),
-                                    BAT = this.BATStart.Text.Trim(),
-                                    SoftModel = this.SoftModel.Text.Trim(),
-                                    Version = this.SoftwareVersion.Text.Trim(),
-                                    Remark = this.Remake.Text.Trim(),
-                                    JS_PrintTime = "",
-                                    JS_TemplatePath = "",
-                                    CH_PrintTime = ProductTime,
-                                    CH_TemplatePath1 = this.Select_Template1.Text,
-                                    CH_TemplatePath2 = this.Select_Template2.Text,
-                                    ICCID = this.ICCIDStart.Text,
-                                    MAC = this.MACStart.Text,
-                                    Equipment = this.EquipmentStart.Text,
-                                    RFID = this.RFIDStart.Text
-                                });
-                                if (PMB.InsertPrintMessageBLL(list))
+                                PList.Claer();
+                                PList.Zhidan = this.CB_ZhiDan.Text.Trim();
+                                PList.IMEI = this.IMEI_Start.Text.Trim();
+                                PList.IMEIStart = this.IMEI_num1.Text.Trim();
+                                PList.IMEIEnd = this.IMEI_num2.Text.Trim();
+                                PList.SN = this.SN1_num.Text;
+                                PList.IMEIRel = this.IMEIRel.Text.Trim();
+                                PList.SIM = this.SIMStart.Text.Trim();
+                                PList.VIP = this.VIPStart.Text.Trim();
+                                PList.BAT = this.BATStart.Text.Trim();
+                                PList.SoftModel = this.SoftModel.Text.Trim();
+                                PList.Version = this.SoftwareVersion.Text.Trim();
+                                PList.Remark = this.Remake.Text.Trim();
+                                PList.JS_PrintTime = "";
+                                PList.JS_TemplatePath = "";
+                                PList.CH_PrintTime = ProductTime;
+                                PList.CH_TemplatePath1 = this.Select_Template1.Text;
+                                PList.CH_TemplatePath2 = this.Select_Template2.Text;
+                                PList.ICCID = this.ICCIDStart.Text;
+                                PList.MAC = this.MACStart.Text;
+                                PList.Equipment = this.EquipmentStart.Text;
+                                PList.RFID = this.RFIDStart.Text;
+                                PList.CHUserName = this.UserShow.Text;
+                                if (PMB.InsertPrintMessageBLL(PList))
                                 {
                                     //记录关联数据信息到关联表
                                     drs.Add(new DataRelativeSheet()
@@ -3599,7 +3692,7 @@ namespace WindowsForms_print
                                             TestTime = System.DateTime.Now.ToString("yyyy.MM.dd HH:mm:ss:fff")
                                         });
                                         DRSB.InsertRelativeSheetBLL(drs);
-                                        PMB.UpdateSN_VIP_BAT_ICCIDBLL(this.IMEI_Start.Text, ProductTime, this.Select_Template1.Text, this.Select_Template2.Text, this.VIPStart.Text, this.BATStart.Text, this.ICCIDStart.Text, a.SN,this.CB_ZhiDan.Text, this.RFIDStart.Text);
+                                        PMB.UpdateSN_VIP_BAT_ICCIDBLL(this.IMEI_Start.Text, ProductTime, this.Select_Template1.Text, this.Select_Template2.Text, this.VIPStart.Text, this.BATStart.Text, this.ICCIDStart.Text, a.SN,this.CB_ZhiDan.Text, this.RFIDStart.Text, this.UserShow.Text);
                                     }
                                     else
                                     {
@@ -3639,7 +3732,7 @@ namespace WindowsForms_print
                                             });
                                             DRSB.InsertRelativeSheetBLL(drs);
                                             //更新打印记录表
-                                            PMB.UpdateSN_VIP_BAT_ICCIDBLL(this.IMEI_Start.Text, ProductTime, this.Select_Template1.Text, this.Select_Template2.Text, this.VIPStart.Text, this.BATStart.Text, this.ICCIDStart.Text, this.SN1_num.Text, this.CB_ZhiDan.Text, this.RFIDStart.Text);
+                                            PMB.UpdateSN_VIP_BAT_ICCIDBLL(this.IMEI_Start.Text, ProductTime, this.Select_Template1.Text, this.Select_Template2.Text, this.VIPStart.Text, this.BATStart.Text, this.ICCIDStart.Text, this.SN1_num.Text, this.CB_ZhiDan.Text, this.RFIDStart.Text, this.UserShow.Text);
                                             if (this.SN1_num.Text != "")
                                             {
                                                 sn1_prefix = SN1_num.Text.Substring(0, this.SN1_num.Text.Length - s);
@@ -3654,7 +3747,7 @@ namespace WindowsForms_print
                                             btFormat.SubStrings["SN"].Value = ASS_sn;
                                             DZSN = ASS_sn;
                                             this.ShowSN.Text = ASS_sn;
-                                            PMB.UpdateSN_VIP_BAT_ICCIDBLL(this.IMEI_Start.Text, ProductTime, this.Select_Template1.Text, this.Select_Template2.Text, this.VIPStart.Text, this.BATStart.Text, this.ICCIDStart.Text, this.SN1_num.Text, this.CB_ZhiDan.Text, this.RFIDStart.Text);
+                                            PMB.UpdateSN_VIP_BAT_ICCIDBLL(this.IMEI_Start.Text, ProductTime, this.Select_Template1.Text, this.Select_Template2.Text, this.VIPStart.Text, this.BATStart.Text, this.ICCIDStart.Text, this.SN1_num.Text, this.CB_ZhiDan.Text, this.RFIDStart.Text, this.UserShow.Text);
                                         }
                                     }
                                 }
@@ -3717,8 +3810,32 @@ namespace WindowsForms_print
                             }
                             if (UpInt == 2)
                             {
-                                this.reminder.AppendText(this.ICCIDStart.Text + "绑定" + this.IMEI_Start.Text + "\r\n");
-                                player4.Play();
+                                if (UpInt == 2 || UpInt == 1)
+                                {
+                                    BindingCountS++;
+                                    Bind_DGV.Rows.Insert(0);
+                                    Bind_DGV.Rows[0].Cells[0].Value = BindingCountS.ToString();
+                                    Bind_DGV.Rows[0].Cells[1].Value = "绑 定";
+                                    Bind_DGV.Rows[0].Cells[2].Value = this.IMEI_Start.Text;
+                                    Bind_DGV.Rows[0].Cells[3].Value = this.SIMStart.Text;
+                                    Bind_DGV.Rows[0].Cells[4].Value = this.VIPStart.Text;
+                                    Bind_DGV.Rows[0].Cells[5].Value = this.BATStart.Text;
+                                    Bind_DGV.Rows[0].Cells[6].Value = this.ICCIDStart.Text;
+                                    player4.Play();
+                                }
+                                else
+                                {
+                                    BindingCountF++;
+                                    Bind_DGV.Rows.Insert(0);
+                                    Bind_DGV.Rows[0].Cells[0].Value = BindingCountF.ToString();
+                                    Bind_DGV.Rows[0].Cells[1].Value = "未 绑 定";
+                                    Bind_DGV.Rows[0].Cells[2].Value = this.IMEI_Start.Text;
+                                    Bind_DGV.Rows[0].Cells[3].Value = this.SIMStart.Text;
+                                    Bind_DGV.Rows[0].Cells[4].Value = this.VIPStart.Text;
+                                    Bind_DGV.Rows[0].Cells[5].Value = this.BATStart.Text;
+                                    Bind_DGV.Rows[0].Cells[6].Value = this.ICCIDStart.Text;
+                                    player.Play();
+                                }
                             }
                             this.IMEI_Start.Clear();
                             this.SIMStart.Clear();
@@ -3880,31 +3997,30 @@ namespace WindowsForms_print
                                     xc2 = 1;
                                 }
                                 //记录打印信息日志
-                                list.Add(new PrintMessage()
-                                {
-                                    Zhidan = this.CB_ZhiDan.Text.Trim(),
-                                    IMEI = this.IMEI_Start.Text.Trim(),
-                                    IMEIStart = this.IMEI_num1.Text.Trim(),
-                                    IMEIEnd = this.IMEI_num2.Text.Trim(),
-                                    SN = ASS_sn,
-                                    IMEIRel = this.IMEIRel.Text.Trim(),
-                                    SIM = this.SIMStart.Text.Trim(),
-                                    VIP = this.VIPStart.Text.Trim(),
-                                    BAT = this.BATStart.Text.Trim(),
-                                    SoftModel = this.SoftModel.Text.Trim(),
-                                    Version = this.SoftwareVersion.Text.Trim(),
-                                    Remark = this.Remake.Text.Trim(),
-                                    JS_PrintTime = "",
-                                    JS_TemplatePath = "",
-                                    CH_PrintTime = ProductTime,
-                                    CH_TemplatePath1 = this.Select_Template1.Text,
-                                    CH_TemplatePath2 = this.Select_Template2.Text,
-                                    ICCID = this.ICCIDStart.Text,
-                                    MAC = this.MACStart.Text,
-                                    Equipment = this.EquipmentStart.Text,
-                                    RFID = this.RFIDStart.Text
-                                });
-                                if (PMB.InsertPrintMessageBLL(list))
+                                PList.Claer();
+                                PList.Zhidan = this.CB_ZhiDan.Text.Trim();
+                                PList.IMEI = this.IMEI_Start.Text.Trim();
+                                PList.IMEIStart = this.IMEI_num1.Text.Trim();
+                                PList.IMEIEnd = this.IMEI_num2.Text.Trim();
+                                PList.SN = ASS_sn;
+                                PList.IMEIRel = this.IMEIRel.Text.Trim();
+                                PList.SIM = this.SIMStart.Text.Trim();
+                                PList.VIP = this.VIPStart.Text.Trim();
+                                PList.BAT = this.BATStart.Text.Trim();
+                                PList.SoftModel = this.SoftModel.Text.Trim();
+                                PList.Version = this.SoftwareVersion.Text.Trim();
+                                PList.Remark = this.Remake.Text.Trim();
+                                PList.JS_PrintTime = "";
+                                PList.JS_TemplatePath = "";
+                                PList.CH_PrintTime = ProductTime;
+                                PList.CH_TemplatePath1 = this.Select_Template1.Text;
+                                PList.CH_TemplatePath2 = this.Select_Template2.Text;
+                                PList.ICCID = this.ICCIDStart.Text;
+                                PList.MAC = this.MACStart.Text;
+                                PList.Equipment = this.EquipmentStart.Text;
+                                PList.RFID = this.RFIDStart.Text;
+                                PList.CHUserName = this.UserShow.Text;
+                                if (PMB.InsertPrintMessageBLL(PList))
                                 {
                                     if (this.SIMStart.Text == "")
                                     {
@@ -4054,7 +4170,7 @@ namespace WindowsForms_print
                                             }
                                             DRSB.UpdateVipAndBatAndMacBLL(this.IMEI_Start.Text, this.VIPStart.Text, this.BATStart.Text, this.MACStart.Text);
                                         }
-                                        PMB.UpdateSN_SIM_VIP_BAT_ICCID_MACBLL(this.IMEI_Start.Text, ProductTime, this.Select_Template1.Text, this.Select_Template2.Text, this.SIMStart.Text, this.VIPStart.Text, this.BATStart.Text, this.ICCIDStart.Text, this.MACStart.Text, a.SN,this.CB_ZhiDan.Text, this.RFIDStart.Text);
+                                        PMB.UpdateSN_SIM_VIP_BAT_ICCID_MACBLL(this.IMEI_Start.Text, ProductTime, this.Select_Template1.Text, this.Select_Template2.Text, this.SIMStart.Text, this.VIPStart.Text, this.BATStart.Text, this.ICCIDStart.Text, this.MACStart.Text, a.SN,this.CB_ZhiDan.Text, this.RFIDStart.Text, this.UserShow.Text);
                                     }
                                     else
                                     {
@@ -4114,7 +4230,7 @@ namespace WindowsForms_print
                                                 }
                                                 DRSB.UpdateVipAndBatAndMacBLL(this.IMEI_Start.Text, this.VIPStart.Text, this.BATStart.Text, this.MACStart.Text);
                                             }
-                                            PMB.UpdateSN_SIM_VIP_BAT_ICCID_MACBLL(this.IMEI_Start.Text, ProductTime, this.Select_Template1.Text, this.Select_Template2.Text, this.SIMStart.Text, this.VIPStart.Text, this.BATStart.Text, this.ICCIDStart.Text, this.MACStart.Text, this.SN1_num.Text, this.CB_ZhiDan.Text, this.RFIDStart.Text);
+                                            PMB.UpdateSN_SIM_VIP_BAT_ICCID_MACBLL(this.IMEI_Start.Text, ProductTime, this.Select_Template1.Text, this.Select_Template2.Text, this.SIMStart.Text, this.VIPStart.Text, this.BATStart.Text, this.ICCIDStart.Text, this.MACStart.Text, this.SN1_num.Text, this.CB_ZhiDan.Text, this.RFIDStart.Text, this.UserShow.Text);
                                             if (this.SN1_num.Text != "")
                                             {
                                                 sn1_prefix = SN1_num.Text.Substring(0, this.SN1_num.Text.Length - s);
@@ -4130,7 +4246,7 @@ namespace WindowsForms_print
                                             DZSN = ASS_sn;
                                             this.ShowSN.Text = ASS_sn;
                                             DRSB.UpdateVipAndBatAndMacBLL(this.IMEI_Start.Text, this.VIPStart.Text, this.BATStart.Text, this.MACStart.Text);
-                                            PMB.UpdateSN_SIM_VIP_BAT_ICCID_MACBLL(this.IMEI_Start.Text, ProductTime, this.Select_Template1.Text, this.Select_Template2.Text, this.SIMStart.Text, this.VIPStart.Text, this.BATStart.Text, this.ICCIDStart.Text, this.MACStart.Text, ASS_sn, this.CB_ZhiDan.Text, this.RFIDStart.Text);
+                                            PMB.UpdateSN_SIM_VIP_BAT_ICCID_MACBLL(this.IMEI_Start.Text, ProductTime, this.Select_Template1.Text, this.Select_Template2.Text, this.SIMStart.Text, this.VIPStart.Text, this.BATStart.Text, this.ICCIDStart.Text, this.MACStart.Text, ASS_sn, this.CB_ZhiDan.Text, this.RFIDStart.Text, this.UserShow.Text);
                                         }
                                     }
                                 }
@@ -4193,10 +4309,33 @@ namespace WindowsForms_print
                                 PMB.UpdateVipAndBatAndMacBLL(this.IMEI_Start.Text, this.SIMStart.Text, this.VIPStart.Text, this.BATStart.Text, this.ICCIDStart.Text, this.MACStart.Text);
                                 UpInt++;
                             }
-                            if (UpInt == 2)
+                            if (UpInt == 2 || UpInt == 1)
                             {
-                                this.reminder.AppendText(this.MACStart.Text + "绑定" + this.IMEI_Start.Text + "\r\n");
+                                BindingCountS++;
+                                Bind_DGV.Rows.Insert(0);
+                                Bind_DGV.Rows[0].Cells[0].Value = BindingCountS.ToString();
+                                Bind_DGV.Rows[0].Cells[1].Value = "绑 定";
+                                Bind_DGV.Rows[0].Cells[2].Value = this.IMEI_Start.Text;
+                                Bind_DGV.Rows[0].Cells[3].Value = this.SIMStart.Text;
+                                Bind_DGV.Rows[0].Cells[4].Value = this.VIPStart.Text;
+                                Bind_DGV.Rows[0].Cells[5].Value = this.BATStart.Text;
+                                Bind_DGV.Rows[0].Cells[6].Value = this.ICCIDStart.Text;
+                                Bind_DGV.Rows[0].Cells[7].Value = this.MACStart.Text;
                                 player4.Play();
+                            }
+                            else
+                            {
+                                BindingCountF++;
+                                Bind_DGV.Rows.Insert(0);
+                                Bind_DGV.Rows[0].Cells[0].Value = BindingCountF.ToString();
+                                Bind_DGV.Rows[0].Cells[1].Value = "未 绑 定";
+                                Bind_DGV.Rows[0].Cells[2].Value = this.IMEI_Start.Text;
+                                Bind_DGV.Rows[0].Cells[3].Value = this.SIMStart.Text;
+                                Bind_DGV.Rows[0].Cells[4].Value = this.VIPStart.Text;
+                                Bind_DGV.Rows[0].Cells[5].Value = this.BATStart.Text;
+                                Bind_DGV.Rows[0].Cells[6].Value = this.ICCIDStart.Text;
+                                Bind_DGV.Rows[0].Cells[7].Value = this.MACStart.Text;
+                                player.Play();
                             }
                             this.IMEI_Start.Clear();
                             this.SIMStart.Clear();
@@ -4359,31 +4498,30 @@ namespace WindowsForms_print
                                     xc2 = 1;
                                 }
                                 //记录打印信息日志
-                                list.Add(new PrintMessage()
-                                {
-                                    Zhidan = this.CB_ZhiDan.Text.Trim(),
-                                    IMEI = this.IMEI_Start.Text.Trim(),
-                                    IMEIStart = this.IMEI_num1.Text.Trim(),
-                                    IMEIEnd = this.IMEI_num2.Text.Trim(),
-                                    SN = ASS_sn,
-                                    IMEIRel = this.IMEIRel.Text.Trim(),
-                                    SIM = this.SIMStart.Text.Trim(),
-                                    VIP = this.VIPStart.Text.Trim(),
-                                    BAT = this.BATStart.Text.Trim(),
-                                    SoftModel = this.SoftModel.Text.Trim(),
-                                    Version = this.SoftwareVersion.Text.Trim(),
-                                    Remark = this.Remake.Text.Trim(),
-                                    JS_PrintTime = "",
-                                    JS_TemplatePath = "",
-                                    CH_PrintTime = ProductTime,
-                                    CH_TemplatePath1 = this.Select_Template1.Text,
-                                    CH_TemplatePath2 = this.Select_Template2.Text,
-                                    ICCID = this.ICCIDStart.Text,
-                                    MAC = this.MACStart.Text,
-                                    Equipment = this.EquipmentStart.Text,
-                                    RFID = this.RFIDStart.Text
-                                });
-                                if (PMB.InsertPrintMessageBLL(list))
+                                PList.Claer();
+                                PList.Zhidan = this.CB_ZhiDan.Text.Trim();
+                                PList.IMEI = this.IMEI_Start.Text.Trim();
+                                PList.IMEIStart = this.IMEI_num1.Text.Trim();
+                                PList.IMEIEnd = this.IMEI_num2.Text.Trim();
+                                PList.SN = ASS_sn;
+                                PList.IMEIRel = this.IMEIRel.Text.Trim();
+                                PList.SIM = this.SIMStart.Text.Trim();
+                                PList.VIP = this.VIPStart.Text.Trim();
+                                PList.BAT = this.BATStart.Text.Trim();
+                                PList.SoftModel = this.SoftModel.Text.Trim();
+                                PList.Version = this.SoftwareVersion.Text.Trim();
+                                PList.Remark = this.Remake.Text.Trim();
+                                PList.JS_PrintTime = "";
+                                PList.JS_TemplatePath = "";
+                                PList.CH_PrintTime = ProductTime;
+                                PList.CH_TemplatePath1 = this.Select_Template1.Text;
+                                PList.CH_TemplatePath2 = this.Select_Template2.Text;
+                                PList.ICCID = this.ICCIDStart.Text;
+                                PList.MAC = this.MACStart.Text;
+                                PList.Equipment = this.EquipmentStart.Text;
+                                PList.RFID = this.RFIDStart.Text;
+                                PList.CHUserName = this.UserShow.Text;
+                                if (PMB.InsertPrintMessageBLL(PList))
                                 {
                                     if (this.SIMStart.Text == "")
                                     {
@@ -4537,7 +4675,7 @@ namespace WindowsForms_print
                                             }
                                             DRSB.UpdateVipAndBatAndMacAndEquBLL(this.IMEI_Start.Text, this.VIPStart.Text, this.BATStart.Text, this.MACStart.Text, this.EquipmentStart.Text);
                                         }
-                                        PMB.UpdateSN_SIM_VIP_BAT_ICCID_MAC_EquipmentBLL(this.IMEI_Start.Text, ProductTime, this.Select_Template1.Text, this.Select_Template2.Text, this.SIMStart.Text, this.VIPStart.Text, this.BATStart.Text, this.ICCIDStart.Text, this.MACStart.Text, this.EquipmentStart.Text, a.SN,this.CB_ZhiDan.Text, this.RFIDStart.Text);
+                                        PMB.UpdateSN_SIM_VIP_BAT_ICCID_MAC_EquipmentBLL(this.IMEI_Start.Text, ProductTime, this.Select_Template1.Text, this.Select_Template2.Text, this.SIMStart.Text, this.VIPStart.Text, this.BATStart.Text, this.ICCIDStart.Text, this.MACStart.Text, this.EquipmentStart.Text, a.SN,this.CB_ZhiDan.Text, this.RFIDStart.Text, this.UserShow.Text);
                                     }
                                     else
                                     {
@@ -4598,7 +4736,7 @@ namespace WindowsForms_print
                                                 }
                                                 DRSB.UpdateVipAndBatAndMacAndEquBLL(this.IMEI_Start.Text, this.VIPStart.Text, this.BATStart.Text, this.MACStart.Text, this.EquipmentStart.Text);
                                             }
-                                            PMB.UpdateSN_SIM_VIP_BAT_ICCID_MAC_EquipmentBLL(this.IMEI_Start.Text, ProductTime, this.Select_Template1.Text, this.Select_Template2.Text, this.SIMStart.Text, this.VIPStart.Text, this.BATStart.Text, this.ICCIDStart.Text, this.MACStart.Text, this.EquipmentStart.Text, this.SN1_num.Text, this.CB_ZhiDan.Text, this.RFIDStart.Text);
+                                            PMB.UpdateSN_SIM_VIP_BAT_ICCID_MAC_EquipmentBLL(this.IMEI_Start.Text, ProductTime, this.Select_Template1.Text, this.Select_Template2.Text, this.SIMStart.Text, this.VIPStart.Text, this.BATStart.Text, this.ICCIDStart.Text, this.MACStart.Text, this.EquipmentStart.Text, this.SN1_num.Text, this.CB_ZhiDan.Text, this.RFIDStart.Text, this.UserShow.Text);
                                             if (this.SN1_num.Text != "")
                                             {
                                                 sn1_prefix = SN1_num.Text.Substring(0, this.SN1_num.Text.Length - s);
@@ -4614,7 +4752,7 @@ namespace WindowsForms_print
                                             DZSN = ASS_sn;
                                             this.ShowSN.Text = ASS_sn;
                                             DRSB.UpdateVipAndBatAndMacAndEquBLL(this.IMEI_Start.Text, this.VIPStart.Text, this.BATStart.Text, this.MACStart.Text, this.EquipmentStart.Text);
-                                            PMB.UpdateSN_SIM_VIP_BAT_ICCID_MAC_EquipmentBLL(this.IMEI_Start.Text, ProductTime, this.Select_Template1.Text, this.Select_Template2.Text, this.SIMStart.Text, this.VIPStart.Text, this.BATStart.Text, this.ICCIDStart.Text, this.MACStart.Text, this.EquipmentStart.Text, ASS_sn, this.CB_ZhiDan.Text, this.RFIDStart.Text);
+                                            PMB.UpdateSN_SIM_VIP_BAT_ICCID_MAC_EquipmentBLL(this.IMEI_Start.Text, ProductTime, this.Select_Template1.Text, this.Select_Template2.Text, this.SIMStart.Text, this.VIPStart.Text, this.BATStart.Text, this.ICCIDStart.Text, this.MACStart.Text, this.EquipmentStart.Text, ASS_sn, this.CB_ZhiDan.Text, this.RFIDStart.Text, this.UserShow.Text);
                                         }
                                     }
                                 }
@@ -4678,10 +4816,35 @@ namespace WindowsForms_print
                                 PMB.UpdateVipAndBatAndMacAndEquBLL(this.IMEI_Start.Text, this.SIMStart.Text, this.VIPStart.Text, this.BATStart.Text, this.ICCIDStart.Text, this.MACStart.Text, this.EquipmentStart.Text);
                                 UpInt++;
                             }
-                            if (UpInt == 2)
+                            if (UpInt == 2 || UpInt == 1)
                             {
-                                this.reminder.AppendText(this.EquipmentStart.Text + "绑定" + this.IMEI_Start.Text + "\r\n");
+                                BindingCountS++;
+                                Bind_DGV.Rows.Insert(0);
+                                Bind_DGV.Rows[0].Cells[0].Value = BindingCountS.ToString();
+                                Bind_DGV.Rows[0].Cells[1].Value = "绑 定";
+                                Bind_DGV.Rows[0].Cells[2].Value = this.IMEI_Start.Text;
+                                Bind_DGV.Rows[0].Cells[3].Value = this.SIMStart.Text;
+                                Bind_DGV.Rows[0].Cells[4].Value = this.VIPStart.Text;
+                                Bind_DGV.Rows[0].Cells[5].Value = this.BATStart.Text;
+                                Bind_DGV.Rows[0].Cells[6].Value = this.ICCIDStart.Text;
+                                Bind_DGV.Rows[0].Cells[7].Value = this.MACStart.Text;
+                                Bind_DGV.Rows[0].Cells[8].Value = this.EquipmentStart.Text;
                                 player4.Play();
+                            }
+                            else
+                            {
+                                BindingCountF++;
+                                Bind_DGV.Rows.Insert(0);
+                                Bind_DGV.Rows[0].Cells[0].Value = BindingCountF.ToString();
+                                Bind_DGV.Rows[0].Cells[1].Value = "未 绑 定";
+                                Bind_DGV.Rows[0].Cells[2].Value = this.IMEI_Start.Text;
+                                Bind_DGV.Rows[0].Cells[3].Value = this.SIMStart.Text;
+                                Bind_DGV.Rows[0].Cells[4].Value = this.VIPStart.Text;
+                                Bind_DGV.Rows[0].Cells[5].Value = this.BATStart.Text;
+                                Bind_DGV.Rows[0].Cells[6].Value = this.ICCIDStart.Text;
+                                Bind_DGV.Rows[0].Cells[7].Value = this.MACStart.Text;
+                                Bind_DGV.Rows[0].Cells[8].Value = this.EquipmentStart.Text;
+                                player.Play();
                             }
                             this.IMEI_Start.Clear();
                             this.SIMStart.Clear();
@@ -4905,8 +5068,32 @@ namespace WindowsForms_print
                 CheckFields[7] = "RFID";
             }
         }
-
-
+        //登录
+        private void SiginIN_Click(object sender, EventArgs e)
+        {
+            SignIn sigin = new SignIn();
+            sigin.ShowDialog();
+            if(sigin.UserNamestr1 != "")
+            {
+                this.UserShow.Text = sigin.UserNamestr1;
+            }
+            if (sigin.Usertype1 != "")
+            {
+                this.UserTypeShow.Text = sigin.Usertype1;
+            }
+        }
+        //退出
+        private void QuitBt_Click(object sender, EventArgs e)
+        {
+            if (MessageBox.Show("是否退出当前账号？", "系统提示", MessageBoxButtons.OKCancel, MessageBoxIcon.Asterisk) == DialogResult.Cancel)
+            {
+                return;
+            }
+            else
+            {
+                this.UserShow.Clear();
+            }
+        }
 
         private void Open_file2_Click(object sender, EventArgs e)
         {
@@ -5010,6 +5197,13 @@ namespace WindowsForms_print
         //锁定按钮函数
         private void ToLock_Click(object sender, EventArgs e)
         {
+
+            if(this.UserShow.Text == "")
+            {
+                this.reminder.AppendText("请先登录\r\n");
+                return;
+            }
+
             if (this.CB_ZhiDan.Text == "")
             {
                 player.Play();
@@ -5180,6 +5374,19 @@ namespace WindowsForms_print
             this.CheckVIP.Enabled = false;
             this.CheckRFID.Enabled = false;
 
+            this.SiginIN.Enabled = false;
+            this.QuitBt.Enabled = false;
+
+
+            BindingCountF = 0;
+            BindingCountS = 0;
+            //清空列表
+            while (this.Bind_DGV.Rows.Count > 1)
+            {
+                this.Bind_DGV.Rows.RemoveAt(0);
+            }
+
+
             //查工位
             MissingSql = "SELECT id FROM dbo.Gps_TestResult  WHERE IMEI='IMEIInput'";
             if(this.AutoTest.Checked == true)
@@ -5322,6 +5529,9 @@ namespace WindowsForms_print
             this.MACStart.ReadOnly = true;
             this.EquipmentStart.ReadOnly = true;
 
+            this.SiginIN.Enabled = true;
+            this.QuitBt.Enabled = true;
+
             MissingSql = "";
             AssociatedFields.Clear();
         }
@@ -5362,6 +5572,15 @@ namespace WindowsForms_print
                 this.reminder.AppendText("刷新模板2成功\r\n");
             }
              RefreshNum++;
+        }
+
+        //
+        public void SetDGV()
+        {
+            Bind_DGV.Rows.Add();
+            Bind_DGV.Rows[0].Cells[5].Value = "1";
+            Bind_DGV.Rows.Insert(0);
+            Bind_DGV.Rows[0].Cells[0].Value = "2";
         }
 
 

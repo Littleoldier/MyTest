@@ -25,8 +25,7 @@ namespace ExcelPrint.Param.DAL
             conn1.Open();
             using (SqlCommand command = conn1.CreateCommand())
             {
-                //command.CommandText = "SELECT * FROM dbo.Gps_ManuExcelPrintParam WHERE (IMEI1='" + IMEI1 + "' OR IMEI2 = '" + IMEI2 + "')";
-                command.CommandText = "SELECT IMEI1,IMEI2 FROM dbo.Gps_ManuExcelPrintParam WHERE (IMEI1='" + IMEI1 + "' OR IMEI2 = '" + IMEI2 + "')";
+                command.CommandText = "SELECT * FROM dbo.Gps_ManuExcelPrintParam WHERE (IMEI1='" + IMEI1 + "' OR IMEI2 = '" + IMEI2 + "')";
                 SqlDataReader dr = command.ExecuteReader();
                 while (dr.Read())
                 {

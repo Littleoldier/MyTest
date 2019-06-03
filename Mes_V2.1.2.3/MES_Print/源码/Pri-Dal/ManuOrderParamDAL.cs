@@ -243,7 +243,7 @@ namespace ManuOrder.Param.DAL
         }
 
         //更新彩盒关联打印信息
-        public int UpdateCHAssociatedDAL(string IMEI, string CHPrintTime, string lj1, string lj2, string SIM, string VIP, string BAT, string ICCID, string MAC, string Equipment, string SN,string zhidan, string RFID)
+        public int UpdateCHAssociatedDAL(string IMEI, string CHPrintTime, string lj1, string lj2, string SIM, string VIP, string BAT, string ICCID, string MAC, string Equipment, string SN,string zhidan, string RFID, string CHUserName)
         {
             using (SqlConnection conn1 = new SqlConnection(conStr))
             {
@@ -251,7 +251,7 @@ namespace ManuOrder.Param.DAL
                 using (SqlCommand command = conn1.CreateCommand())
                 {
                     string CH_PrintTime = CHPrintTime == "" ? "NULL" : "'" + CHPrintTime + "'";
-                    command.CommandText = "UPDATE dbo.Gps_ManuPrintParam SET ZhiDan ='"+zhidan+"', SN='" + SN + "', CH_PrintTime=" + CH_PrintTime + ", CH_TemplatePath1 ='" + lj1 + "', CH_TemplatePath2 ='" + lj2 + "',SIM='" + SIM + "',VIP='" + VIP + "',BAT='" + BAT + "',ICCID='" + ICCID + "',MAC='" + MAC + "',Equipment='" + Equipment + "',RFID='"+RFID+"' WHERE IMEI='" + IMEI + "'";
+                    command.CommandText = "UPDATE dbo.Gps_ManuPrintParam SET ZhiDan ='"+zhidan+"', SN='" + SN + "', CH_PrintTime=" + CH_PrintTime + ", CH_TemplatePath1 ='" + lj1 + "', CH_TemplatePath2 ='" + lj2 + "',SIM='" + SIM + "',VIP='" + VIP + "',BAT='" + BAT + "',ICCID='" + ICCID + "',MAC='" + MAC + "',Equipment='" + Equipment + "',RFID='"+RFID+ "',CHUserName='" + CHUserName + "' WHERE IMEI='" + IMEI + "'";
                     return command.ExecuteNonQuery();
                 }
             }
