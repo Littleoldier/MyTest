@@ -444,7 +444,11 @@ namespace WindowsForms_print
                         this.CheckVIP.Enabled = false;
                     }
 
-                    
+                    if (this.choose_RFID.Checked == true)
+                    {
+                        this.CheckRFID.Enabled = false;
+                    }
+
 
                     if (this.CheckSIM.Checked == true)
                     {
@@ -475,7 +479,12 @@ namespace WindowsForms_print
                     {
                         this.choose_vip.Enabled = false;
                     }
-                    
+
+                    if (this.CheckRFID.Checked == true)
+                    {
+                        this.choose_RFID.Enabled = false;
+                    }
+
                 }
                 if (this.CheckSIM.Checked == false && this.choose_sim.Checked == false)
                 {
@@ -1073,13 +1082,14 @@ namespace WindowsForms_print
                                 this.RFIDStart.Text = a.RFID;
                                 this.EquipmentStart.Text = a.IMEI7;
                                 this.GLB_SN.Text = a.SN;
+                                this.ShowSN.Text = a.IMEI2;
                                 this.Re_IMEINum.Text = a.IMEI1;
                                 this.GLB_IMEI14.Text = a.IMEI14;
 
                                 int Chekcfalge = 0;
                                 if(this.CheckSN.Checked == true)
                                 {
-                                    if(this.GLB_SN.Text == "")
+                                    if(this.ShowSN.Text == "")
                                     {
                                         this.reminder.AppendText("SN号为空\r\n");
                                         Chekcfalge = 1;
@@ -1146,7 +1156,7 @@ namespace WindowsForms_print
                                 {
                                     if (this.GLB_IMEI14.Text == "")
                                     {
-                                        this.reminder.AppendText("IMEI2为空\r\n");
+                                        this.reminder.AppendText("IMEI2号为空\r\n");
                                         Chekcfalge = 1;
                                     }
                                 }
@@ -1539,6 +1549,7 @@ namespace WindowsForms_print
                         foreach (DataRelativeSheet a in drs)
                         {
                             this.GLB_SN.Text = a.SN;
+                            this.ShowSN.Text = a.IMEI2;
                             this.SIMStart.Text = a.IMEI3;
                             this.ICCIDStart.Text = a.IMEI4;
                             //对带出的ICCID进行范围判断
@@ -1607,10 +1618,31 @@ namespace WindowsForms_print
                         //{
                             if (CheckSN.Checked == true)
                             {
-                                if (this.GLB_SN.Text == "")
+                                if (this.ShowSN.Text == "")
                                 {
                                     this.reminder.AppendText(this.IMEI_Start.Text + "关联 SN号为空\r\n");
                                     checkFalge = 1;
+                                }
+                                else
+                                {
+                                    if (PMB.CheckSNBLL(this.ShowSN.Text))
+                                    {
+                                        player.Play();
+                                        this.reminder.AppendText("SN "+this.ShowSN.Text + "打印重号\r\n");
+                                        this.IMEI_Start.Clear();
+                                        this.SIMStart.Clear();
+                                        this.VIPStart.Clear();
+                                        this.BATStart.Clear();
+                                        this.ICCIDStart.Clear();
+                                        this.MACStart.Clear();
+                                        this.EquipmentStart.Clear();
+                                        this.ShowSN.Clear();
+                                        this.GLB_SN.Clear();
+                                        this.RFIDStart.Clear();
+                                        this.GLB_IMEI14.Clear();
+                                        this.IMEI_Start.Focus();
+                                        return;
+                                    }
                                 }
                             }
 
@@ -1622,6 +1654,28 @@ namespace WindowsForms_print
                                     this.reminder.AppendText(this.IMEI_Start.Text + "关联SIM号为空\r\n");
                                     checkFalge = 1;
                                 }
+                                else
+                                {
+                                    if(PMB.CheckSIMBLL(this.SIMStart.Text))
+                                    {
+                                        player.Play();
+                                        this.reminder.AppendText("SIM "+this.SIMStart.Text + "打印重号\r\n");
+                                        this.IMEI_Start.Clear();
+                                        this.SIMStart.Clear();
+                                        this.VIPStart.Clear();
+                                        this.BATStart.Clear();
+                                        this.ICCIDStart.Clear();
+                                        this.MACStart.Clear();
+                                        this.EquipmentStart.Clear();
+                                        this.ShowSN.Clear();
+                                        this.GLB_SN.Clear();
+                                        this.RFIDStart.Clear();
+                                        this.GLB_IMEI14.Clear();
+                                        this.IMEI_Start.Focus();
+                                        return;
+                                    }
+                                }
+
                             }
 
                             if (this.CheckICCID.Checked == true)
@@ -1630,6 +1684,27 @@ namespace WindowsForms_print
                                 {
                                     this.reminder.AppendText(this.IMEI_Start.Text + "关联ICCID号为空\r\n");
                                     checkFalge = 1;
+                                }
+                                else
+                                {
+                                    if (PMB.CheckICCIDBLL(this.ICCIDStart.Text))
+                                    {
+                                        player.Play();
+                                        this.reminder.AppendText("ICCID "+this.ICCIDStart.Text + "打印重号\r\n");
+                                        this.IMEI_Start.Clear();
+                                        this.SIMStart.Clear();
+                                        this.VIPStart.Clear();
+                                        this.BATStart.Clear();
+                                        this.ICCIDStart.Clear();
+                                        this.MACStart.Clear();
+                                        this.EquipmentStart.Clear();
+                                        this.ShowSN.Clear();
+                                        this.GLB_SN.Clear();
+                                        this.RFIDStart.Clear();
+                                        this.GLB_IMEI14.Clear();
+                                        this.IMEI_Start.Focus();
+                                        return;
+                                    }
                                 }
                             }
 
@@ -1640,13 +1715,56 @@ namespace WindowsForms_print
                                     this.reminder.AppendText(this.IMEI_Start.Text + "关联蓝牙号为空\r\n");
                                     checkFalge = 1;
                                 }
+                                else
+                                {
+                                    if (PMB.CheckMACBLL(this.MACStart.Text))
+                                    {
+                                        player.Play();
+                                        this.reminder.AppendText("MAC "+this.MACStart.Text + "打印重号\r\n");
+                                        this.IMEI_Start.Clear();
+                                        this.SIMStart.Clear();
+                                        this.VIPStart.Clear();
+                                        this.BATStart.Clear();
+                                        this.ICCIDStart.Clear();
+                                        this.MACStart.Clear();
+                                        this.EquipmentStart.Clear();
+                                        this.ShowSN.Clear();
+                                        this.GLB_SN.Clear();
+                                        this.RFIDStart.Clear();
+                                        this.GLB_IMEI14.Clear();
+                                        this.IMEI_Start.Focus();
+                                        return;
+                                    }
+                                }
                             }
+
                             if (this.CheckEquipment.Checked == true)
                             {
                                 if (this.EquipmentStart.Text == "")
                                 {
                                     this.reminder.AppendText(this.IMEI_Start.Text + "关联设备号为空\r\n");
                                     checkFalge = 1;
+                                }
+                                else
+                                {
+                                    if (PMB.CheckEquipmentBLL(this.EquipmentStart.Text))
+                                    {
+                                        player.Play();
+                                        this.reminder.AppendText("Equipment "+this.EquipmentStart.Text + "打印重号\r\n");
+                                        this.IMEI_Start.Clear();
+                                        this.SIMStart.Clear();
+                                        this.VIPStart.Clear();
+                                        this.BATStart.Clear();
+                                        this.ICCIDStart.Clear();
+                                        this.MACStart.Clear();
+                                        this.EquipmentStart.Clear();
+                                        this.ShowSN.Clear();
+                                        this.GLB_SN.Clear();
+                                        this.RFIDStart.Clear();
+                                        this.GLB_IMEI14.Clear();
+                                        this.IMEI_Start.Focus();
+                                        return;
+                                    }
                                 }
                             }
                             if (this.CheckVIP.Checked == true)
@@ -1655,6 +1773,27 @@ namespace WindowsForms_print
                                 {
                                     this.reminder.AppendText(this.IMEI_Start.Text + "关联VIP号为空\r\n");
                                     checkFalge = 1;
+                                }
+                                else
+                                {
+                                    if (PMB.CheckVIPBLL(this.VIPStart.Text))
+                                    {
+                                        player.Play();
+                                        this.reminder.AppendText("VIP "+this.VIPStart.Text + "打印重号\r\n");
+                                        this.IMEI_Start.Clear();
+                                        this.SIMStart.Clear();
+                                        this.VIPStart.Clear();
+                                        this.BATStart.Clear();
+                                        this.ICCIDStart.Clear();
+                                        this.MACStart.Clear();
+                                        this.EquipmentStart.Clear();
+                                        this.ShowSN.Clear();
+                                        this.GLB_SN.Clear();
+                                        this.RFIDStart.Clear();
+                                        this.GLB_IMEI14.Clear();
+                                        this.IMEI_Start.Focus();
+                                        return;
+                                    }
                                 }
 
                             }
@@ -1665,6 +1804,27 @@ namespace WindowsForms_print
                                     this.reminder.AppendText(this.IMEI_Start.Text + "关联BAT号为空\r\n");
                                     checkFalge = 1;
                                 }
+                                else
+                                {
+                                    if (PMB.CheckBATBLL(this.BATStart.Text))
+                                    {
+                                        player.Play();
+                                        this.reminder.AppendText("BAT "+this.BATStart.Text + "打印重号\r\n");
+                                        this.IMEI_Start.Clear();
+                                        this.SIMStart.Clear();
+                                        this.VIPStart.Clear();
+                                        this.BATStart.Clear();
+                                        this.ICCIDStart.Clear();
+                                        this.MACStart.Clear();
+                                        this.EquipmentStart.Clear();
+                                        this.ShowSN.Clear();
+                                        this.GLB_SN.Clear();
+                                        this.RFIDStart.Clear();
+                                        this.GLB_IMEI14.Clear();
+                                        this.IMEI_Start.Focus();
+                                        return;
+                                    }
+                                }
                             }
                             if (this.CheckRFID.Checked == true)
                             {
@@ -1672,6 +1832,27 @@ namespace WindowsForms_print
                                 {
                                     this.reminder.AppendText(this.IMEI_Start.Text + "关联RFID号为空\r\n");
                                     checkFalge = 1;
+                                }
+                                else
+                                {
+                                    if (PMB.CheckRFIDBLL(this.RFIDStart.Text))
+                                    {
+                                        player.Play();
+                                        this.reminder.AppendText("RFID "+this.RFIDStart.Text + "打印重号\r\n");
+                                        this.IMEI_Start.Clear();
+                                        this.SIMStart.Clear();
+                                        this.VIPStart.Clear();
+                                        this.BATStart.Clear();
+                                        this.ICCIDStart.Clear();
+                                        this.MACStart.Clear();
+                                        this.EquipmentStart.Clear();
+                                        this.ShowSN.Clear();
+                                        this.GLB_SN.Clear();
+                                        this.RFIDStart.Clear();
+                                        this.GLB_IMEI14.Clear();
+                                        this.IMEI_Start.Focus();
+                                        return;
+                                    }
                                 }
                             }
 
@@ -1682,6 +1863,27 @@ namespace WindowsForms_print
                                     this.reminder.AppendText(this.IMEI_Start.Text + "关联IMEI2号为空\r\n");
                                     checkFalge = 1;
                                 }
+                                //else
+                                //{
+                                //    if (PMB.CheckIMEI2BLL(this.GLB_IMEI14.Text))
+                                //    {
+                                //        player.Play();
+                                //        this.reminder.AppendText(this.GLB_IMEI14.Text + "重号\r\n");
+                                //        this.IMEI_Start.Clear();
+                                //        this.SIMStart.Clear();
+                                //        this.VIPStart.Clear();
+                                //        this.BATStart.Clear();
+                                //        this.ICCIDStart.Clear();
+                                //        this.MACStart.Clear();
+                                //        this.EquipmentStart.Clear();
+                                //        this.ShowSN.Clear();
+                                //        this.GLB_SN.Clear();
+                                //        this.RFIDStart.Clear();
+                                //        this.GLB_IMEI14.Clear();
+                                //        this.IMEI_Start.Focus();
+                                //        return;
+                                //    }
+                                //}
                             }
 
                             if (checkFalge == 1)
@@ -8764,6 +8966,11 @@ namespace WindowsForms_print
                             this.CheckVIP.Enabled = false;
                         }
 
+                        if (this.choose_RFID.Checked == true)
+                        {
+                            this.CheckRFID.Enabled = false;
+                        }
+
 
 
                         if (this.CheckSIM.Checked == true)
@@ -8794,6 +9001,11 @@ namespace WindowsForms_print
                         if (this.CheckVIP.Checked == true)
                         {
                             this.choose_vip.Enabled = false;
+                        }
+
+                        if (this.CheckRFID.Checked == true)
+                        {
+                            this.choose_RFID.Enabled = false;
                         }
 
                     }

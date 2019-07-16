@@ -10126,10 +10126,24 @@ namespace WindowsForms_print
                                                         btFormat.SubStrings["SN"].Value = a.SN;
                                                     }
                                                 }
+
+                                                if (DRSB.CheckIMEIBLL(this.IMEI_Start.Text))
+                                                {
+                                                    DRSB.UpdateIMEI14DAL(this.IMEI_Start.Text, this.IMEI2_Start.Text);
+                                                }
+
                                                 if (MOPB.UpdateJSmesIMEI2BLL(this.IMEI_Start.Text, this.IMEI2_Start.Text, ProductTime, this.UserShow.Text, this.UserDesShow.Text, this.IMEI2_num1.Text, this.IMEI2_num2.Text, lj))
                                                 {
                                                     Result nResult1 = btFormat.Print("标签打印软件", waitout, out messages);
                                                     Form1.Log("打印了IMEI号为" + this.IMEI_Start.Text + ", IMEI2号为" + this.IMEI2_Start.Text + "的制单", null);
+                                                    this.IMEI_Start.Clear();
+                                                    this.IMEI2_Start.Clear();
+                                                    this.IMEI_Start.Focus();
+                                                }
+                                                else
+                                                {
+                                                    player.Play();
+                                                    this.reminder.AppendText("更新打印失败\r\n");
                                                     this.IMEI_Start.Clear();
                                                     this.IMEI2_Start.Clear();
                                                     this.IMEI_Start.Focus();
@@ -10604,10 +10618,24 @@ namespace WindowsForms_print
                                                         btFormat.SubStrings["SN"].Value = a.SN;
                                                     }
                                                 }
+
+                                                if (DRSB.CheckIMEIBLL(this.IMEI_Start.Text))
+                                                {
+                                                    DRSB.UpdateIMEI14DAL(this.IMEI_Start.Text, this.IMEI2_Start.Text);
+                                                }
+
                                                 if (MOPB.UpdateJSmesIMEI2BLL(this.IMEI_Start.Text, this.IMEI2_Start.Text, ProductTime, this.UserShow.Text, this.UserDesShow.Text, this.IMEI2_num1.Text, this.IMEI2_num2.Text, lj))
                                                 {
                                                     Result nResult1 = btFormat.Print("标签打印软件", waitout, out messages);
                                                     Form1.Log("打印了IMEI号为" + this.IMEI_Start.Text + ", IMEI2号为" + this.IMEI2_Start.Text + "的制单", null);
+                                                    this.IMEI_Start.Clear();
+                                                    this.IMEI2_Start.Clear();
+                                                    this.IMEI_Start.Focus();
+                                                }
+                                                else
+                                                {
+                                                    player.Play();
+                                                    this.reminder.AppendText("更新打印失败\r\n");
                                                     this.IMEI_Start.Clear();
                                                     this.IMEI2_Start.Clear();
                                                     this.IMEI_Start.Focus();
@@ -11070,10 +11098,23 @@ namespace WindowsForms_print
                                                     }
                                                 }
 
+                                                if (DRSB.CheckIMEIBLL(this.IMEI_Start.Text))
+                                                {
+                                                    DRSB.UpdateIMEI14DAL(this.IMEI_Start.Text, this.IMEI2_Start.Text);
+                                                }
+
                                                 if (MOPB.UpdateJSmesIMEI2BLL(this.IMEI_Start.Text, this.IMEI2_Start.Text, ProductTime, this.UserShow.Text, this.UserDesShow.Text, this.IMEI2_num1.Text, this.IMEI2_num2.Text, lj))
                                                 {
                                                     Result nResult1 = btFormat.Print("标签打印软件", waitout, out messages);
                                                     Form1.Log("打印了IMEI号为" + this.IMEI_Start.Text + ", IMEI2号为" + this.IMEI2_Start.Text + "的制单", null);
+                                                    this.IMEI_Start.Clear();
+                                                    this.IMEI2_Start.Clear();
+                                                    this.IMEI_Start.Focus();
+                                                }
+                                                else
+                                                {
+                                                    player.Play();
+                                                    this.reminder.AppendText("更新打印失败\r\n");
                                                     this.IMEI_Start.Clear();
                                                     this.IMEI2_Start.Clear();
                                                     this.IMEI_Start.Focus();
@@ -11550,10 +11591,23 @@ namespace WindowsForms_print
                                                     }
                                                 }
 
+                                                if (DRSB.CheckIMEIBLL(this.IMEI_Start.Text))
+                                                {
+                                                    DRSB.UpdateIMEI14DAL(this.IMEI_Start.Text, this.IMEI2_Start.Text);
+                                                }
+
                                                 if (MOPB.UpdateJSmesIMEI2BLL(this.IMEI_Start.Text, this.IMEI2_Start.Text, ProductTime, this.UserShow.Text, this.UserDesShow.Text, this.IMEI2_num1.Text, this.IMEI2_num2.Text, lj))
                                                 {
                                                     Result nResult1 = btFormat.Print("标签打印软件", waitout, out messages);
                                                     Form1.Log("打印了IMEI号为" + this.IMEI_Start.Text + ", IMEI2号为" + this.IMEI2_Start.Text + "的制单", null);
+                                                    this.IMEI_Start.Clear();
+                                                    this.IMEI2_Start.Clear();
+                                                    this.IMEI_Start.Focus();
+                                                }
+                                                else
+                                                {
+                                                    player.Play();
+                                                    this.reminder.AppendText("更新打印失败\r\n");
                                                     this.IMEI_Start.Clear();
                                                     this.IMEI2_Start.Clear();
                                                     this.IMEI_Start.Focus();
